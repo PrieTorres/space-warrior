@@ -1,16 +1,16 @@
 {
   "files": {
     "main.css": "/space-warrior/static/css/main.abd6f6b9.css",
-    "main.js": "/space-warrior/static/js/main.56d1aef7.js",
+    "main.js": "/space-warrior/static/js/main.145737ab.js",
     "static/js/787.4de1a9be.chunk.js": "/space-warrior/static/js/787.4de1a9be.chunk.js",
     "static/media/space8.gif": "/space-warrior/static/media/space8.e1058fee45d1dddc2c48.gif",
     "index.html": "/space-warrior/index.html",
     "main.abd6f6b9.css.map": "/space-warrior/static/css/main.abd6f6b9.css.map",
-    "main.56d1aef7.js.map": "/space-warrior/static/js/main.56d1aef7.js.map",
+    "main.145737ab.js.map": "/space-warrior/static/js/main.145737ab.js.map",
     "787.4de1a9be.chunk.js.map": "/space-warrior/static/js/787.4de1a9be.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.abd6f6b9.css",
-    "static/js/main.56d1aef7.js"
+    "static/js/main.145737ab.js"
   ]
 }
