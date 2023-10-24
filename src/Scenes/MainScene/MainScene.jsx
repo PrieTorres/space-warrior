@@ -21,6 +21,7 @@ import {
 } from "../../gameAssets/Objects/Global";
 import style from "./MainScene.module.scss";
 import { cloneDeep } from "lodash";
+import { LevelPass } from "../../Components/LevelPass/LevelPass";
 
 export const MainScene = () => {
   const { gameState, gameDispatch } = useContext(GameContext);
@@ -31,6 +32,7 @@ export const MainScene = () => {
 
   const [points, setPoints] = useState(gameState.points);
   const [munitionReload, setMunitionReload] = useState(100);
+  const [levelUpAnimation, setLevelUpAnimation] = useState(false);
 
   const shots = useRef([]);
   const asteroids = useRef([]);
@@ -334,7 +336,7 @@ export const MainScene = () => {
     return () => {
       clearInterval(interval);
     };
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [
     gameScreen,
     gameScreenWidth,
@@ -380,28 +382,42 @@ export const MainScene = () => {
       level++;
     }
 
-    if(points > 120){
+    if (points > 120) {
       level++;
     }
 
-    if(points > 190){
+    if (points > 190) {
       level++;
     }
 
-    if(points > 280){
+    if (points > 280) {
       level++;
     }
 
-    if(points > 400){
+    if (points > 400) {
       level++;
     }
 
-    if(level !== gameState.level){
+    if (level !== gameState.level && !gameState.paused) {
       gameDispatch({ type: types.LEVEL_UP });
+      gameDispatch({ type: types.PAUSE });
+      setLevelUpAnimation(true);
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [points]);
 
+  useEffect(() => {
+    if(!levelUpAnimation) return;
+    const timeOut = setTimeout(() => {
+      setLevelUpAnimation(false);
+      gameDispatch({ type: types.PAUSE });
+    }, 2500);
+
+    return () => clearTimeout(timeOut);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [levelUpAnimation])
+
+  console.log("renderizou");
   return (
     <div id="game-main-scene-screen" style={{ overflow: "hidden" }}>
       <div className={`${style["points-counter"]}`}>SCORE: {points}</div>
@@ -432,7 +448,7 @@ export const MainScene = () => {
             background: gameState.paused ? "#000000a6" : "none",
           }}
         >
-          {gameState.paused && !gameState.initial ? (
+          {gameState.paused && !gameState.initial && !levelUpAnimation ? (
             <div className={`${style["pause-info"]}`}>
               PAUSED
               <button
@@ -442,7 +458,7 @@ export const MainScene = () => {
                 Menu Inicial
               </button>
             </div>
-          ) : undefined}
+          ) : <LevelPass show={levelUpAnimation} level={gameState.level} secondsToDisplay={2000} />}
         </div>
       </div>
     </div>
