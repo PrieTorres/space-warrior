@@ -4,7 +4,8 @@ import style from "./LevelPass.module.scss";
 export const LevelPass = ({ level, show, secondsToDisplay }) => {
   const container = useRef();
   const [insideShow, setInsideShow] = useState(show);
-  const [showIn, setShowIn] = useState(true);
+  const [showIn, setShowIn] = useState(false);
+  const [showOut, setShowOut] = useState(false);
 
   useEffect(() => {
     if(insideShow !== show){
@@ -13,11 +14,10 @@ export const LevelPass = ({ level, show, secondsToDisplay }) => {
   }, [show]);
 
   useEffect(() => {
+    setShowIn(true);
     const timeout = setTimeout(() => {
       setShowIn(false);
-      container.current?.addEventListener('animationend', () => {
-        setInsideShow(false);
-      });
+      setShowOut(true);
     }, secondsToDisplay);
 
     return () => clearTimeout(timeout);
@@ -27,7 +27,7 @@ export const LevelPass = ({ level, show, secondsToDisplay }) => {
     <>
       {insideShow ?
         <div className={`${style["level-container"]}`} >
-          <div className={`${style["level-box"]} ${showIn ? "animate__animated animate__bounceInLeft" : "animate__animated animate__bounceOutRight"}`} ref={container}>
+          <div className={`${style["level-box"]} ${style[showIn ? "centered-x" : showOut? "out-right" : ""]}`} ref={container}>
             <span className={`${style["text"]}`}>Você passou de nível!</span>
             <p className={`${style["level-num"]}`}>{level}</p>
           </div>

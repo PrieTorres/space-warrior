@@ -407,7 +407,7 @@ export const MainScene = () => {
   }, [points]);
 
   useEffect(() => {
-    if(!levelUpAnimation) return;
+    if (!levelUpAnimation) return;
     const timeOut = setTimeout(() => {
       setLevelUpAnimation(false);
       gameDispatch({ type: types.PAUSE });
@@ -458,7 +458,10 @@ export const MainScene = () => {
                 Menu Inicial
               </button>
             </div>
-          ) : <LevelPass show={levelUpAnimation} level={gameState.level} secondsToDisplay={2000} />}
+          ) : undefined}
+          {levelUpAnimation ?
+            <LevelPass show={levelUpAnimation} level={gameState.level} secondsToDisplay={2000} />
+            : undefined}
         </div>
       </div>
     </div>
