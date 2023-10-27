@@ -417,7 +417,6 @@ export const MainScene = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [levelUpAnimation])
 
-  console.log("renderizou");
   return (
     <div id="game-main-scene-screen" style={{ overflow: "hidden" }}>
       <div className={`${style["points-counter"]}`}>SCORE: {points}</div>
