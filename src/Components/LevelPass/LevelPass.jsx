@@ -6,20 +6,26 @@ export const LevelPass = ({ level, show, secondsToDisplay }) => {
   const [animationClass, setAnimationClass] = useState("");
 
   useEffect(() => {
-    if (container.current?.classList !== undefined) setAnimationClass("centered-x");
-    const timeout = setTimeout(() => {
-      setAnimationClass("out-right");
-    }, secondsToDisplay);
+    let timeoutToEnter, timeoutToLeave;
 
-    return () => clearTimeout(timeout);
+    timeoutToEnter = setTimeout(() => {
+      if (container.current?.classList !== undefined) setAnimationClass("centered-x");
+      timeoutToLeave = setTimeout(() => {
+        setAnimationClass("out-right");
+      }, secondsToDisplay);
+    }, 100);
+   
+    return () => {
+      if (timeoutToLeave != undefined) clearTimeout(timeoutToLeave);
+      if (timeoutToEnter != undefined) clearTimeout(timeoutToEnter);
+    };
   }, [secondsToDisplay, show]);
 
   if (!show) return;
-  console.log({ show, animationClass }, container.current?.classList);
   return (
     <>
       <div className={`${style["level-container"]}`} >
-        <div className={`${style["level-box"]} ${style[animationClass]}`} ref={container}>
+        <div className={`${style["level-box"]} ${style["centered-x"]}`} ref={container}>
           <span className={`${style["text"]}`}>Você passou de nível!</span>
           <p className={`${style["level-num"]}`}>{level}</p>
         </div>

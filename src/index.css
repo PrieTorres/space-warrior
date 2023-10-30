@@ -1,7 +1,12 @@
+@font-face {
+  font-family: 'gameboy';
+  src: url('/public/fonts/VT323-Regular.ttf');
+}
+
 *{
   padding: 0;
   margin: 0;
-  font-family: 'Courier New', Courier, monospace;
+  font-family: 'gameboy', 'Courier New', Courier, monospace;
 }
 
 body, html {
