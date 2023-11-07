@@ -25,7 +25,7 @@ export const LevelPass = ({ level, show, secondsToDisplay }) => {
   return (
     <>
       <div className={`${style["level-container"]}`} >
-        <div className={`${style["level-box"]} ${style["centered-x"]}`} ref={container}>
+        <div className={`${style["level-box"]} ${style[animationClass]}`} ref={container}>
           <span className={`${style["text"]}`}>Você passou de nível!</span>
           <p className={`${style["level-num"]}`}>{level}</p>
         </div>

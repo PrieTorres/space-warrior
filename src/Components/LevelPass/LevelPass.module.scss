@@ -11,8 +11,8 @@
 }
 
 .level-box {
-  width: 600px;
-  height: 400px;
+  width: 650px;
+  min-height: 60vh;
   position: absolute;
   top: calc(50% - 200px);
   left: -100vw;
@@ -24,10 +24,10 @@
   align-items: center;
   flex-wrap: wrap;
   justify-content: center;
-  align-content: center;
+  align-content: space-evenly;
   border-radius: 15px;
   color: #108612;
-  // text-shadow: 0 0 5px #000000,0 0 10px #a3ff10,0 0 15px #84ff17,0 0 20px #50fd00,0 0 35px #50fd00,0 0 40px #50fd00;
+  box-sizing: border-box;
 }
 
 .centered-x{
@@ -40,9 +40,12 @@
 
 .text{
   font-size: 4.2rem;
+  padding: 3px 8px;
+  border: 2px solid #a3b6aa;
+  width: 80%;
 }
 
 .level-num{
-  font-size: 15rem;
-  // text-shadow: 0 0 5px #000000,0 0 10px #2b650c,0 0 15px #2ba20d,0 0 20px #08fd00;
+  width: 100%;
+  font-size: 13rem;
 }
