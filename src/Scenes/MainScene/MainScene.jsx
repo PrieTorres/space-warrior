@@ -363,8 +363,11 @@ export const MainScene = () => {
       const percent = (counter / spaceShip.current.cooldown) * 100;
 
       if (percent >= 100) {
-        if (munitionCount < spaceShip.current.initialMunition)
-          setMunitionCount((prev) => (prev += 1));
+        if (munitionCount < spaceShip.current.initialMunition){
+          if(munitionCount === 0) setMunitionCount(spaceShip.current.initialMunition);
+          else setMunitionCount((prev) => (prev += 1));
+        }
+
         setMunitionReload(100);
         return clearInterval(interval);
       }
