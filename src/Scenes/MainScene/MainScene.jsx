@@ -10,7 +10,7 @@ import * as helper from "../../Components/lib/helper/helper";
 import * as types from "../../contexts/types.js";
 import Canvas from "../../Components/Canvas";
 import {
-  copyAsteroid,
+  calcShotOnAsteroidRange,
   createAsteroid,
 } from "../../gameAssets/Objects/ManipuleAsteroid";
 import { GameContext } from "../../contexts/GameContext";
@@ -20,7 +20,6 @@ import {
   LEVELS_DATA,
 } from "../../gameAssets/Objects/Global";
 import style from "./MainScene.module.scss";
-import { cloneDeep } from "lodash";
 import { LevelPass } from "../../Components/LevelPass/LevelPass";
 
 export const MainScene = () => {
@@ -68,56 +67,6 @@ export const MainScene = () => {
   );
 
   // ------- use callbacks ------- //
-  const mitoseTheAsteroid = useCallback(
-    (asteroid) => {
-      const infoAsteroid = {
-        ...asteroid,
-        active: true,
-        width: asteroid.width / 1.5,
-        height: asteroid.height / 1.5,
-        vel: asteroid.vel / 2,
-      };
-      const parentXPosition = asteroid.position.x;
-
-      asteroids.current.push(
-        copyAsteroid({
-          ...cloneDeep(infoAsteroid),
-          finalCordinates: {
-            x: parentXPosition - asteroid.width / 2,
-            y: asteroid.finalCordinates.y,
-          },
-        }),
-      );
-
-      asteroids.current.push(
-        copyAsteroid({
-          ...cloneDeep(infoAsteroid),
-          finalCordinates: {
-            x: parentXPosition + asteroid.width / 2,
-            y: asteroid.finalCordinates.y,
-          },
-        }),
-      );
-    }, []);
-
-  const calcShotOnAsteroidRange = useCallback((shot, asteroids) => {
-    for (let indexAsteroid = 0; indexAsteroid <= asteroids.length; indexAsteroid++) {
-      const asteroid = asteroids[indexAsteroid];
-
-      if (helper.calcCollapse(asteroid, shot) && shot.active) {
-        asteroid.active = false;
-        asteroid.health -= shot.damage;
-        setPoints((prev) => prev + 1);
-
-        if (asteroid.health >= 1) {
-          mitoseTheAsteroid(asteroid);
-        }
-
-        return shot;
-      };
-
-    };
-  }, [mitoseTheAsteroid]);
 
   const fillCanvas = useCallback((c) => {
     c.clearRect(0, 0, gameScreenWidth, gameScreenHeight);
@@ -132,9 +81,9 @@ export const MainScene = () => {
 
       if (shot?.move) {
         shot.move(undefined, undefined, () => {
-          const returnedShot = calcShotOnAsteroidRange(shot, _asteroids);
+          const { collapsed } = calcShotOnAsteroidRange(shot, asteroids.current, setPoints);
 
-          if (returnedShot) {
+          if (collapsed) {
             shot.active = false;
           }
         });
@@ -157,7 +106,6 @@ export const MainScene = () => {
       }
     }
   }, [
-    calcShotOnAsteroidRange,
     gameDispatch,
     gameState.health,
     points,
@@ -336,12 +284,10 @@ export const MainScene = () => {
     return () => {
       clearInterval(interval);
     };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [
     gameScreen,
     gameScreenWidth,
     gameScreenHeight,
-    calcShotOnAsteroidRange,
     gameState.paused,
     levelData.respawnAsteroid,
   ]);
@@ -363,8 +309,8 @@ export const MainScene = () => {
       const percent = (counter / spaceShip.current.cooldown) * 100;
 
       if (percent >= 100) {
-        if (munitionCount < spaceShip.current.initialMunition){
-          if(munitionCount === 0) setMunitionCount(spaceShip.current.initialMunition);
+        if (munitionCount < spaceShip.current.initialMunition) {
+          if (munitionCount === 0) setMunitionCount(spaceShip.current.initialMunition);
           else setMunitionCount((prev) => (prev += 1));
         }
 
