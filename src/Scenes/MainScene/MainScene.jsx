@@ -9,18 +9,14 @@ import {
 import * as helper from "../../Components/lib/helper/helper";
 import * as types from "../../contexts/types.js";
 import Canvas from "../../Components/Canvas";
-import {
-  calcShotOnAsteroidRange,
-  createAsteroid,
-} from "../../gameAssets/Objects/ManipuleAsteroid";
+import { createAsteroid } from "../../gameAssets/Objects/ManipuleAsteroid";
 import { GameContext } from "../../contexts/GameContext";
 import { createSpaceShip } from "../../gameAssets/Objects/SpaceShip";
-import {
-  CONST,
-  LEVELS_DATA,
-} from "../../gameAssets/Objects/Global";
+import { CONST, LEVELS_DATA } from "../../gameAssets/Objects/Global";
 import style from "./MainScene.module.scss";
 import { LevelPass } from "../../Components/LevelPass/LevelPass";
+import { drawAsteroids, moveAsteroids } from "../../Components/lib/gameEssentials/handleAsteroids.js";
+import { drawShots, moveShots } from "../../Components/lib/gameEssentials/handleShots.js";
 
 export const MainScene = () => {
   const { gameState, gameDispatch } = useContext(GameContext);
@@ -73,38 +69,24 @@ export const MainScene = () => {
   }, [gameScreenWidth, gameScreenHeight]);
 
   const moveEverything = useCallback(() => {
-    const _asteroids = helper.filterActives(asteroids.current);
-    const _shots = helper.filterActives(shots.current);
 
-    for (let indexShot = 0; indexShot <= _shots.length; indexShot++) {
-      const shot = _shots[indexShot];
-
-      if (shot?.move) {
-        shot.move(undefined, undefined, () => {
-          const { collapsed } = calcShotOnAsteroidRange(shot, asteroids.current, setPoints);
-
-          if (collapsed) {
-            shot.active = false;
-          }
-        });
+    moveAsteroids({
+      asteroids: asteroids.current,
+      takeHit: (asteroid) => {
+        if ((gameState.health - asteroid.health) > 0) {
+          gameDispatch({ type: types.LOSE_LIFE, payload: asteroid.health });
+        } else {
+          gameDispatch({ type: types.GAME_OVER, payload: points });
+        }
       }
-    }
+    });
 
-    for (let indexAster = 0; indexAster <= _asteroids.length; indexAster++) {
-      const asteroid = _asteroids[indexAster];
+    moveShots({
+      asteroids: asteroids.current,
+      shots: shots.current,
+      setPoints
+    })
 
-      if (asteroid?.move) {
-        asteroid.move(undefined, undefined, undefined, () => {
-          asteroid.active = false;
-
-          if ((gameState.health - asteroid.health) > 0) {
-            gameDispatch({ type: types.LOSE_LIFE, payload: asteroid.health });
-          } else {
-            gameDispatch({ type: types.GAME_OVER, payload: points });
-          }
-        });
-      }
-    }
   }, [
     gameDispatch,
     gameState.health,
@@ -116,18 +98,10 @@ export const MainScene = () => {
       if (gameState.paused) return;
       if (!canvasCtx) return;
 
-      const _asteroids = helper.filterActives(asteroids.current);
-      const _shots = helper.filterActives(shots.current);
-
       fillCanvas(canvasCtx);
 
-      for (const asteroid of _asteroids) {
-        if (asteroid?.active) asteroid.draw(canvasCtx);
-      }
-
-      for (const shot of _shots) {
-        if (shot?.active) shot.draw(canvasCtx);
-      }
+      drawAsteroids({ asteroids: asteroids.current, canvasCtx });
+      drawShots({ shots: shots.current, canvasCtx });
 
       spaceShip.current.draw(canvasCtx);
     },
@@ -305,6 +279,7 @@ export const MainScene = () => {
   useEffect(() => {
     let counter = 0;
     const interval = setInterval(() => {
+      if(gameState.paused) return;
       counter += 100;
       const percent = (counter / spaceShip.current.cooldown) * 100;
 
@@ -322,7 +297,7 @@ export const MainScene = () => {
     }, 100);
 
     return () => clearInterval(interval);
-  }, [munitionCount]);
+  }, [gameState.paused, munitionCount]);
 
   useEffect(() => {
     let level = 0;
