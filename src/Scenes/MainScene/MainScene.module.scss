@@ -1,20 +1,20 @@
 .points-counter,
 .life-counter,
 .munition-info {
-  color         : #15f419;
-  position      : absolute;
-  font-family   : monospace;
+  color: #15f419;
+  position: absolute;
+  font-family: monospace;
   text-transform: uppercase;
-  width         : fit-content;
-  font-size     : 2rem;
-  padding       : 10px;
-  z-index       : 99;
+  width: fit-content;
+  font-size: 2rem;
+  padding: 10px;
+  z-index: 99;
 }
 
 .munition-info {
-  width : fit-content;
+  width: fit-content;
   bottom: 0;
-  right : 0;
+  right: 0;
   text-align: center;
 }
 
@@ -23,9 +23,9 @@
 }
 
 .munitions-counter {
-  width          : 100%;
-  display        : flex;
-  flex-wrap      : wrap;
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
   justify-content: center;
 }
 
@@ -42,27 +42,10 @@
 }
 
 .glass {
-  width    : 100%;
-  height   : 100%;
-  position : absolute;
+  width: 100%;
+  height: 100%;
+  position: absolute;
   font-size: 0px;
-  z-index  : 10;
-  top      : 0px;
-}
-
-.pause-info {
-  width          : 100%;
-  height         : 100%;
-  display        : flex;
-  flex-direction : column;
-  justify-content: center;
-  align-items    : center;
-  color          : #15f419;
-  text-transform : uppercase;
-  gap            : 12px;
-}
-
-.menu-button {
-  padding: 8px;
-  border : none;
+  z-index: 10;
+  top: 0px;
 }

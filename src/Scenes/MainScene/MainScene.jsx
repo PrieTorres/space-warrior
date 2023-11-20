@@ -1,33 +1,29 @@
-import {
-  useCallback,
-  useContext,
-  useEffect,
-  useMemo,
-  useRef,
-  useState,
-} from "react";
-import * as helper from "../../Components/lib/helper/helper";
-import * as types from "../../contexts/types.js";
-import Canvas from "../../Components/Canvas";
-import { createAsteroid } from "../../gameAssets/Objects/ManipuleAsteroid";
+import React, { useCallback, useContext, useEffect, useRef, useState } from "react";
 import { GameContext } from "../../contexts/GameContext";
 import { createSpaceShip } from "../../gameAssets/Objects/SpaceShip";
-import { CONST, LEVELS_DATA } from "../../gameAssets/Objects/Global";
-import style from "./MainScene.module.scss";
 import { LevelPass } from "../../Components/LevelPass/LevelPass";
-import { drawAsteroids, moveAsteroids } from "../../Components/lib/gameEssentials/handleAsteroids.js";
-import { drawShots, moveShots } from "../../Components/lib/gameEssentials/handleShots.js";
+import { useAsteroidCreation } from "../../Components/lib/gameEssentials/useAsteroidCreation";
+import { useMoveAsteroidsAndShots } from "../../Components/lib/gameEssentials/useMoveAsteroidsAndShots";
+import { useMunitionCooldown } from "../../Components/lib/gameEssentials/useMunitionCooldown";
+import { useInitializeHandlers, useResetInfos } from "../../Components/lib/gameEssentials/initializers";
+import { useLevelUpdater } from "../../Components/lib/gameEssentials/useLevelUpdater";
+import { useCanvas } from "../../Components/Canvas/useCanvas";
+import * as types from "../../contexts/types.js";
+import * as handlerSpaceShip from "../../Components/lib/gameEssentials/handleSpaceShip";
+import style from "./MainScene.module.scss";
+import { PauseScreen } from "../../Components/PauseScreen/PauseScreen.jsx";
+
 
 export const MainScene = () => {
   const { gameState, gameDispatch } = useContext(GameContext);
+  const { spaceShipId, health, level, paused } = gameState;
 
-  const levelData = LEVELS_DATA[gameState.level];
   const gameScreenHeight = window.innerHeight;
   const gameScreenWidth = window.innerWidth;
 
-  const [points, setPoints] = useState(gameState.points);
-  const [munitionReload, setMunitionReload] = useState(100);
-  const [levelUpAnimation, setLevelUpAnimation] = useState(false);
+  const [points, setPoints] = useState(() => gameState.points);
+  const [munitionReload, setMunitionReload] = useState(() => 100);
+  const [levelUpAnimation, setLevelUpAnimation] = useState(() => false);
 
   const shots = useRef([]);
   const asteroids = useRef([]);
@@ -38,233 +34,42 @@ export const MainScene = () => {
     createSpaceShip({
       canvasWidth: gameScreenWidth,
       canvasHeight: gameScreenHeight,
-      id: gameState.spaceShipId,
+      id: spaceShipId,
     }),
-    [gameState.spaceShipId],
+    [spaceShipId],
   );
-  const [munitionCount, setMunitionCount] = useState(spaceShip.current.initialMunition);
+  const [munitionCount, setMunitionCount] = useState(() => spaceShip.current.initialMunition);
 
-  // ------- use memos ------- //
-  const gameCanvas = useMemo(
-    () => (
-      <Canvas
-        id="main-screen-canvas"
-        canvasRef={gameScreen}
-        height={gameScreenHeight}
-        width={gameScreenWidth}
-        canvasStyle={{
-          backgroundColor: "#000000a6",
-          backgroundImage: `url('${process.env.PUBLIC_URL}/images/backgrounds/space1.gif')`,
-          border: "1px solid black",
-        }}
-      />
-    ),
-    [gameScreenHeight, gameScreenWidth],
-  );
+  const gameCanvas = useCanvas(gameScreen, gameScreenHeight, gameScreenWidth);
+  const setShots = (updatedShots) => { shots.current = updatedShots };
 
-  // ------- use callbacks ------- //
+  const handleKeyDown = useCallback((e) => {
+    handlerSpaceShip.handleKeyDown(e, gameState, spaceShip.current, gameDispatch,
+      () => handlerSpaceShip.handleSpaceShipShot(spaceShip.current, shots.current, munitionCount, setShots, setMunitionCount)
+    );
 
-  const fillCanvas = useCallback((c) => {
-    c.clearRect(0, 0, gameScreenWidth, gameScreenHeight);
-  }, [gameScreenWidth, gameScreenHeight]);
+  }, [gameDispatch, gameState, munitionCount]);
 
-  const moveEverything = useCallback(() => {
+  const handleKeyPress = useCallback((e, canvasCtx) => {
+    if (paused) return;
+    handlerSpaceShip.handleKeyPress(e, canvasCtx, spaceShip.current);
 
-    moveAsteroids({
-      asteroids: asteroids.current,
-      takeHit: (asteroid) => {
-        if ((gameState.health - asteroid.health) > 0) {
-          gameDispatch({ type: types.LOSE_LIFE, payload: asteroid.health });
-        } else {
-          gameDispatch({ type: types.GAME_OVER, payload: points });
-        }
-      }
-    });
+  }, [paused]);
 
-    moveShots({
-      asteroids: asteroids.current,
-      shots: shots.current,
-      setPoints
-    })
+  useResetInfos({ spaceShip, asteroids, shots, gameState, setPoints, gameScreenHeight, gameScreenWidth });
 
-  }, [
-    gameDispatch,
-    gameState.health,
-    points,
-  ]);
+  useInitializeHandlers({ gameScreen, handleKeyDown, handleKeyPress });
 
-  const drawEverything = useCallback(
-    (canvasCtx) => {
-      if (gameState.paused) return;
-      if (!canvasCtx) return;
+  useAsteroidCreation({ asteroids: asteroids.current, gameScreen, gameScreenWidth, gameScreenHeight, gameState });
 
-      fillCanvas(canvasCtx);
+  useMoveAsteroidsAndShots({
+    asteroids: asteroids.current, spaceShip: spaceShip.current, shots: shots.current,
+    gameState, setPoints, gameScreen, gameScreenWidth, gameScreenHeight, gameDispatch, points
+  });
 
-      drawAsteroids({ asteroids: asteroids.current, canvasCtx });
-      drawShots({ shots: shots.current, canvasCtx });
+  useMunitionCooldown({ gameState, spaceShip: spaceShip.current, munitionCount, setMunitionCount, setMunitionReload });
 
-      spaceShip.current.draw(canvasCtx);
-    },
-    [fillCanvas, gameState.paused],
-  );
-
-  const handleKeyDown = useCallback(
-    (e) => {
-      if (e.Code === "p" || e.key === "p") {
-        spaceShip.current.active = gameState.paused;
-        gameDispatch({ type: "PAUSE" });
-      }
-
-      if (gameState.paused) return;
-
-      if (e.Code === "Space" || e.key === " " || e.keyCode === 32) {
-        if (munitionCount > 0) {
-          const shot = spaceShip.current.shoot();
-          const updatedShots = helper.filterActives(shots.current);
-
-          updatedShots.push(...shot);
-          shots.current = updatedShots;
-
-          setMunitionCount((prev) => (prev -= 1));
-        }
-      }
-    },
-    [gameDispatch, gameState.paused, munitionCount],
-  );
-
-  const handleKeyPress = useCallback(
-    (e, canvasCtx) => {
-      if (gameState.paused) return;
-      if (e.key === "w" || e.key === "ArrowUp") {
-        const upInterval = setInterval(() => {
-          spaceShip.current.move({ top: spaceShip.current.vel, canvasCtx });
-        }, 25);
-
-        window.addEventListener("keyup", (upKeyEvent) => {
-          if (upKeyEvent.key === e.key) {
-            clearInterval(upInterval);
-          }
-        });
-      }
-      if (e.key === "s" || e.key === "ArrowDown") {
-        const downInterval = setInterval(() => {
-          spaceShip.current.move({ bottom: spaceShip.current.vel, canvasCtx });
-        }, 25);
-
-        window.addEventListener("keyup", (upKeyEvent) => {
-          if (upKeyEvent.key === e.key) {
-            clearInterval(downInterval);
-          }
-        });
-      }
-      if (e.key === "d" || e.key === "ArrowRight") {
-        const rightInterval = setInterval(() => {
-          spaceShip.current.move({ right: spaceShip.current.vel, canvasCtx });
-        }, 25);
-
-        window.addEventListener("keyup", (upKeyEvent) => {
-          if (upKeyEvent.key === e.key) {
-            clearInterval(rightInterval);
-          }
-        });
-      }
-      if (e.key === "a" || e.key === "ArrowLeft") {
-        const letfInterval = setInterval(() => {
-          spaceShip.current.move({ left: spaceShip.current.vel, canvasCtx });
-        }, 25);
-
-        window.addEventListener("keyup", (upKeyEvent) => {
-          if (upKeyEvent.key === e.key) {
-            clearInterval(letfInterval);
-          }
-        });
-      }
-    },
-    [gameState.paused],
-  );
-
-  // ------- use effects ------- //
-  useEffect(() => {
-    if (gameState.initial === true) {
-      setPoints(0);
-
-      helper.inactiveAll(shots.current);
-      helper.inactiveAll(asteroids.current);
-
-      asteroids.current = [];
-      shots.current = [];
-    }
-
-  }, [gameState.initial]);
-
-  useEffect(() => {
-    spaceShip.current = createSpaceShip({
-      props: {
-        size: 150,
-      },
-      canvasWidth: gameScreenWidth,
-      canvasHeight: gameScreenHeight,
-      id: gameState.spaceShipId,
-    });
-  }, [gameScreenHeight, gameScreenWidth, gameState.spaceShipId]);
-
-  useEffect(() => {
-    const canvasCtx = gameScreen?.current?.getContext("2d");
-
-    const interval = setInterval(() => {
-      if (gameState.paused) return;
-      moveEverything();
-      drawEverything(canvasCtx);
-    }, CONST.defaultInterval);
-
-    return () => {
-      clearInterval(interval);
-    };
-  }, [drawEverything, gameState.paused, moveEverything]);
-
-  useEffect(() => {
-    const canvasCtx = gameScreen?.current?.getContext("2d");
-    const handleDown = (e) => handleKeyDown(e);
-    const handlePress = (e) => handleKeyPress(e, canvasCtx);
-
-    window.addEventListener("keydown", handleDown);
-    window.addEventListener("keypress", handlePress);
-
-    return () => {
-      window.removeEventListener("keydown", handleDown);
-      window.removeEventListener("keypress", handlePress);
-    };
-  }, [gameScreen, handleKeyPress, handleKeyDown]);
-
-  useEffect(() => {
-    const _asteroids = helper.filterActives(asteroids.current);
-    const canvasCtx = gameScreen?.current?.getContext("2d");
-    const idsAsteroids = levelData?.typesAsteroids || [1];
-
-    const interval = setInterval(() => {
-      if (gameState.paused) return;
-      const asteroid = createAsteroid({
-        canvasCtx,
-        gameScreenWidth,
-        gameScreenHeight,
-        idsAsteroids,
-      });
-
-      _asteroids.push(asteroid);
-
-      asteroids.current = _asteroids;
-    }, levelData.respawnAsteroid);
-
-    return () => {
-      clearInterval(interval);
-    };
-  }, [
-    gameScreen,
-    gameScreenWidth,
-    gameScreenHeight,
-    gameState.paused,
-    levelData.respawnAsteroid,
-  ]);
+  useLevelUpdater({ gameState, gameDispatch, points, setLevelUpAnimation });
 
   useEffect(() => {
     damaged.current = true;
@@ -274,78 +79,28 @@ export const MainScene = () => {
     }, 1000);
 
     return () => clearTimeout(removeDamageBorder);
-  }, [gameState.health]);
+  }, [health]);
 
-  useEffect(() => {
-    let counter = 0;
-    const interval = setInterval(() => {
-      if(gameState.paused) return;
-      counter += 100;
-      const percent = (counter / spaceShip.current.cooldown) * 100;
-
-      if (percent >= 100) {
-        if (munitionCount < spaceShip.current.initialMunition) {
-          if (munitionCount === 0) setMunitionCount(spaceShip.current.initialMunition);
-          else setMunitionCount((prev) => (prev += 1));
-        }
-
-        setMunitionReload(100);
-        return clearInterval(interval);
-      }
-
-      setMunitionReload(percent.toFixed(0));
-    }, 100);
-
-    return () => clearInterval(interval);
-  }, [gameState.paused, munitionCount]);
-
-  useEffect(() => {
-    let level = 0;
-
-    if (points > 50) {
-      level++;
-    }
-
-    if (points > 120) {
-      level++;
-    }
-
-    if (points > 190) {
-      level++;
-    }
-
-    if (points > 280) {
-      level++;
-    }
-
-    if (points > 400) {
-      level++;
-    }
-
-    if (level !== gameState.level && !gameState.paused) {
-      gameDispatch({ type: types.LEVEL_UP });
-      gameDispatch({ type: types.PAUSE });
-      setLevelUpAnimation(true);
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [points]);
 
   useEffect(() => {
     if (!levelUpAnimation) return;
     const timeOut = setTimeout(() => {
       setLevelUpAnimation(false);
       gameDispatch({ type: types.PAUSE });
-    }, 2500);
+    }, 1500);
 
     return () => clearTimeout(timeOut);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [levelUpAnimation])
+  }, [levelUpAnimation]);
+
+  const renderPauseInfo = gameState.paused && !paused && !levelUpAnimation && (
+    <PauseScreen goMenuFunc={() => gameDispatch({ type: "RESTART" })} />
+  );
 
   return (
     <div id="game-main-scene-screen" style={{ overflow: "hidden" }}>
       <div className={`${style["points-counter"]}`}>SCORE: {points}</div>
       <div className={`${style["life-counter"]}`}>
-        HEALTH: {gameState.health}
+        HEALTH: {health}
       </div>
       <div className={`${style["munition-info"]}`}>
         <div className={`${style["munition-reload"]}`}>{munitionReload}%</div>
@@ -367,24 +122,12 @@ export const MainScene = () => {
             boxShadow: damaged.current
               ? "inset 0 0 5vw 5vh #ff8888"
               : "inset 0 0 5vw 5vh #000",
-            fontSize: gameState.paused ? "5rem" : 0,
-            background: gameState.paused ? "#000000a6" : "none",
+            fontSize: paused ? "5rem" : 0,
+            background: paused ? "#000000a6" : "none",
           }}
         >
-          {gameState.paused && !gameState.initial && !levelUpAnimation ? (
-            <div className={`${style["pause-info"]}`}>
-              PAUSED
-              <button
-                className={`${style["menu-button"]}`}
-                onClick={() => gameDispatch({ type: "RESTART" })}
-              >
-                Menu Inicial
-              </button>
-            </div>
-          ) : undefined}
-          {levelUpAnimation ?
-            <LevelPass show={levelUpAnimation} level={gameState.level} secondsToDisplay={2000} />
-            : undefined}
+          {renderPauseInfo}
+          {levelUpAnimation && <LevelPass show={levelUpAnimation} level={level} secondsToDisplay={2000} />}
         </div>
       </div>
     </div>
