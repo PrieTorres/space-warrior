@@ -1,12 +1,10 @@
 import { useEffect } from "react";
 import { createAsteroid } from "../../../gameAssets/Objects/ManipuleAsteroid";
-import { filterActives } from "../helper/helper";
 import { LEVELS_DATA } from "../../../gameAssets/Objects/Global";
 
 export const useAsteroidCreation = ({ asteroids, gameScreen, gameScreenWidth, gameScreenHeight, gameState }) => {
   useEffect(() => {
     const levelData = LEVELS_DATA[gameState.level];
-    const _asteroids = filterActives(asteroids);
     const canvasCtx = gameScreen?.current?.getContext("2d");
     const idsAsteroids = levelData?.typesAsteroids || [1];
 
@@ -19,9 +17,7 @@ export const useAsteroidCreation = ({ asteroids, gameScreen, gameScreenWidth, ga
         idsAsteroids,
       });
 
-      _asteroids.push(asteroid);
-
-      asteroids = _asteroids;
+      asteroids.push(asteroid);
     }, levelData.respawnAsteroid);
 
     return () => {
