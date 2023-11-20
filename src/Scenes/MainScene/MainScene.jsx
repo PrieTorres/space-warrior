@@ -13,7 +13,6 @@ import * as handlerSpaceShip from "../../Components/lib/gameEssentials/handleSpa
 import style from "./MainScene.module.scss";
 import { PauseScreen } from "../../Components/PauseScreen/PauseScreen.jsx";
 
-
 export const MainScene = () => {
   const { gameState, gameDispatch } = useContext(GameContext);
   const { spaceShipId, health, level, paused } = gameState;
@@ -58,14 +57,14 @@ export const MainScene = () => {
 
   useResetInfos({ spaceShip, asteroids, shots, gameState, setPoints, gameScreenHeight, gameScreenWidth });
 
-  useInitializeHandlers({ gameScreen, handleKeyDown, handleKeyPress });
-
   useAsteroidCreation({ asteroids: asteroids.current, gameScreen, gameScreenWidth, gameScreenHeight, gameState });
 
   useMoveAsteroidsAndShots({
     asteroids: asteroids.current, spaceShip: spaceShip.current, shots: shots.current,
     gameState, setPoints, gameScreen, gameScreenWidth, gameScreenHeight, gameDispatch, points
   });
+
+  useInitializeHandlers({ gameScreen, handleKeyDown, handleKeyPress });
 
   useMunitionCooldown({ gameState, spaceShip: spaceShip.current, munitionCount, setMunitionCount, setMunitionReload });
 
@@ -90,11 +89,7 @@ export const MainScene = () => {
     }, 1500);
 
     return () => clearTimeout(timeOut);
-  }, [levelUpAnimation]);
-
-  const renderPauseInfo = gameState.paused && !paused && !levelUpAnimation && (
-    <PauseScreen goMenuFunc={() => gameDispatch({ type: "RESTART" })} />
-  );
+  }, [gameDispatch, levelUpAnimation]);
 
   return (
     <div id="game-main-scene-screen" style={{ overflow: "hidden" }}>
@@ -126,7 +121,7 @@ export const MainScene = () => {
             background: paused ? "#000000a6" : "none",
           }}
         >
-          {renderPauseInfo}
+          {paused && !gameState.initial && !levelUpAnimation && <PauseScreen goMenuFunc={() => gameDispatch({ type: "RESTART" })} />}
           {levelUpAnimation && <LevelPass show={levelUpAnimation} level={level} secondsToDisplay={2000} />}
         </div>
       </div>

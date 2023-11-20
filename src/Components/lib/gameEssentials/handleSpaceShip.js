@@ -1,6 +1,6 @@
 import { filterActives } from "../helper/helper";
 
-export const handleSpaceShipShot = ({ spaceShip, shots, munitionCount, setShots, setMunitionCount }) => {
+export const handleSpaceShipShot = (spaceShip, shots, munitionCount, setShots, setMunitionCount) => {
   if (munitionCount > 0) {
     const shot = spaceShip.shoot();
     const updatedShots = filterActives(shots);
