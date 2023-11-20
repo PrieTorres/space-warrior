@@ -64,10 +64,12 @@ export const moveAsteroids = ({ asteroids, takeHit }) => {
     const asteroid = _asteroids[indexAster];
 
     if (asteroid?.move) {
-      asteroid.move(undefined, undefined, undefined, () => {
-        asteroid.active = false;
-
-        takeHit(asteroid);
+      asteroid.move({
+        finalCb: () => {
+          asteroid.active = false;
+  
+          takeHit(asteroid);
+        }
       });
     }
   }

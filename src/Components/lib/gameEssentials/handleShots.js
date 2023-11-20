@@ -9,16 +9,18 @@ export const moveShots = ({ asteroids, shots, setPoints }) => {
     const shot = _shots[indexShot];
 
     if (shot?.move) {
-      shot.move(undefined, undefined, () => {
-        const { collapsed, asteroidsToAdd } = calcShotOnAsteroidRange(shot, _asteroids);
+      shot.move({
+        cb: () => {
+          const { collapsed, asteroidsToAdd } = calcShotOnAsteroidRange(shot, _asteroids);
 
-        if (collapsed) {
-          shot.active = false;
-          setPoints(prev => prev + 1);
-        }
+          if (collapsed) {
+            shot.active = false;
+            setPoints(prev => prev + 1);
+          }
 
-        if (asteroidsToAdd?.length) {
-          asteroids.push(...asteroidsToAdd);
+          if (asteroidsToAdd?.length) {
+            asteroids.push(...asteroidsToAdd);
+          }
         }
       });
     }

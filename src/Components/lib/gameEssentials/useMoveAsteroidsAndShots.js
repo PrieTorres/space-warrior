@@ -25,7 +25,7 @@ const moveEverything = ({ asteroids, shots, takeHit, setPoints }) => {
   moveShots({ asteroids, shots, setPoints });
 };
 
-const takeHit = (asteroid, points, gameState, gameDispatch) => {
+const takeHit = ({ asteroid, points, gameState, gameDispatch }) => {
   if ((gameState.health - asteroid.health) > 0) {
     gameDispatch({ type: types.LOSE_LIFE, payload: asteroid.health });
   } else {
@@ -39,7 +39,7 @@ export const useMoveAsteroidsAndShots = ({ asteroids, shots, gameState, setPoint
 
     const interval = setInterval(() => {
       if (gameState.paused) return;
-      moveEverything({asteroids, shots, takeHit: () => takeHit({asteroids, points, gameState, gameDispatch}), setPoints});
+      moveEverything({ asteroids, shots, takeHit: (asteroid) => takeHit({ asteroid, points, gameState, gameDispatch }), setPoints });
       drawEverything({ canvasCtx, gameState, gameScreenWidth, gameScreenHeight, spaceShip, asteroids, shots });
     }, CONST.defaultInterval);
 

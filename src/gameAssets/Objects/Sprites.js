@@ -27,12 +27,10 @@ export class Sprite {
       );
   }
 
-  move(
-    finalPositionX = this.finalCordinates.x,
-    finalPositionY = this.finalCordinates.y,
-    cb,
-    finalCb,
-  ) {
+  move({ finalPositionX, finalPositionY, cb, finalCb }) {
+    if (!finalPositionX) finalPositionX = this.finalCordinates.x;
+    if (!finalPositionY) finalPositionY = this.finalCordinates.y;
+
     const goingDown = this.initialPosition.y < finalPositionY;
     const goingRigth = this.initialPosition.x < finalPositionX;
     const xDistanceMove = this.vel;
@@ -96,7 +94,10 @@ export class AsteroidSprite extends Sprite {
     );
   }
 
-  move(finalPositionX = this.finalCordinates.x, finalPositionY = this.finalCordinates.y, cb, finalCb) {
+  move({ finalPositionX, finalPositionY, cb, finalCb }) {
+    if (!finalPositionX) finalPositionX = this.finalCordinates.x;
+    if (!finalPositionY) finalPositionY = this.finalCordinates.y;
+
     switch (this.type) {
       case "ZIGZAG":
         if (this.onEndSide === "right" || this.finalCordinates.x === undefined) this.finalCordinates.x = 0;
@@ -104,10 +105,10 @@ export class AsteroidSprite extends Sprite {
 
         this.onEndSide = undefined;
 
-        super.move(this.finalCordinates.x, finalPositionY, cb, finalCb);
+        super.move({ finalPositionX: this.finalCordinates.x, finalPositionY, cb, finalCb });
         break;
       default:
-        super.move(finalPositionX, finalPositionY, cb, finalCb);
+        super.move({ finalPositionX, finalPositionY, cb, finalCb });
         break;
     }
   }
@@ -267,7 +268,7 @@ export class SpaceShipSprite extends Sprite {
     const shots = ShotTypes[type || this.shotType].getSprite(this);
 
     shots.forEach((shot) => {
-      shot.move();
+      shot.move({});
     });
 
     return shots
