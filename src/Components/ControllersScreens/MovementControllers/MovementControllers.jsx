@@ -1,10 +1,10 @@
 import { KeyCard } from "../../keyCard/KeyCard"
 
-export const MovementControllers = () => {
+export const MovementControllers = ({style}) => {
 
   return(
     <div>
-      <div>
+      <div style={{}}>
         <KeyCard label={"w"}/>
         <KeyCard label={"s"}/>
         <KeyCard label={"a"}/>
