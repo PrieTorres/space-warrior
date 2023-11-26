@@ -1,0 +1,23 @@
+$cardShape: polygon(
+  14% 0,
+  14% 14%,
+  0 14%,
+  86% 0,
+  86% 14%,
+  100% 14%,
+  100% 86%,
+  86% 86%,
+  86% 100%,
+  14% 86%,
+  0% 86%,
+  14% 100%
+);
+
+.card {
+  width: 4rem;
+  height: 4rem;
+  text-align: center;
+  -webkit-clip-path: cardShape;
+  clip-path: $cardShape;
+  border: 3px solid #000;
+}
