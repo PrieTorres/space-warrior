@@ -35,20 +35,25 @@ export class Sprite {
     const goingRigth = this.initialPosition.x < finalPositionX;
     const xDistanceMove = this.vel;
 
-    if (goingDown && finalPositionY <= this.position.y) {
-      this.active = false;
-      if (finalCb) finalCb();
-    } else if (!goingDown && finalPositionY >= this.position.y) {
+    if (
+      (goingDown && finalPositionY <= this.position.y) ||
+      (!goingDown && finalPositionY >= this.position.y)
+    ) {
       this.active = false;
       if (finalCb) finalCb();
     }
 
     if (goingDown && finalPositionY > this.position.y) {
       this.position.y += this.vel;
-    } else if (!goingDown && finalPositionY < this.position.y)
+    } else if (!goingDown && finalPositionY < this.position.y) {
       this.position.y -= this.vel;
+    }
 
-    if (goingRigth && finalPositionX !== undefined && finalPositionX > this.position.x) {
+    if (
+      goingRigth &&
+      finalPositionX !== undefined &&
+      finalPositionX > this.position.x
+    ) {
       this.position.x += xDistanceMove;
       if (this.position.x + xDistanceMove === finalPositionX) this.onEndSide = "right";
     } else if (

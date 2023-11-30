@@ -3,13 +3,16 @@
   height: 100%;
   position: absolute;
   display: flex;
-  z-index: 10;
-  background-color: #000000cb;
+  z-index: 100;
   justify-content: center;
   align-items: center;
 }
 
 .box{
-  padding: 20px;
+  padding: 100px 50px;
   background-color: #cdcdcdcb;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 40px;
 }

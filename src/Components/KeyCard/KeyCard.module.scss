@@ -1,13 +1,11 @@
-$cardShape: polygon(
-  16.5% 0%,
-  83.5% 0%,
-  100% 15%,
-  100% 85%,
-  83.5% 100%,
-  16.5% 100%,
-  0% 85%,
-  0% 15%
-);
+$cardShape: polygon(16.5% 0%,
+    83.5% 0%,
+    100% 15%,
+    100% 85%,
+    83.5% 100%,
+    16.5% 100%,
+    0% 85%,
+    0% 15%);
 
 $box-pixel: (
   1px 1px #000,
@@ -54,13 +52,30 @@ $box-pixel: (
 );
 
 .card {
+  -webkit-user-select: none;
+  -webkit-touch-callout: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  font-size: 2rem;
   width: 40px;
   text-align: center;
   margin: 5px;
+  transition: 0.1s ease;
   position: relative;
   box-shadow: 1px 1px #000, -1px 1px #000, -1px -1px #000, 1px -1px #000, 2px 0px #000, -2px 0px #000, 1px -2px #000, 2px 2px 0px 1px #000;
   // -webkit-clip-path: $cardShape;
   // clip-path: $cardShape;
+}
+
+.card:hover {
+  background-color: #0000007b;
+  box-shadow: inset 1px #000, inset -1px 1px #000, inset -1px -1px #000, inset 1px -1px #000, inset 2px 0px #000, inset -2px 0px #000, inset 1px -2px #000, inset 2px 2px 0px 1px #000;
+}
+
+.card-container {
+  display: inline-block;
+  text-align: center;
 }
 
 .pixel-art {

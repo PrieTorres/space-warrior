@@ -4,11 +4,12 @@ export const MovementControllers = ({ style }) => {
 
   return (
     <div>
-      <div style={{ width: 300, textAlign: "center",...style }}>
-        <div style={{ width: "100%" }}><KeyCard label={"w"} /></div>
-        <KeyCard label={"s"} />
-        <KeyCard label={"a"} />
-        <KeyCard label={"d"} />
+      <div style={{ textAlign: "center", ...style }}>
+        <div style={{ width: "100%" }}><KeyCard label={"w"} description={"moves spaceship to top"} /></div>
+        <KeyCard label={"s"} description={"moves spaceship to bottom"} />
+        <KeyCard label={"a"} description={"moves spaceship to left"} />
+        <KeyCard label={"d"} description={"moves spaceship to right"} />
+        <div>Move SpaceShip</div>
       </div>
     </div>
   )
