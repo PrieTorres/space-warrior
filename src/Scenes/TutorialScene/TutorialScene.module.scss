@@ -15,4 +15,19 @@
   align-items: center;
   justify-content: center;
   gap: 40px;
+  position: relative;
+}
+
+.close-modal-container{
+  position: absolute;
+  right: 5px;
+  top: 5px;
+  padding: 5px;
+}
+
+.close-modal{
+  font-size: 1.45rem;
+  cursor: pointer;
+  padding: 4px;
+  border: 1px solid #000;
 }

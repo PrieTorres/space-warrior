@@ -1,4 +1,4 @@
-import './global.scss';
+import './app.scss';
 import { InitialMenuScene } from './Scenes/InitialMenuScene/InitialMenuScene';
 import { useContext } from "react";
 import { GameContext } from "./contexts/GameContext";
