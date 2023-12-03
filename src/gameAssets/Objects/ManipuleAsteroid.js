@@ -2,6 +2,25 @@ import { cloneDeep } from 'lodash';
 import { AsteroidSprite } from './Sprites';
 import { asteroidsTypes } from './asteroidData/asteroidsTypes';
 
+function checkCreateMultipleAsteroids(asteroidToCreate) {
+  const extraAsteroids = [];
+
+  if (asteroidToCreate?.quant) {
+    for (let i = 1; i < asteroidToCreate.quant; i++) {
+      const newAsteroid = copyAsteroid(asteroidToCreate);
+      const distanceMainAsterX = Math.ceil(asteroidToCreate.width * i / 2);
+      const distanceMainAsterY = Math.ceil(asteroidToCreate.height * i / 2) / 2;
+
+      newAsteroid.position.x += i % 2 == 0 ? (distanceMainAsterX * -1) : distanceMainAsterX;
+      newAsteroid.position.y -= distanceMainAsterY;
+
+      extraAsteroids.push(newAsteroid)
+    }
+  }
+
+  return extraAsteroids;
+}
+
 export const createAsteroid = ({
   gameScreenWidth,
   gameScreenHeight,
@@ -9,8 +28,7 @@ export const createAsteroid = ({
 }) => {
   const randomType = Math.floor(idsAsteroids.length * Math.random());
   const asteroidData = asteroidsTypes.find(asteroid => asteroid.id === idsAsteroids[randomType]) || asteroidsTypes[0];
-
-  const Asteroid = new AsteroidSprite({
+  const dataToSprite ={
     position: {
       y: 0,
       x: Math.floor(Math.random() * (gameScreenWidth - asteroidData.size)),
@@ -21,9 +39,13 @@ export const createAsteroid = ({
     ...asteroidData,
     gameScreenWidth,
     gameScreenHeight,
-  });
+  }
 
-  return Asteroid;
+  const Asteroid = new AsteroidSprite(dataToSprite);
+
+  const otherAsteroids = checkCreateMultipleAsteroids(dataToSprite);
+
+  return [Asteroid, ...otherAsteroids];
 };
 
 export const copyAsteroid = (asteroid) => {

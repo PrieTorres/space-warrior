@@ -17,7 +17,7 @@ export const useAsteroidCreation = ({ asteroids, gameScreen, gameScreenWidth, ga
         idsAsteroids,
       });
 
-      asteroids.push(asteroid);
+      asteroids.push(...asteroid);
     }, levelData.respawnAsteroid);
 
     return () => {

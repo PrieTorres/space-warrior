@@ -52,4 +52,25 @@ export const asteroidsTypes = [
       type: "GANG",
       quant: 5
     },
+    {
+      id: 7,
+      imageSrc: `${process.env.PUBLIC_URL}/images/asteroids/asteroid-4.png`,
+      vel: 1.5,
+      damage: 1.5,
+      size: 65,
+      health: 2,
+      type: "ZIGZAGRANGE",
+      range: 100
+    },
+    {
+      id: 6,
+      imageSrc: `${process.env.PUBLIC_URL}/images/asteroids/asteroid-6.png`,
+      vel: 0.7,
+      damage: 2,
+      size: 35,
+      health: 1,
+      type: "GANGZIGZAGRANGE",
+      quant: 5,
+      range: 80
+    },
   ];

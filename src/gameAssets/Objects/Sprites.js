@@ -105,12 +105,12 @@ export class AsteroidSprite extends Sprite {
 
     switch (this.type) {
       case "ZIGZAG":
-        if (this.onEndSide === "right" || this.finalCordinates.x === undefined) this.finalCordinates.x = 0;
-        if (this.onEndSide === "left" || this.finalCordinates.x === undefined) this.finalCordinates.x = this.gameScreen.width;
+        if (this.onEndSide === "right" || this.finalCordinates.x === undefined) finalPositionX = 0;
+        if (this.onEndSide === "left" || this.finalCordinates.x === undefined) finalPositionX = this.gameScreen.width;
 
         this.onEndSide = undefined;
 
-        super.move({ finalPositionX: this.finalCordinates.x, finalPositionY, cb, finalCb });
+        super.move({ finalPositionX, finalPositionY, cb, finalCb });
         break;
       default:
         super.move({ finalPositionX, finalPositionY, cb, finalCb });

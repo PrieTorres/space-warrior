@@ -7,7 +7,7 @@ export const CONST = {
 export const LEVELS_DATA = [
   {
     respawnAsteroid: 2500,
-    typesAsteroids: [1, 2, 3]
+    typesAsteroids: [5,6]
   },
   {
     respawnAsteroid: 2000,
