@@ -1,17 +1,17 @@
 import React, { useCallback, useContext, useEffect, useRef, useState } from "react";
+import style from "./MainScene.module.scss";
 import { GameContext } from "../../contexts/GameContext";
-import { createSpaceShip } from "../../gameAssets/Objects/SpaceShip";
 import { LevelPass } from "../../Components/LevelPass/LevelPass";
-import { useAsteroidCreation } from "../../Components/lib/gameEssentials/useAsteroidCreation";
-import { useMoveAsteroidsAndShots } from "../../Components/lib/gameEssentials/useMoveAsteroidsAndShots";
-import { useMunitionCooldown } from "../../Components/lib/gameEssentials/useMunitionCooldown";
-import { useInitializeHandlers, useResetInfos } from "../../Components/lib/gameEssentials/initializers";
-import { useLevelUpdater } from "../../Components/lib/gameEssentials/useLevelUpdater";
 import { useCanvas } from "../../Components/Canvas/useCanvas";
 import * as types from "../../contexts/types.js";
 import * as handlerSpaceShip from "../../Components/lib/spaceship/handleSpaceShip";
-import style from "./MainScene.module.scss";
 import { PauseScreen } from "../../Components/PauseScreen/PauseScreen.jsx";
+import { useInitializeHandlers, useResetInfos } from "../../Components/lib/customHooks/initializers";
+import { useAsteroidCreation } from "../../Components/lib/customHooks/useAsteroidCreation";
+import { useMoveAsteroidsAndShots } from "../../Components/lib/customHooks/useMoveAsteroidsAndShots";
+import { useMunitionCooldown } from "../../Components/lib/customHooks/useMunitionCooldown";
+import { useLevelUpdater } from "../../Components/lib/customHooks/useLevelUpdater";
+import { createSpaceShip } from "../../gameAssets/functional/Sprites/spaceship/createSpaceShip";
 
 export const MainScene = () => {
   const { gameState, gameDispatch } = useContext(GameContext);
@@ -55,18 +55,13 @@ export const MainScene = () => {
   }, [paused]);
 
   useResetInfos({ spaceShip, asteroids, shots, gameState, setPoints, gameScreenHeight, gameScreenWidth });
-
   useAsteroidCreation({ asteroids: asteroids.current, gameScreen, gameScreenWidth, gameScreenHeight, gameState });
-
   useMoveAsteroidsAndShots({
     asteroids: asteroids.current, spaceShip: spaceShip.current, shots: shots.current,
     gameState, setPoints, gameScreen, gameScreenWidth, gameScreenHeight, gameDispatch, points
   });
-
   useInitializeHandlers({ gameScreen, handleKeyDown, handleKeyPress });
-
   useMunitionCooldown({ gameState, spaceShip: spaceShip.current, munitionCount, setMunitionCount, setMunitionReload });
-
   useLevelUpdater({ gameState, gameDispatch, points, setLevelUpAnimation });
 
   useEffect(() => {
