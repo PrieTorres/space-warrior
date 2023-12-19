@@ -1,6 +1,6 @@
-import { cloneDeep } from 'lodash';
-import { AsteroidSprite } from './Sprites';
-import { asteroidsTypes } from './asteroidData/asteroidsTypes';
+import { cloneDeep } from "lodash";
+import { AsteroidSprite } from "./asteroidSprite";
+import { asteroidsTypes } from "./asteroidsTypes";
 
 function checkCreateMultipleAsteroids(asteroidToCreate) {
   const extraAsteroids = [];
@@ -11,7 +11,7 @@ function checkCreateMultipleAsteroids(asteroidToCreate) {
       const distanceMainAsterX = Math.ceil(asteroidToCreate.width * i / 2);
       const distanceMainAsterY = Math.ceil(asteroidToCreate.height * i / 2) / 2;
 
-      newAsteroid.position.x += i % 2 == 0 ? (distanceMainAsterX * -1) : distanceMainAsterX;
+      newAsteroid.position.x += i % 2 === 0 ? (distanceMainAsterX * -1) : distanceMainAsterX;
       newAsteroid.position.y -= distanceMainAsterY;
 
       extraAsteroids.push(newAsteroid)
@@ -53,4 +53,3 @@ export const copyAsteroid = (asteroid) => {
 
   return Asteroid;
 };
-

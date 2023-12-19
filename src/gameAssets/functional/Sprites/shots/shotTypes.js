@@ -1,9 +1,9 @@
-import { Shot } from "./Sprites";
+import { Shot } from "../Sprites";
 
 // !TODO: formatos do shot na sprite
 // !TODO: mensagem de erro para retorno inválidos (deve sempre retornar um array)
 
-export const ShotTypes = {
+export const shotTypes = {
   default: {
     getSprite: (spaceshipData) => {
       return [

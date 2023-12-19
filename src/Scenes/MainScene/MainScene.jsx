@@ -9,7 +9,7 @@ import { useInitializeHandlers, useResetInfos } from "../../Components/lib/gameE
 import { useLevelUpdater } from "../../Components/lib/gameEssentials/useLevelUpdater";
 import { useCanvas } from "../../Components/Canvas/useCanvas";
 import * as types from "../../contexts/types.js";
-import * as handlerSpaceShip from "../../Components/lib/gameEssentials/handleSpaceShip";
+import * as handlerSpaceShip from "../../Components/lib/spaceship/handleSpaceShip";
 import style from "./MainScene.module.scss";
 import { PauseScreen } from "../../Components/PauseScreen/PauseScreen.jsx";
 
@@ -17,18 +17,17 @@ export const MainScene = () => {
   const { gameState, gameDispatch } = useContext(GameContext);
   const { spaceShipId, health, level, paused } = gameState;
 
-  const gameScreenHeight = window.innerHeight;
-  const gameScreenWidth = window.innerWidth;
-
   const [points, setPoints] = useState(() => gameState.points);
   const [munitionReload, setMunitionReload] = useState(() => 100);
   const [levelUpAnimation, setLevelUpAnimation] = useState(() => false);
+
+  const gameScreenHeight = window.innerHeight;
+  const gameScreenWidth = window.innerWidth;
 
   const shots = useRef([]);
   const asteroids = useRef([]);
   const gameScreen = useRef(null);
   const damaged = useRef(false);
-
   const spaceShip = useRef(
     createSpaceShip({
       canvasWidth: gameScreenWidth,
@@ -37,22 +36,22 @@ export const MainScene = () => {
     }),
     [spaceShipId],
   );
+
   const [munitionCount, setMunitionCount] = useState(() => spaceShip.current.initialMunition);
 
   const gameCanvas = useCanvas(gameScreen, gameScreenHeight, gameScreenWidth);
-  const setShots = (updatedShots) => { shots.current = updatedShots };
 
+  const setShots = (updatedShots) => { shots.current = updatedShots };
   const handleKeyDown = useCallback((e) => {
-    handlerSpaceShip.handleKeyDown(e, gameState, spaceShip.current, gameDispatch,
+    handlerSpaceShip.handleKeyDown(
+      e, gameState, spaceShip.current, gameDispatch,
       () => handlerSpaceShip.handleSpaceShipShot(spaceShip.current, shots.current, munitionCount, setShots, setMunitionCount)
     );
-
   }, [gameDispatch, gameState, munitionCount]);
 
   const handleKeyPress = useCallback((e, canvasCtx) => {
     if (paused) return;
     handlerSpaceShip.handleKeyPress(e, canvasCtx, spaceShip.current);
-
   }, [paused]);
 
   useResetInfos({ spaceShip, asteroids, shots, gameState, setPoints, gameScreenHeight, gameScreenWidth });

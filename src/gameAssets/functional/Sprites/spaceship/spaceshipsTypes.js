@@ -1,4 +1,4 @@
-export const spaceships = [
+export const spaceshipsTypes = [
   {
     id: 0,
     name: "Nothing Special Spaceship",
