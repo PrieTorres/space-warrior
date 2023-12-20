@@ -1,5 +1,5 @@
 /* eslint-disable default-case */
-import { spaceships } from '../gameAssets/Objects/spaceshipsData/spaceships.js';
+import { spaceshipsTypes } from '../gameAssets/functional/Sprites/spaceship/spaceshipsTypes';
 import * as types from './types.js';
 
 export const gameReducer = (state, action) => {
@@ -7,9 +7,9 @@ export const gameReducer = (state, action) => {
     case types.CHANGE_SPACESHIP: {
       let spaceShipId = action.payload;
 
-      if (spaceShipId > state.spaceShipId && !spaceships[spaceShipId]) {
+      if (spaceShipId > state.spaceShipId && !spaceshipsTypes[spaceShipId]) {
         spaceShipId = 0
-      } else if (!spaceships[spaceShipId]) spaceShipId = spaceships.length - 1
+      } else if (!spaceshipsTypes[spaceShipId]) spaceShipId = spaceshipsTypes.length - 1
 
       return { ...state, spaceShipId };
     }

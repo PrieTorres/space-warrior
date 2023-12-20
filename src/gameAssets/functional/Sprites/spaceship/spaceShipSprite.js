@@ -1,4 +1,4 @@
-import { ShotTypes } from "../shots/shotTypes";
+import { shotTypes } from "../shots/shotTypes";
 import { Sprite } from "../mainSprite";
 
 export class SpaceShipSprite extends Sprite {
@@ -54,7 +54,7 @@ export class SpaceShipSprite extends Sprite {
   }
 
   shoot(type) {
-    const shots = ShotTypes[type || this.shotType].getSprite(this);
+    const shots = shotTypes[type || this.shotType].getSprite(this);
 
     shots.forEach((shot) => {
       shot.move({});

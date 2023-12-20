@@ -1,5 +1,5 @@
-import { spaceships } from "./spaceshipsData/spaceships";
-import { SpaceShipSprite } from "./Sprites";
+import { spaceshipsTypes } from "../spaceship/spaceshipsTypes";
+import { SpaceShipSprite } from "../spaceship/spaceShipSprite";
 
 export const createSpaceShip = ({
   props = {},
@@ -7,7 +7,7 @@ export const createSpaceShip = ({
   canvasHeight = 1000,
   id = 0,
 }) => {
-  const spaceShipType = spaceships[id];
+  const spaceShipType = spaceshipsTypes[id];
   const spaceShip = new SpaceShipSprite({
     ...spaceShipType,
     position: {

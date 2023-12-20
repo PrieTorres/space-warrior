@@ -1,5 +1,5 @@
 import * as helper from "../helper/helper";
-import { calcShotOnAsteroidRange } from "./handleAsteroids";
+import { calcShotOnAsteroidRange } from "../asteroids/handleAsteroids";
 
 export const moveShots = ({ asteroids, shots, setPoints }) => {
   const _asteroids = helper.filterActives(asteroids);

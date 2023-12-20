@@ -1,4 +1,4 @@
-import { copyAsteroid } from "../../../gameAssets/Objects/ManipuleAsteroid";
+import { copyAsteroid } from "../../../gameAssets/functional/Sprites/asteroids/createAsteroids";
 import * as helper from "../helper/helper";
 import { cloneDeep } from 'lodash';
 

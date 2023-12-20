@@ -11,7 +11,7 @@ export const useMunitionCooldown = ({ gameState, spaceShip, munitionCount, setMu
       if (percent >= 100) {
         if (munitionCount < spaceShip.initialMunition) {
           if (munitionCount === 0) setMunitionCount(spaceShip.initialMunition);
-          else setMunitionCount((prev) => (prev += 1));
+          else setMunitionCount((prev) => prev + 1);
         }
 
         setMunitionReload(100);

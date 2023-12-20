@@ -8,7 +8,7 @@ export const handleSpaceShipShot = (spaceShip, shots, munitionCount, setShots, s
     updatedShots.push(...shot);
     setShots(updatedShots);
 
-    setMunitionCount((prev) => (prev -= 1));
+    setMunitionCount((prev) => prev - 1);
   }
 }
 

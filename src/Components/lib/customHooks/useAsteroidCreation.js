@@ -1,6 +1,6 @@
 import { useEffect } from "react";
-import { createAsteroid } from "../../../gameAssets/Objects/ManipuleAsteroid";
-import { LEVELS_DATA } from "../../../gameAssets/Objects/Global";
+import { createAsteroid } from "../../../gameAssets/functional/Sprites/asteroids/createAsteroids";
+import { LEVELS_DATA } from "../../../gameAssets/functional/Global";
 
 export const useAsteroidCreation = ({ asteroids, gameScreen, gameScreenWidth, gameScreenHeight, gameState }) => {
   useEffect(() => {

@@ -1,7 +1,7 @@
 import { useEffect } from "react";
-import { CONST } from "../../../gameAssets/Objects/Global";
-import { drawAsteroids, moveAsteroids } from "./handleAsteroids";
-import { drawShots, moveShots } from "./handleShots";
+import { CONST } from "../../../gameAssets/functional/Global";
+import { drawAsteroids, moveAsteroids } from "../asteroids/handleAsteroids";
+import { drawShots, moveShots } from "../shots/handleShots";
 import * as types from "../../../contexts/types";
 
 const fillCanvas = (c, gameScreenWidth, gameScreenHeight) => {
