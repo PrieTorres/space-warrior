@@ -28,16 +28,25 @@ export const MainScene = () => {
   const asteroids = useRef([]);
   const gameScreen = useRef(null);
   const damaged = useRef(false);
-  const spaceShip = useRef(
+  const [spaceShip, setSpaceShip] = useState(
     createSpaceShip({
       canvasWidth: gameScreenWidth,
       canvasHeight: gameScreenHeight,
       id: spaceShipId,
-    }),
-    [spaceShipId],
+    })
   );
 
-  const [munitionCount, setMunitionCount] = useState(() => spaceShip.current.initialMunition);
+  useEffect(() => {
+    setSpaceShip(
+      createSpaceShip({
+        canvasWidth: gameScreenWidth,
+        canvasHeight: gameScreenHeight,
+        id: spaceShipId,
+      })
+    );
+  }, [spaceShipId])
+
+  const [munitionCount, setMunitionCount] = useState(() => spaceShip.initialMunition);
 
   const gameCanvas = useCanvas(gameScreen, gameScreenHeight, gameScreenWidth);
 
@@ -45,30 +54,30 @@ export const MainScene = () => {
 
   useEffect(() => {
     canvasContext.current = gameScreen.current?.getContext("2d");
-  }, [gameScreen.current])
+  }, [gameScreenHeight, gameScreenWidth])
 
   const setShots = (updatedShots) => { shots.current = updatedShots };
   const handleKeyDown = useCallback((e) => {
     handlerSpaceShip.handleKeyDown(
-      e, gameState, spaceShip.current, gameDispatch,
-      () => handlerSpaceShip.handleSpaceShipShot(spaceShip.current, shots.current, munitionCount, setShots, setMunitionCount)
+      e, gameState, spaceShip, gameDispatch,
+      () => handlerSpaceShip.handleSpaceShipShot(spaceShip, shots.current, munitionCount, setShots, setMunitionCount)
     );
   }, [gameDispatch, gameState, munitionCount]);
 
   const handleKeyPress = useCallback((e, canvasCtx) => {
     if (paused) return;
-    handlerSpaceShip.handleKeyPress(e, canvasCtx, spaceShip.current);
+    handlerSpaceShip.handleKeyPress(e, canvasCtx, spaceShip);
   }, [paused]);
 
   useResetInfos({ spaceShip, asteroids, shots, gameState, setPoints, gameScreenHeight, gameScreenWidth });
   useAsteroidCreation({ asteroids: asteroids.current, gameScreen, gameScreenWidth, gameScreenHeight, gameState });
   useMoveAsteroidsAndShots({
-    asteroids: asteroids.current, spaceShip: spaceShip.current, shots: shots.current,
+    asteroids: asteroids.current, spaceShip: spaceShip, shots: shots.current,
     gameState, setPoints, canvasCtx: canvasContext.current, gameScreenWidth, gameScreenHeight, gameDispatch, points
   });
 
   useInitializeHandlers({ gameScreen, handleKeyDown, handleKeyPress });
-  useMunitionCooldown({ gameState, spaceShip: spaceShip.current, munitionCount, setMunitionCount, setMunitionReload });
+  useMunitionCooldown({ gameState, spaceShip: spaceShip, munitionCount, setMunitionCount, setMunitionReload });
   useLevelUpdater({ gameState, gameDispatch, points, setLevelUpAnimation });
 
   useEffect(() => {
