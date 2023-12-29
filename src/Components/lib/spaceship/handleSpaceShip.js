@@ -28,7 +28,7 @@ export const handleKeyDown = (e, gameState, spaceShip, gameDispatch, shotFunctio
 export const handleKeyPress = (e, canvasCtx, spaceShip) => {
   if (e.key === "w" || e.key === "ArrowUp") {
     const upInterval = setInterval(() => {
-      spaceShip.move({ top: spaceShip.vel, canvasCtx });
+      spaceShip.move({ top: spaceShip.vel });
     }, 25);
 
     window.addEventListener("keyup", (upKeyEvent) => {
@@ -39,7 +39,7 @@ export const handleKeyPress = (e, canvasCtx, spaceShip) => {
   }
   if (e.key === "s" || e.key === "ArrowDown") {
     const downInterval = setInterval(() => {
-      spaceShip.move({ bottom: spaceShip.vel, canvasCtx });
+      spaceShip.move({ bottom: spaceShip.vel });
     }, 25);
 
     window.addEventListener("keyup", (upKeyEvent) => {
@@ -50,7 +50,7 @@ export const handleKeyPress = (e, canvasCtx, spaceShip) => {
   }
   if (e.key === "d" || e.key === "ArrowRight") {
     const rightInterval = setInterval(() => {
-      spaceShip.move({ right: spaceShip.vel, canvasCtx });
+      spaceShip.move({ right: spaceShip.vel });
     }, 25);
 
     window.addEventListener("keyup", (upKeyEvent) => {
@@ -61,7 +61,7 @@ export const handleKeyPress = (e, canvasCtx, spaceShip) => {
   }
   if (e.key === "a" || e.key === "ArrowLeft") {
     const letfInterval = setInterval(() => {
-      spaceShip.move({ left: spaceShip.vel, canvasCtx });
+      spaceShip.move({ left: spaceShip.vel });
     }, 25);
 
     window.addEventListener("keyup", (upKeyEvent) => {

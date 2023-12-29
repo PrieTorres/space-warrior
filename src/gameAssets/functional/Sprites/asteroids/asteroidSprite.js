@@ -16,18 +16,6 @@ export class AsteroidSprite extends Sprite {
       width: props.gameScreenWidth,
       height: props.gameScreenHeight,
     };
-    this.image.onload = () => {
-      this.isLoaded = true;
-    };
-  }
-
-  clearCanvas(c) {
-    c.clearRect(
-      this.position.x,
-      this.position.y - this.vel,
-      this.width,
-      this.height,
-    );
   }
 
   move({ finalPositionX, finalPositionY, cb, finalCb }) {
@@ -47,16 +35,5 @@ export class AsteroidSprite extends Sprite {
         super.move({ finalPositionX, finalPositionY, cb, finalCb });
         break;
     }
-  }
-
-  draw(c) {
-    if (this.isLoaded)
-      c.drawImage(
-        this.image,
-        this.position.x - this.width / 2,
-        this.position.y - this.height / 2,
-        this.width,
-        this.height,
-      );
   }
 };

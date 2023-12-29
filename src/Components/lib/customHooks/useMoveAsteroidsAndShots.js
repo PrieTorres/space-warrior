@@ -33,10 +33,8 @@ const takeHit = ({ asteroid, points, gameState, gameDispatch }) => {
   }
 };
 
-export const useMoveAsteroidsAndShots = ({ asteroids, shots, gameState, setPoints, gameScreen, gameScreenWidth, gameScreenHeight, spaceShip, points, gameDispatch }) => {
+export const useMoveAsteroidsAndShots = ({ asteroids, shots, gameState, setPoints, canvasCtx, gameScreenWidth, gameScreenHeight, spaceShip, points, gameDispatch }) => {
   useEffect(() => {
-    const canvasCtx = gameScreen?.current?.getContext("2d");
-
     const interval = setInterval(() => {
       if (gameState.paused) return;
       moveEverything({ asteroids, shots, takeHit: (asteroid) => takeHit({ asteroid, points, gameState, gameDispatch }), setPoints });
@@ -46,5 +44,5 @@ export const useMoveAsteroidsAndShots = ({ asteroids, shots, gameState, setPoint
     return () => {
       clearInterval(interval);
     };
-  }, [asteroids, shots, gameState.paused, setPoints, gameScreen, gameState, gameScreenWidth, gameScreenHeight, spaceShip, points, gameDispatch]);
+  }, [asteroids, shots, gameState.paused, setPoints, canvasCtx, gameState, gameScreenWidth, gameScreenHeight, spaceShip, points, gameDispatch]);
 };

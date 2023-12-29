@@ -32,9 +32,10 @@ export class SpaceShipSprite extends Sprite {
     this.munition = munition;
     this.initialMunition = initialMunition;
     this.cooldown = cooldown;
+    this.isLoaded = true;
   }
 
-  move({ top = 0, bottom = 0, right = 0, left = 0, canvasCtx }) {
+  move({ top = 0, bottom = 0, right = 0, left = 0 }) {
     if (!this.active) return;
     if (
       this.position.x + right + this.width - this.width / 3 <=
@@ -47,10 +48,6 @@ export class SpaceShipSprite extends Sprite {
     if (this.position.y + bottom + this.height / 2 <= this.maxPositions.y)
       this.position.y += bottom;
     if (this.position.y - top >= 0 - this.height / 2) this.position.y -= top;
-
-    if (this.isLoaded) {
-      this.draw(canvasCtx);
-    }
   }
 
   shoot(type) {

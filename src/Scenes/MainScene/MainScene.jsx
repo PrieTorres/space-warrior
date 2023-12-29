@@ -41,6 +41,12 @@ export const MainScene = () => {
 
   const gameCanvas = useCanvas(gameScreen, gameScreenHeight, gameScreenWidth);
 
+  const canvasContext = useRef(gameScreen.current?.getContext("2d"));
+
+  useEffect(() => {
+    canvasContext.current = gameScreen.current?.getContext("2d");
+  }, [gameScreen.current])
+
   const setShots = (updatedShots) => { shots.current = updatedShots };
   const handleKeyDown = useCallback((e) => {
     handlerSpaceShip.handleKeyDown(
@@ -58,8 +64,9 @@ export const MainScene = () => {
   useAsteroidCreation({ asteroids: asteroids.current, gameScreen, gameScreenWidth, gameScreenHeight, gameState });
   useMoveAsteroidsAndShots({
     asteroids: asteroids.current, spaceShip: spaceShip.current, shots: shots.current,
-    gameState, setPoints, gameScreen, gameScreenWidth, gameScreenHeight, gameDispatch, points
+    gameState, setPoints, canvasCtx: canvasContext.current, gameScreenWidth, gameScreenHeight, gameDispatch, points
   });
+
   useInitializeHandlers({ gameScreen, handleKeyDown, handleKeyPress });
   useMunitionCooldown({ gameState, spaceShip: spaceShip.current, munitionCount, setMunitionCount, setMunitionReload });
   useLevelUpdater({ gameState, gameDispatch, points, setLevelUpAnimation });
