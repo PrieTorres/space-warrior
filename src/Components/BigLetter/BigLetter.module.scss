@@ -1,0 +1,14 @@
+.letter{
+  font-size: 5rem;
+  text-transform: uppercase;
+}
+
+.letter::after{
+  content: "";
+  display: block;
+  width: 100%;
+  height: 1rem;
+  background-color: var(--orange);
+  position: absolute;
+  bottom: 0;
+}
