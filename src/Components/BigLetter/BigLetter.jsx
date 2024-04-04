@@ -4,7 +4,7 @@ export const BigLetter = ({ letter, active }) => {
 
   return (
     <div>
-      <div className={styles.letter}>
+      <div className={`${styles.letter} ${active ? styles.active : ""}`} active={active}>
         {letter}
       </div>
     </div>

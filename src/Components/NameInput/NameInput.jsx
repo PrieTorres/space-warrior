@@ -8,6 +8,9 @@ export const NameInput = ({ limit = 10 }) => {
   useEffect(() => {
     const nameInputHandler = (e) => {
       const letter = e.key;
+      if (letter === "Backspace") {
+        return setName(`${name.substring(0, (name.length - 1))}`)
+      }
       if (name.length >= limit) return;
       if (letter.length > 1) return;
       if (!letter.match(/\w/ig)) return;
