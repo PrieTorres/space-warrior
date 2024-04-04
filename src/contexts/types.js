@@ -6,3 +6,4 @@ export const LOSE_LIFE = "LOSE_LIFE";
 export const PAUSE = "PAUSE";
 export const INITIAL = "INITIAL";
 export const ON = "ON";
+export const RANK_INPUT = "RANK_INPUT";

@@ -7,4 +7,5 @@ export const initialData = {
   fps: 60,
   paused: true,
   initial: true,
+  ranks: []
 }

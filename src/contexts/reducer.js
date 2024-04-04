@@ -18,6 +18,24 @@ export const gameReducer = (state, action) => {
       return { ...state, gameOver: true, points: action.payload };
     }
 
+    case types.RANK_INPUT: {
+      const rankData = action.payload;
+
+      const ranks = state.ranks;
+      ranks.push(rankData);
+
+      return {
+        ...state,
+        ranks,
+        points: 0,
+        health: 100,
+        level: 0,
+        gameOver: false,
+        initial: true,
+        paused: true,
+      }
+    }
+
     case types.RESTART: {
       return {
         ...state,

@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { BigLetter } from "../BigLetter/BigLetter";
 import styles from "./NameInput.module.scss";
 
-export const NameInput = ({ limit = 10 }) => {
+export const NameInput = ({ limit = 10, onChange }) => {
   const [name, setName] = useState("aaa");
 
   useEffect(() => {
@@ -22,6 +22,10 @@ export const NameInput = ({ limit = 10 }) => {
 
     return () => window.removeEventListener("keydown", nameInputHandler);
   }, [name, limit]);
+
+  useEffect(() => {
+    onChange(name)
+  }, [name, onChange]);
 
   return (
     <div className={styles.container}>
