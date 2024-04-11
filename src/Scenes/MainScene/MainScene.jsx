@@ -15,7 +15,7 @@ import { createSpaceShip } from "../../gameAssets/functional/Sprites/spaceship/c
 
 export const MainScene = () => {
   const { gameState, gameDispatch } = useContext(GameContext);
-  const { spaceShipId, health, level, paused } = gameState;
+  const { spaceShipId, health, level, paused, showRank } = gameState;
 
   const [points, setPoints] = useState(() => gameState.points);
   const [munitionReload, setMunitionReload] = useState(() => 100);

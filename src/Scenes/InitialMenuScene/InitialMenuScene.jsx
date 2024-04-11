@@ -5,18 +5,19 @@ import { GameContext } from '../../contexts/GameContext';
 import { useContext, useEffect, useState } from 'react';
 import { TutorialScene } from '../TutorialScene/TutorialScene';
 import { Ranking } from '../RankingScene/Ranking';
+import * as types from "../../contexts/types";
 
 export const InitialMenuScene = () => {
   const { gameState, gameDispatch } = useContext(GameContext);
   const [renderMenu, setRenderMenu] = useState(gameState.initial);
-  const [showRank, setShowRank] = useState(false);
+  const { showRank } = gameState
 
   const handleGoClick = () => {
     gameDispatch({ type: "ON" });
   }
 
   const handleRankClick = () => {
-    setShowRank(true);
+    gameDispatch({ type: showRank ? types.RANK_MENU_CLOSE : types.RANK_MENU_OPEN });
   }
 
   useEffect(() => {
@@ -29,25 +30,37 @@ export const InitialMenuScene = () => {
 
   return (
     <div className={`${style['container']}`}>
-      {
-        showRank ?
-          <Ranking />
-          :
-          renderMenu ?
-            <div className={`${style['menu-screen']}`} style={{ top: gameState.initial ? 0 : "-100vh" }}>
-              <h1 className={`${style['title']}`}>SPACE WARRIOR</h1>
-              <SpaceShipSelector />
-              <div style={{ width: "100%", textAlign: "center", paddingBottom: 16 }}>
-                <button className={`${style['start-button']}`} onClick={handleGoClick} >GO GO GO!</button>
-                <button className={`${style['start-button']}`} onClick={handleRankClick} >RANK</button>
-              </div>
-              <footer style={{ position: "absolute", bottom: 0 }}>
-                <div>
-                  &copy; copyrigths -- feito por Priscila T. 2023
-                </div>
-              </footer>
+      {renderMenu ?
+        <div className={`${style['menu-screen']}`} style={{ top: gameState.initial ? 0 : "-100vh" }}>
+          <h1 className={`${style['title']}`}>SPACE WARRIOR</h1>
+          {showRank ?
+            <Ranking /> :
+            <SpaceShipSelector />
+          }
+          <div style={{
+            width: "100%",
+            textAlign: "center",
+            paddingBottom: 16,
+            gap: 8,
+            display: "flex",
+            justifyContent: "center"
+          }}>
+            <button
+              className={`${style['start-button']}`}
+              onClick={handleGoClick}
+            >GO GO GO!</button>
+            <button
+              className={`${style['start-button']}`}
+              onClick={handleRankClick}
+            >{showRank ? "MENU" : "RANK"}</button>
+          </div>
+          <footer style={{ position: "absolute", bottom: 0 }}>
+            <div>
+              &copy; copyrigths -- feito por Priscila T. 2023
             </div>
-            : <TutorialScene />
+          </footer>
+        </div> :
+        <TutorialScene />
       }
       <MainScene />
     </div>

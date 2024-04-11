@@ -15,7 +15,7 @@ export const gameReducer = (state, action) => {
     }
 
     case types.GAME_OVER: {
-      return { ...state, gameOver: true, points: action.payload };
+      return { ...state, gameOver: true, points: action.payload ?? 0 };
     }
 
     case types.RANK_INPUT: {
@@ -33,6 +33,21 @@ export const gameReducer = (state, action) => {
         gameOver: false,
         initial: true,
         paused: true,
+        showRank: true,
+      }
+    }
+
+    case types.RANK_MENU_OPEN: {
+      return {
+        ...state,
+        showRank: true
+      }
+    }
+
+    case types.RANK_MENU_CLOSE: {
+      return {
+        ...state,
+        showRank: false
       }
     }
 

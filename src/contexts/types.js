@@ -7,3 +7,5 @@ export const PAUSE = "PAUSE";
 export const INITIAL = "INITIAL";
 export const ON = "ON";
 export const RANK_INPUT = "RANK_INPUT";
+export const RANK_MENU_OPEN = "RANK_MENU_OPEN";
+export const RANK_MENU_CLOSE = "RANK_MENU_CLOSE";
