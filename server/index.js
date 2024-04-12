@@ -1,0 +1,2 @@
+const dbStringConnection = `mongosh "mongodb+srv://spacewarrior.7e3zm0s.mongodb.net/" --apiVersion 1 --username priscilatorresbdepaula`
+const dbStringConnection2 = `mongodb+srv://priscilatorresbdepaula:<password>@spacewarrior.7e3zm0s.mongodb.net/`
