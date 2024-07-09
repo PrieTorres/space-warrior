@@ -60,7 +60,7 @@ export const InitialMenuScene = () => {
             </div>
           </footer>
         </div> :
-        <TutorialScene />
+        !gameState.touchScreen && <TutorialScene /> 
       }
       <MainScene />
     </div>

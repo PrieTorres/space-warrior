@@ -83,6 +83,10 @@ export const gameReducer = (state, action) => {
       return { ...state, paused: !state.paused };
     }
 
+    case types.TOUCH_MODE: {
+      return { ...state, touchScreen: true };
+    }
+
     case types.INITIAL: {
       return { ...state, initial: true, paused: true }
     }

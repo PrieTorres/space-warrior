@@ -18,6 +18,19 @@ export const useInitializeHandlers = ({ gameScreen, handleKeyDown, handleKeyPres
   }, [gameScreen, handleKeyDown, handleKeyPress]);
 };
 
+export const isTouchDevice = () => {
+  let isTouch = false;
+  if(window.matchMedia("(pointer: coarse)").matches) {
+    isTouch = true;
+  }
+
+  return isTouch;
+}
+
+export const useDetectDevice = ({}) => {
+  
+};
+
 export const useResetInfos = ({ spaceShip, gameState, asteroids, shots, setPoints, gameScreenWidth, gameScreenHeight }) => {
   useEffect(() => {
     if (gameState.initial === true) {

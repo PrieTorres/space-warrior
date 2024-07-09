@@ -6,7 +6,7 @@ import { useCanvas } from "../../Components/Canvas/useCanvas";
 import * as types from "../../contexts/types.js";
 import * as handlerSpaceShip from "../../Components/lib/spaceship/handleSpaceShip";
 import { PauseScreen } from "../../Components/PauseScreen/PauseScreen.jsx";
-import { useInitializeHandlers, useResetInfos } from "../../Components/lib/customHooks/initializers";
+import { isTouchDevice, useInitializeHandlers, useResetInfos } from "../../Components/lib/customHooks/initializers";
 import { useAsteroidCreation } from "../../Components/lib/customHooks/useAsteroidCreation";
 import { useMoveAsteroidsAndShots } from "../../Components/lib/customHooks/useMoveAsteroidsAndShots";
 import { useMunitionCooldown } from "../../Components/lib/customHooks/useMunitionCooldown";
@@ -15,7 +15,7 @@ import { createSpaceShip } from "../../gameAssets/functional/Sprites/spaceship/c
 
 export const MainScene = () => {
   const { gameState, gameDispatch } = useContext(GameContext);
-  const { spaceShipId, health, level, paused, showRank } = gameState;
+  const { spaceShipId, health, level, paused } = gameState;
 
   const [points, setPoints] = useState(() => gameState.points);
   const [munitionReload, setMunitionReload] = useState(() => 100);
@@ -37,6 +37,12 @@ export const MainScene = () => {
   );
 
   useEffect(() => {
+    const isTouchScreen = isTouchDevice();
+
+    if (isTouchScreen) {
+      gameDispatch({ type: types.TOUCH_MODE });
+    }
+
     setSpaceShip(
       createSpaceShip({
         canvasWidth: gameScreenWidth,

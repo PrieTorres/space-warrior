@@ -8,5 +8,6 @@ export const initialData = {
   paused: true,
   initial: true,
   ranks: [],
-  showRank: false
+  showRank: false,
+  touchScreen: false
 }
