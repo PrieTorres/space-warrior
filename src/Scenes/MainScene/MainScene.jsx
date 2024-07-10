@@ -12,6 +12,9 @@ import { useMoveAsteroidsAndShots } from "../../Components/lib/customHooks/useMo
 import { useMunitionCooldown } from "../../Components/lib/customHooks/useMunitionCooldown";
 import { useLevelUpdater } from "../../Components/lib/customHooks/useLevelUpdater";
 import { createSpaceShip } from "../../gameAssets/functional/Sprites/spaceship/createSpaceShip";
+import { ShotButton } from "../../Components/mobileControls/ShotButton/ShotButton.jsx";
+import { Joystick } from "react-joystick-component";
+import { PauseButton } from "../../Components/PauseButton/index.jsx";
 
 export const MainScene = () => {
   const { gameState, gameDispatch } = useContext(GameContext);
@@ -72,6 +75,19 @@ export const MainScene = () => {
 
   const handleKeyPress = useCallback((e, canvasCtx) => {
     if (paused) return;
+
+    if (e.x != undefined && e.y != undefined) {
+      const xmove = e.x * 1.5 * spaceShip.vel;
+      const ymove = e.y * 1.5 * spaceShip.vel;
+      let [top, bottom, left, right] = [ymove, ymove * -1, xmove * -1, xmove];
+
+      if (top < 0) top = 0;
+      if (bottom < 0) bottom = 0;
+      if (left < 0) left = 0;
+      if (right < 0) right = 0;
+
+      return spaceShip.move({ top, bottom, left, right });
+    }
     handlerSpaceShip.handleKeyPress(e, canvasCtx, spaceShip);
   }, [paused]);
 
@@ -112,7 +128,17 @@ export const MainScene = () => {
       <div className={`${style["points-counter"]}`}>SCORE: {points}</div>
       <div className={`${style["life-counter"]}`}>
         HEALTH: {health}
+        <PauseButton pauseFunction={() => {
+          spaceShip.active = gameState.paused; 
+          gameDispatch({ type: "PAUSE" });
+        }}/>
       </div>
+      {gameState.touchScreen &&
+        <div className={`${style["mobile-controls"]}`}>
+          <ShotButton shotFunction={() => handlerSpaceShip.handleSpaceShipShot(spaceShip, shots.current, munitionCount, setShots, setMunitionCount)} />
+          <Joystick move={(args) => handleKeyPress(args, canvasContext)} />
+        </div>
+      }
       <div className={`${style["munition-info"]}`}>
         <div className={`${style["munition-reload"]}`}>{munitionReload}%</div>
         <div className={`${style["munitions-counter"]}`}>
