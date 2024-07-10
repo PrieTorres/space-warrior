@@ -95,6 +95,23 @@ export const gameReducer = (state, action) => {
       return { ...state, initial: false, paused: false }
     }
 
+    case types.TUTORIAL_DISPLAY: {
+      return { ...state, showTutorial: true, paused:true }
+    }
+
+    case types.DISABLE_JOYSTYCK: {
+      return { ...state, touchScreen: false }
+    }
+
+    case types.CLOSE_TUTORIAL: {
+      return { ...state, showTutorial: false }
+    }
+
+    case types.CHANGE_JOYSTYCK: {
+      if (!action?.payload?.size || action?.payload?.size < 20 || action?.payload?.size > 400) return state;
+      return { ...state, joystickSize: action?.payload?.size }
+    }
+
     default: {
       console.log({ ...action });
     }

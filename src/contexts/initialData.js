@@ -1,6 +1,6 @@
 export const initialData = {
   points: 0,
-  health: 100,
+  health: 5,//100,
   level: 0,
   gameOver: false,
   spaceShipId: 0,
@@ -9,5 +9,7 @@ export const initialData = {
   initial: true,
   ranks: [],
   showRank: false,
-  touchScreen: false
+  touchScreen: false,
+  showTutorial: true,
+  joystickSize: 100
 }

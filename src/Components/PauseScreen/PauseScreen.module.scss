@@ -5,9 +5,14 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  color: #15f419;
   text-transform: uppercase;
   gap: 12px;
+  font-size: 1rem;
+  color: #15f419;
+}
+
+.title{
+  font-size: 2rem;
 }
 
 .menu-button {

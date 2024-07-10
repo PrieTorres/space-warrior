@@ -1,20 +1,24 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { MovementControllers } from "../../Components/ControllersScreens/MovementControllers/MovementControllers"
 import { OthersControls } from "../../Components/ControllersScreens/OthersControls/OthersControls";
 import style from "./TutorialScene.module.scss";
+import { GameContext } from "../../contexts/GameContext";
+import { CLOSE_TUTORIAL } from "../../contexts/types";
 
 export const TutorialScene = () => {
-  const [show, setShow] = useState(true);
+  const { gameDispatch, gameState } = useContext(GameContext);
 
-  if (!show) return;
+  if (!gameState.showTutorial) return;
   return (
     <div className={style.container}>
       <div className={style.box}>
         <div className={style["close-modal-container"]}>
-          <span
+          <button
             className={style["close-modal"]}
-            onClick={() => setShow(false)}
-          >X</span>
+            onClick={() => {
+              gameDispatch({ type: CLOSE_TUTORIAL });
+            }}
+          >X</button>
         </div>
         <MovementControllers />
         <OthersControls />

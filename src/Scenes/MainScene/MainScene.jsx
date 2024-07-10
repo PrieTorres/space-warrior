@@ -53,7 +53,11 @@ export const MainScene = () => {
         id: spaceShipId,
       })
     );
-  }, [spaceShipId])
+  }, [spaceShipId]);
+
+  useEffect(() => {
+    spaceShip.active = !gameState.paused;
+  }, [gameState.paused]);
 
   const [munitionCount, setMunitionCount] = useState(() => spaceShip.initialMunition);
 
@@ -129,14 +133,13 @@ export const MainScene = () => {
       <div className={`${style["life-counter"]}`}>
         HEALTH: {health}
         <PauseButton pauseFunction={() => {
-          spaceShip.active = gameState.paused; 
           gameDispatch({ type: "PAUSE" });
-        }}/>
+        }} />
       </div>
       {gameState.touchScreen &&
         <div className={`${style["mobile-controls"]}`}>
           <ShotButton shotFunction={() => handlerSpaceShip.handleSpaceShipShot(spaceShip, shots.current, munitionCount, setShots, setMunitionCount)} />
-          <Joystick move={(args) => handleKeyPress(args, canvasContext)} />
+          <Joystick move={(args) => handleKeyPress(args, canvasContext)} size={gameState.joystickSize} />
         </div>
       }
       <div className={`${style["munition-info"]}`}>

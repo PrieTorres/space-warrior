@@ -1,10 +1,14 @@
+export const CLOSE_TUTORIAL = "CLOSE_TUTORIAL";
 export const TOUCH_MODE = "TOUCH_MODE";
+export const DISABLE_JOYSTYCK = "DISABLE_JOYSTYCK";
+export const CHANGE_JOYSTYCK = "CHANGE_JOYSTYCK";
 export const GAME_OVER = "GAME_OVER";
 export const CHANGE_SPACESHIP = "CHANGE_SPACESHIP";
 export const LEVEL_UP = "LEVEL_UP";
 export const RESTART = "RESTART";
 export const LOSE_LIFE = "LOSE_LIFE";
 export const PAUSE = "PAUSE";
+export const TUTORIAL_DISPLAY = "TUTORIAL_DISPLAY";
 export const INITIAL = "INITIAL";
 export const ON = "ON";
 export const RANK_INPUT = "RANK_INPUT";

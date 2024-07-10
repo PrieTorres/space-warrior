@@ -1,27 +1,27 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { BigLetter } from "../BigLetter/BigLetter";
 import styles from "./NameInput.module.scss";
 
 export const NameInput = ({ limit = 10, onChange }) => {
   const [name, setName] = useState("aaa");
 
-  useEffect(() => {
-    const nameInputHandler = (e) => {
-      const letter = e.key;
-      if (letter === "Backspace") {
-        return setName(`${name.substring(0, (name.length - 1))}`)
-      }
-      if (name.length >= limit) return;
-      if (letter.length > 1) return;
-      if (!letter.match(/\w/ig)) return;
-
-      setName(name + letter);
+  const nameInputHandler = useCallback((e) => {
+    const letter = e.key;
+    if (letter === "Backspace") {
+      return setName(`${name.substring(0, (name.length - 1))}`)
     }
+    if (name.length >= limit) return;
+    if (letter.length > 1) return;
+    if (!letter.match(/\w/ig)) return;
 
+    setName(name + letter);
+  }, [name, setName, limit]);
+
+  useEffect(() => {
     window.addEventListener("keydown", nameInputHandler);
 
     return () => window.removeEventListener("keydown", nameInputHandler);
-  }, [name, limit]);
+  }, [nameInputHandler]);
 
   useEffect(() => {
     onChange(name)
@@ -29,8 +29,10 @@ export const NameInput = ({ limit = 10, onChange }) => {
 
   return (
     <div className={styles.container}>
+      <input type="text" value={name} onChange={nameInputHandler} autoFocus style={{ display: "none" }} />
       {name.split("").map((letter, i) => (
         <BigLetter
+          key={`big-letter-${i}-${letter}`}
           letter={letter}
           active={i === (name.length - 1)}
         />
