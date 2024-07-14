@@ -25,7 +25,7 @@ class ranksControllers {
     });
   }
 
-  static excluirRank = (req, res) => {
+  static deleteRank = (req, res) => {
     let id = req.params.id;
     RankData.findByIdAndDelete(id, (err) => {
       if (err) {

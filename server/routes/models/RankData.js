@@ -8,6 +8,6 @@ const rankDataSchema = new mongoose.Schema (
     }
 );
 
-const RankData = mongoose.model('rank', rankDataSchema);
+const RankData = mongoose.model('Rank', rankDataSchema);
 
 export default RankData;

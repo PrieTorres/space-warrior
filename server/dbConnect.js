@@ -7,9 +7,7 @@ const user = process.env.DB_USER;
 const password = process.env.DB_PASSWORD;
 const dbStringConnection = `mongodb+srv://${user}:${password}@spacewarrior.2fypyzc.mongodb.net/`;
 
-mongoose.connect(dbStringConnection, err => {
- console.error(err);
-});
+mongoose.connect(dbStringConnection);
 
 const db = mongoose.connection;
 

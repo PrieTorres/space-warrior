@@ -2,17 +2,36 @@ import { useContext, useEffect, useState } from "react";
 import style from "./GameOver.module.scss"
 import { GameContext } from "../../contexts/GameContext";
 import { NameInput } from "../../Components/NameInput/NameInput";
+import axios from "axios";
 
 export const GameOver = () => {
   const { gameState, gameDispatch } = useContext(GameContext);
   const [rankName, setRankName] = useState("");
 
+  const saveRank = async ({ name, points }) => {
+    try{
+      const res = await axios.post(
+        `http://localhost:4000/rank`,
+        { name, points, insertedDate: new Date() }
+      );
+
+      return res;
+    } catch (err) {
+      console.error(err);
+      console.log(err);
+      return err;
+    }
+  }
+
   useEffect(() => {
     const menuFunc = (e) => {
-      if (e.key === "Enter") gameDispatch({
-        type: "RANK_INPUT",
-        payload: { rankName, points: gameState.points }
-      });
+      if (e.key === "Enter") {
+        saveRank({ name: rankName, points: gameState.points });
+        gameDispatch({
+          type: "RANK_INPUT",
+          payload: { rankName, points: gameState.points, insertedDate: new Date() }
+        });
+      }
     };
 
     window.addEventListener("keydown", menuFunc);
