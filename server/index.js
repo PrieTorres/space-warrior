@@ -1,2 +1,15 @@
-const dbStringConnection = `mongosh "mongodb+srv://spacewarrior.7e3zm0s.mongodb.net/" --apiVersion 1 --username priscilatorresbdepaula`
-const dbStringConnection2 = `mongodb+srv://priscilatorresbdepaula:<password>@spacewarrior.7e3zm0s.mongodb.net/`
+import express from 'express';
+import db from './dbConnect.js'
+import routes from './routes/index.js';
+
+db.on('error', console.log.bind(console, 'erro ao conectar no banco de dados'));
+
+db.once("open", () => {
+    console.log('conexão com o banco realizada com sucesso');
+});
+
+const app = express();
+
+routes(app);
+
+export default app;
