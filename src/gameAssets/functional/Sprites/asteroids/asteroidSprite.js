@@ -1,4 +1,4 @@
-import { Sprite } from "../mainSprite";
+import { Sprite } from "../mainSprite.js";
 
 export class AsteroidSprite extends Sprite {
   constructor(props) {

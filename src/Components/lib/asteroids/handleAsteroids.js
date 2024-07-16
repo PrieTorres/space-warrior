@@ -1,5 +1,5 @@
-import { copyAsteroid } from "../../../gameAssets/functional/Sprites/asteroids/createAsteroids";
-import * as helper from "../helper/helper";
+import { copyAsteroid } from "../../../gameAssets/functional/Sprites/asteroids/createAsteroids.js";
+import * as helper from "../helper/helper.js";
 import { cloneDeep } from 'lodash';
 
 export const mitoseTheAsteroid = (asteroid) => {

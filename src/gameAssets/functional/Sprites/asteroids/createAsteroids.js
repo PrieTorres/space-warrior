@@ -1,6 +1,6 @@
 import { cloneDeep } from "lodash";
-import { AsteroidSprite } from "./asteroidSprite";
-import { asteroidsTypes } from "./asteroidsTypes";
+import { AsteroidSprite } from "./asteroidSprite.js";
+import { asteroidsTypes } from "./asteroidsTypes.js";
 
 function checkCreateMultipleAsteroids(asteroidToCreate) {
   const extraAsteroids = [];

@@ -1,6 +1,6 @@
 import { useEffect } from "react";
-import { inactiveAll } from "../helper/helper";
-import { createSpaceShip } from "../../../gameAssets/functional/Sprites/spaceship/createSpaceShip";
+import { inactiveAll } from "../helper/helper.js";
+import { createSpaceShip } from "../../../gameAssets/functional/Sprites/spaceship/createSpaceShip.js";
 
 export const useInitializeHandlers = ({ gameScreen, handleKeyDown, handleKeyPress }) => {
   useEffect(() => {

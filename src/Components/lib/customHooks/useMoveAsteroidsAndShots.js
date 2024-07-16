@@ -1,8 +1,8 @@
 import { useEffect } from "react";
-import { CONST } from "../../../gameAssets/functional/Global";
-import { drawAsteroids, moveAsteroids } from "../asteroids/handleAsteroids";
-import { drawShots, moveShots } from "../shots/handleShots";
-import * as types from "../../../contexts/types";
+import { CONST } from "../../../gameAssets/functional/Global.js";
+import { drawAsteroids, moveAsteroids } from "../asteroids/handleAsteroids.js";
+import { drawShots, moveShots } from "../shots/handleShots.js";
+import * as types from "../../../contexts/types.js";
 
 const fillCanvas = (c, gameScreenWidth, gameScreenHeight) => {
   c.clearRect(0, 0, gameScreenWidth, gameScreenHeight);

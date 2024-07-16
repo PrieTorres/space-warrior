@@ -5,7 +5,7 @@ import { GameContext } from '../../contexts/GameContext';
 import { useContext, useEffect, useState } from 'react';
 import { TutorialScene } from '../TutorialScene/TutorialScene';
 import { Ranking } from '../RankingScene/Ranking';
-import * as types from "../../contexts/types";
+import * as types from "../../contexts/types.js";
 
 export const InitialMenuScene = () => {
   const { gameState, gameDispatch } = useContext(GameContext);

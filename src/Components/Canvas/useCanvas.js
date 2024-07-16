@@ -1,5 +1,5 @@
 import { useMemo } from "react";
-import Canvas from "./Canvas";
+import Canvas from "./Canvas.jsx";
 
 export const useCanvas = (ref, gameScreenHeight, gameScreenWidth) => {
   return useMemo(

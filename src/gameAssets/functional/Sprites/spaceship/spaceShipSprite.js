@@ -1,5 +1,5 @@
-import { shotTypes } from "../shots/shotTypes";
-import { Sprite } from "../mainSprite";
+import { shotTypes } from "../shots/shotTypes.js";
+import { Sprite } from "../mainSprite.js";
 
 export class SpaceShipSprite extends Sprite {
   constructor({

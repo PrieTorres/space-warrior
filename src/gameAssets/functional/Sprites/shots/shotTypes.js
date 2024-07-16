@@ -1,4 +1,4 @@
-import { Shot } from "../shots/shotSprite";
+import { Shot } from "../shots/shotSprite.js";
 
 // !TODO: formatos do shot na sprite
 // !TODO: mensagem de erro para retorno inválidos (deve sempre retornar um array)

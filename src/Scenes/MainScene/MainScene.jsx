@@ -11,7 +11,7 @@ import { useAsteroidCreation } from "../../Components/lib/customHooks/useAsteroi
 import { useMoveAsteroidsAndShots } from "../../Components/lib/customHooks/useMoveAsteroidsAndShots";
 import { useMunitionCooldown } from "../../Components/lib/customHooks/useMunitionCooldown";
 import { useLevelUpdater } from "../../Components/lib/customHooks/useLevelUpdater";
-import { createSpaceShip } from "../../gameAssets/functional/Sprites/spaceship/createSpaceShip";
+import { createSpaceShip } from "../../gameAssets/functional/Sprites/spaceship/createSpaceShip.js";
 import { ShotButton } from "../../Components/mobileControls/ShotButton/ShotButton.jsx";
 import { Joystick } from "react-joystick-component";
 import { PauseButton } from "../../Components/PauseButton/index.jsx";

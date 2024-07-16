@@ -1,5 +1,5 @@
 /* eslint-disable default-case */
-import { spaceshipsTypes } from '../gameAssets/functional/Sprites/spaceship/spaceshipsTypes';
+import { spaceshipsTypes } from '../gameAssets/functional/Sprites/spaceship/spaceshipsTypes.js';
 import * as types from './types.js';
 
 export const gameReducer = (state, action) => {

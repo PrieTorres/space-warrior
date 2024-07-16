@@ -1,9 +1,9 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
-import App from './App';
-import reportWebVitals from './reportWebVitals';
-import { GameProvider } from './contexts';
+import App from './App.jsx';
+import reportWebVitals from './reportWebVitals.js';
+import { GameProvider } from './contexts/index.jsx';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(

@@ -1,7 +1,7 @@
 import { useContext, useState } from "react";
 import style from "./PauseScreen.module.scss";
 import { GameContext } from "../../contexts/GameContext";
-import { TOUCH_MODE, DISABLE_JOYSTYCK, CHANGE_JOYSTYCK, PAUSE, TUTORIAL_DISPLAY } from "../../contexts/types";
+import { TOUCH_MODE, DISABLE_JOYSTYCK, CHANGE_JOYSTYCK, PAUSE, TUTORIAL_DISPLAY } from "../../contexts/types.js";
 
 export const PauseScreen = ({ goMenuFunc }) => {
   const { gameState, gameDispatch } = useContext(GameContext);

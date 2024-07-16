@@ -1,5 +1,5 @@
-import { CONST } from "../../Global";
-import { Sprite } from "../mainSprite";
+import { CONST } from "../../Global.js";
+import { Sprite } from "../mainSprite.js";
 
 export class Shot extends Sprite {
   constructor({

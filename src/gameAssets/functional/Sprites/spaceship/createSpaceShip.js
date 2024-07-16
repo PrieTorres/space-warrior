@@ -1,5 +1,5 @@
-import { spaceshipsTypes } from "../spaceship/spaceshipsTypes";
-import { SpaceShipSprite } from "../spaceship/spaceShipSprite";
+import { spaceshipsTypes } from "../spaceship/spaceshipsTypes.js";
+import { SpaceShipSprite } from "../spaceship/spaceShipSprite.js";
 
 export const createSpaceShip = ({
   props = {},

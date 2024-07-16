@@ -3,7 +3,7 @@ import { MovementControllers } from "../../Components/ControllersScreens/Movemen
 import { OthersControls } from "../../Components/ControllersScreens/OthersControls/OthersControls";
 import style from "./TutorialScene.module.scss";
 import { GameContext } from "../../contexts/GameContext";
-import { CLOSE_TUTORIAL } from "../../contexts/types";
+import { CLOSE_TUTORIAL } from "../../contexts/types.js";
 
 export const TutorialScene = () => {
   const { gameDispatch, gameState } = useContext(GameContext);

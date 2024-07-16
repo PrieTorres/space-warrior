@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import * as types from "../../../contexts/types";
+import * as types from "../../../contexts/types.js";
 
 export const useLevelUpdater = ({points, gameState, gameDispatch, setLevelUpAnimation}) => {
   useEffect(() => {

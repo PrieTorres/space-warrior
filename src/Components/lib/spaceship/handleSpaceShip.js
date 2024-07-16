@@ -1,4 +1,4 @@
-import { filterActives } from "../helper/helper";
+import { filterActives } from "../helper/helper.js";
 
 export const handleSpaceShipShot = (spaceShip, shots, munitionCount, setShots, setMunitionCount) => {
   if (munitionCount > 0) {
