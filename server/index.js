@@ -10,6 +10,9 @@ db.once("open", () => {
 
 const app = express();
 
+app.get("/", (req, res) => {
+    res.send('Hello World!');
+});
 routes(app);
 
 export default app;

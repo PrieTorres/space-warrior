@@ -1,6 +1,6 @@
 import RankData from '../models/RankData.js';
 
-class ranksControllers {
+class RanksControllers {
 
   static listRank = (req, res) => {
     RankData.find()
@@ -38,4 +38,4 @@ class ranksControllers {
 
 }
 
-export default ranksControllers;
+export default RanksControllers;

@@ -2,18 +2,21 @@ import { useContext, useEffect, useState } from "react";
 import style from "./GameOver.module.scss"
 import { GameContext } from "../../contexts/GameContext";
 import { NameInput } from "../../Components/NameInput/NameInput";
-import axios from "axios";
 
 export const GameOver = () => {
   const { gameState, gameDispatch } = useContext(GameContext);
   const [rankName, setRankName] = useState("");
 
   const saveRank = async ({ name, points }) => {
-    try{
-      const res = await axios.post(
-        `http://localhost:4000/rank`,
-        { name, points, insertedDate: new Date() }
-      );
+    try {
+      const res = await fetch(`${window.location.origin}/rank`, {
+        method: 'POST',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        },
+        body: { name, points, insertedDate: new Date() }
+      });
 
       return res;
     } catch (err) {

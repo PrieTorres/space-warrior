@@ -1,25 +1,22 @@
 import { useContext, useRef, useCallback, useEffect } from "react";
 import style from "./Ranking.module.scss"
 import { GameContext } from "../../contexts/GameContext";
-import axios from "axios";
 
 export const Ranking = () => {
   const { gameState, gameDispatch } = useContext(GameContext);
   const { ranks } = gameState;
   const container = useRef(null);
 
-  const getRanking = async () => {
+  const getRanking = new Promise(async (resolve) => {
     try {
-      const res = await axios.get(
-        `http://localhost:4000/rank`
-      );
+      const res = await fetch("/rank", { method: "GET" });
 
-      return res;
+      return resolve(res);
     } catch (err) {
       console.error(err);
-      return [];
+      return resolve([]);
     }
-  };
+  });
 
   useEffect(() => {
     getRanking.then(data => {
