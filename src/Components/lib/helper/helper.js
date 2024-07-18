@@ -1,6 +1,6 @@
-export const inactiveAll = (arrayObjs) => arrayObjs.forEach(obj => obj.active = false);
+export const inactiveAll = (arrayObjs) => arrayObjs?.forEach(obj => obj.active = false);
 
-export const filterActives = (arrayObjs) => arrayObjs.filter(obj => obj.active);
+export const filterActives = (arrayObjs) => arrayObjs?.filter(obj => obj.active);
 
 export function getBoundingCoordinates(obj) {
   const top = obj.position.y + obj.height / 2;

@@ -9,7 +9,7 @@ export const Ranking = () => {
 
   const getRanking = new Promise(async (resolve) => {
     try {
-      const res = await fetch("/rank", { method: "GET" });
+      const res = await fetch("/api/rank", { method: "GET", mode: 'cors' });
 
       return resolve(res);
     } catch (err) {

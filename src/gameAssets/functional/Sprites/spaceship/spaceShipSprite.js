@@ -53,7 +53,7 @@ export class SpaceShipSprite extends Sprite {
   shoot(type) {
     const shots = shotTypes[type || this.shotType].getSprite(this);
 
-    shots.forEach((shot) => {
+    shots?.forEach((shot) => {
       shot.move({});
     });
 

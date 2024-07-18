@@ -8,7 +8,7 @@ const __dirname = dirname(__filename);
 const dirName = __dirname.slice(0, -7)
 
 const routes = (app) => {
-
+/*
   app.route('/').get((req, res) => {
     res.status(200).sendFile(path.join(dirName, '/'))
   })
@@ -17,7 +17,14 @@ const routes = (app) => {
     express.static(dirName + '/'),
     express.static(dirName + '/node_modules/file-saver'),
     ranking
-  )
+  )*/
+
+  app.use(express.static(path.join(dirName, 'build')));
+  app.use(express.json());
+  app.use('/api', ranking);
+  app.get('*', (req, res) => {
+    res.sendFile(path.join(dirName, 'build', 'index.html'));
+  });
 
 }
 

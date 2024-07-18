@@ -9,13 +9,13 @@ export const GameOver = () => {
 
   const saveRank = async ({ name, points }) => {
     try {
-      const res = await fetch(`${window.location.origin}/rank`, {
+      const res = await fetch(`http://localhost:4000/rank`, {
         method: 'POST',
         headers: {
           'Accept': 'application/json',
           'Content-Type': 'application/json'
         },
-        body: { name, points, insertedDate: new Date() }
+        body: JSON.stringify({ name, points, insertedDate: new Date() })
       });
 
       return res;
