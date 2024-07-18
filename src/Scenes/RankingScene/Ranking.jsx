@@ -1,4 +1,4 @@
-import { useContext, useRef, useCallback, useEffect } from "react";
+import { useContext, useRef, useEffect } from "react";
 import style from "./Ranking.module.scss"
 import { GameContext } from "../../contexts/GameContext";
 
@@ -10,8 +10,8 @@ export const Ranking = () => {
   const getRanking = new Promise(async (resolve) => {
     try {
       const res = await fetch("/api/rank", { method: "GET", mode: 'cors' });
-
-      return resolve(res);
+      const data = await res.json();
+      return resolve(data);
     } catch (err) {
       console.error(err);
       return resolve([]);
@@ -20,13 +20,9 @@ export const Ranking = () => {
 
   useEffect(() => {
     getRanking.then(data => {
-      data?.forEach((rankData) => {
-        const { name, points, insertedDate } = rankData;
-
-        gameDispatch({
-          type: "RANK_INPUT",
-          payload: { rankName: name, points: points, insertedDate }
-        });
+      gameDispatch({
+        type: "LOAD_RANK",
+        payload: { rank: data }
       });
     })
   }, [gameDispatch]);

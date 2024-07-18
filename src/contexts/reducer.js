@@ -18,6 +18,21 @@ export const gameReducer = (state, action) => {
       return { ...state, gameOver: true, points: action.payload ?? 0 };
     }
 
+    case types.LOAD_RANK : {
+      const data = action.payload;
+      const rank = state.ranks ?? [];
+
+      data?.rank?.forEach((rankData) => {
+        const { name, points, insertedDate, id } = rankData;
+
+        if(!rank.map(r => r?.id)?.includes(id)){
+          rank.push({ rankName:name, points, insertedDate, id });
+        }
+      });
+
+      return { ...state, ranks: rank }
+    }
+
     case types.RANK_INPUT: {
       const rankData = action.payload;
 
