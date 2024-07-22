@@ -28,7 +28,7 @@ export const GameOver = () => {
 
   useEffect(() => {
     const menuFunc = (e) => {
-      if (e.key === "Enter") {
+      if (e.key === "Enter" && gameState.gameOver) {
         saveRank({ name: rankName, points: gameState.points });
         gameDispatch({
           type: "RANK_INPUT",
@@ -37,9 +37,9 @@ export const GameOver = () => {
       }
     };
 
-    window.addEventListener("keydown", menuFunc);
+    if (gameState.gameOver) window.addEventListener("keydown", menuFunc);
     return () => window.removeEventListener("keydown", menuFunc);
-  }, [gameDispatch, gameState.points, rankName]);
+  }, [gameDispatch, gameState.points, rankName, gameState.gameOver]);
 
   return (
     <div className={`${style['container']}`}>
