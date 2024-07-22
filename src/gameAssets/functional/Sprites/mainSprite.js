@@ -5,12 +5,14 @@ export class Sprite {
     this.width = width;
     this.height = height;
     this.finalCordinates = finalCordinates;
-    this.image = new Image(1000, 1000);
-    this.image.src = imageSrc;
-    this.imageSrc = imageSrc;
-    this.image.onload = () => {
-      this.isLoaded = true;
-    };
+    if (imageSrc) {
+      this.image = new Image(1000, 1000);
+      this.image.src = imageSrc;
+      this.imageSrc = imageSrc;
+      this.image.onload = () => {
+        this.isLoaded = true;
+      };
+    }
   }
 
   draw(c) {
