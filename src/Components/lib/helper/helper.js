@@ -5,8 +5,8 @@ export const filterActives = (arrayObjs) => arrayObjs?.filter(obj => obj.active)
 export function getBoundingCoordinates(obj) {
   const top = obj.position.y + obj.height / 2;
   const bottom = obj.position.y - obj.height / 2;
-  const left = obj.position.x - obj.width / 2;
-  const right = obj.position.x + obj.width / 2;
+  const left = obj.position.x;
+  const right = obj.position.x + obj.width;
   return { top, bottom, left, right };
 }
 
