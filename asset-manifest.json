@@ -1,17 +1,17 @@
 {
   "files": {
-    "main.css": "/space-warrior/static/css/main.e4f00190.css",
-    "main.js": "/space-warrior/static/js/main.8b9e3918.js",
+    "main.css": "/space-warrior/static/css/main.2223eb96.css",
+    "main.js": "/space-warrior/static/js/main.c316698b.js",
     "static/js/787.4de1a9be.chunk.js": "/space-warrior/static/js/787.4de1a9be.chunk.js",
     "static/media/VT323-Regular.ttf": "/space-warrior/static/media/VT323-Regular.2bc43ad8eb2f60b39f27.ttf",
     "static/media/space8.gif": "/space-warrior/static/media/space8.e1058fee45d1dddc2c48.gif",
     "index.html": "/space-warrior/index.html",
-    "main.e4f00190.css.map": "/space-warrior/static/css/main.e4f00190.css.map",
-    "main.8b9e3918.js.map": "/space-warrior/static/js/main.8b9e3918.js.map",
+    "main.2223eb96.css.map": "/space-warrior/static/css/main.2223eb96.css.map",
+    "main.c316698b.js.map": "/space-warrior/static/js/main.c316698b.js.map",
     "787.4de1a9be.chunk.js.map": "/space-warrior/static/js/787.4de1a9be.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.e4f00190.css",
-    "static/js/main.8b9e3918.js"
+    "static/css/main.2223eb96.css",
+    "static/js/main.c316698b.js"
   ]
 }
