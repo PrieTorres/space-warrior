@@ -20,20 +20,25 @@ export const GameOver = () => {
 
       return res;
     } catch (err) {
+      //TODO: logic save in localstorage on error gameDispatch({ type: {} })
       console.error(err);
       console.log(err);
       return err;
     }
   }
 
+  function goMenu() {
+    saveRank({ name: rankName, points: gameState.points });
+    gameDispatch({
+      type: "RANK_INPUT",
+      payload: { rankName, points: gameState.points, insertedDate: new Date() }
+    });
+  }
+
   useEffect(() => {
     const menuFunc = (e) => {
       if (e.key === "Enter" && gameState.gameOver) {
-        saveRank({ name: rankName, points: gameState.points });
-        gameDispatch({
-          type: "RANK_INPUT",
-          payload: { rankName, points: gameState.points, insertedDate: new Date() }
-        });
+        goMenu();
       }
     };
 
@@ -47,7 +52,19 @@ export const GameOver = () => {
         <h1 className={`${style['game-over-text']}`}>Game Over</h1>
         <p className={`${style['score-text']}`}>Your Score: {gameState.points}</p>
         <NameInput onChange={(name) => setRankName(name)} />
-        <p className={`${style['info-text']}`}>Press "Enter" to go to menu</p>
+        <div style={{ width: "100%", textAlign: "center", paddingBottom: 10 }}>
+          <p className={`${style['info-text']}`}>Press "Enter" to go to menu</p>
+        </div>
+        {
+          gameState.touchScreen ?
+            <button
+              className={`${style["menu-button"]}`}
+              onClick={goMenu}
+            >
+              Menu
+            </button>
+            : undefined
+        }
       </div>
     </div>
   )

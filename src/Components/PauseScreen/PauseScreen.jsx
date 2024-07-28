@@ -41,7 +41,7 @@ export const PauseScreen = ({ goMenuFunc }) => {
           style={{ width: 40 }}
         />
       </label>
-      <label>
+      <label style={{ gap: 10 }}>
         Joystick revert:
         <button
           className={`${style["menu-button"]}`}

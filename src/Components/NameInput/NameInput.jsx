@@ -1,9 +1,10 @@
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useState, useRef } from "react";
 import { BigLetter } from "../BigLetter/BigLetter";
 import styles from "./NameInput.module.scss";
 
 export const NameInput = ({ limit = 10, onChange }) => {
   const [name, setName] = useState("aaa");
+  const inputRef = useRef(null);
 
   const nameInputHandler = useCallback((e) => {
     const letter = e.key;
@@ -29,14 +30,16 @@ export const NameInput = ({ limit = 10, onChange }) => {
 
   return (
     <div className={styles.container}>
-      <input type="text" value={name} onChange={nameInputHandler} autoFocus style={{ display: "none" }} />
-      {name.split("").map((letter, i) => (
-        <BigLetter
-          key={`big-letter-${i}-${letter}`}
-          letter={letter}
-          active={i === (name.length - 1)}
-        />
-      ))}
+      <input ref={inputRef} type="text" value={name} onChange={nameInputHandler} autoFocus style={{ display: "none" }} />
+      <div style={{ display: "flex", gap: 6 }} onClick={() => inputRef?.current?.focus()}>
+        {name.split("").map((letter, i) => (
+          <BigLetter
+            key={`big-letter-${i}-${letter}`}
+            letter={letter}
+            active={i === (name.length - 1)}
+          />
+        ))}
+      </div>
     </div>
   )
 }
