@@ -4,6 +4,8 @@
   font-size: 5rem;
   text-transform: uppercase;
   position: relative;
+  min-width: 2rem;
+  min-height: 100%;
 }
 
 .letter::after{
