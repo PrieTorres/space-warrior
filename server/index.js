@@ -1,4 +1,6 @@
 import express from 'express';
+import functions from "firebase-functions";
+import cors from "cors";
 import db from './dbConnect.js'
 import routes from './routes/index.js';
 
@@ -9,10 +11,13 @@ db.once("open", () => {
 });
 
 const app = express();
-
+app.use(cors());
 app.get("/", (req, res) => {
     res.send('Hello World!');
 });
+
 routes(app);
+
+exports.app = functions.https.onRequest(app);
 
 export default app;
