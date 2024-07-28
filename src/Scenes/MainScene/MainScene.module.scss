@@ -65,6 +65,10 @@
   box-sizing: border-box;
 }
 
+.reverted-control{
+  flex-direction: row-reverse;
+}
+
 @media (max-width: 600px) {
   .points-counter,
   .life-counter {

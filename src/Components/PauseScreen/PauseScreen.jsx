@@ -1,7 +1,7 @@
 import { useContext, useState } from "react";
 import style from "./PauseScreen.module.scss";
 import { GameContext } from "../../contexts/GameContext";
-import { TOUCH_MODE, DISABLE_JOYSTYCK, CHANGE_JOYSTYCK, PAUSE, TUTORIAL_DISPLAY } from "../../contexts/types.js";
+import * as types from "../../contexts/types.js";
 
 export const PauseScreen = ({ goMenuFunc }) => {
   const { gameState, gameDispatch } = useContext(GameContext);
@@ -12,14 +12,18 @@ export const PauseScreen = ({ goMenuFunc }) => {
     let enable = !gameState?.touchScreen;
 
     if (enable) {
-      gameDispatch({ type: TOUCH_MODE });
+      gameDispatch({ type: types.TOUCH_MODE });
     } else {
-      gameDispatch({ type: DISABLE_JOYSTYCK });
+      gameDispatch({ type: types.DISABLE_JOYSTYCK });
     }
   }
 
+  function handleJoystickRevert() {
+    gameDispatch({ type: types.JOYSTYCK_REVERT })
+  }
+
   function handleJoySize(size) {
-    gameDispatch({ type: CHANGE_JOYSTYCK, payload: { size } });
+    gameDispatch({ type: types.CHANGE_JOYSTYCK, payload: { size } });
   }
 
   return (
@@ -37,6 +41,13 @@ export const PauseScreen = ({ goMenuFunc }) => {
           style={{ width: 40 }}
         />
       </label>
+      <label>
+        Joystick revert:
+        <button
+          className={`${style["menu-button"]}`}
+          onClick={handleJoystickRevert}
+        >{gameState.joystickRevert ? "off" : "on"}</button>
+      </label>
       <button
         className={`${style["menu-button"]}`}
         onClick={handleJoystickTurn}
@@ -45,13 +56,13 @@ export const PauseScreen = ({ goMenuFunc }) => {
       </button>
       <button
         className={`${style["menu-button"]}`}
-        onClick={() => gameDispatch({type: TUTORIAL_DISPLAY})}
+        onClick={() => gameDispatch({ type: types.TUTORIAL_DISPLAY })}
       >
         Tutorial
       </button>
       <button
         className={`${style["menu-button"]}`}
-        onClick={() => gameDispatch({type: PAUSE})}
+        onClick={() => gameDispatch({ type: types.PAUSE })}
       >
         Resume
       </button>

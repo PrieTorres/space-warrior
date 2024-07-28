@@ -18,15 +18,15 @@ export const gameReducer = (state, action) => {
       return { ...state, gameOver: true, points: action.payload ?? 0 };
     }
 
-    case types.LOAD_RANK : {
+    case types.LOAD_RANK: {
       const data = action.payload;
       const rank = state.ranks ?? [];
 
       data?.rank?.forEach((rankData) => {
         const { name, points, insertedDate, id } = rankData;
 
-        if(!rank.map(r => r?.id)?.includes(id)){
-          rank.push({ rankName:name, points, insertedDate, id });
+        if (!rank.map(r => r?.id)?.includes(id)) {
+          rank.push({ rankName: name, points, insertedDate, id });
         }
       });
 
@@ -111,7 +111,7 @@ export const gameReducer = (state, action) => {
     }
 
     case types.TUTORIAL_DISPLAY: {
-      return { ...state, showTutorial: true, paused:true }
+      return { ...state, showTutorial: true, paused: true }
     }
 
     case types.DISABLE_JOYSTYCK: {
@@ -120,6 +120,10 @@ export const gameReducer = (state, action) => {
 
     case types.CLOSE_TUTORIAL: {
       return { ...state, showTutorial: false }
+    }
+
+    case types.JOYSTYCK_REVERT: {
+      return { ...state, joystickRevert: !state.joystickRevert }
     }
 
     case types.CHANGE_JOYSTYCK: {

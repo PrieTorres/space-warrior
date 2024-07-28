@@ -11,5 +11,6 @@ export const initialData = {
   showRank: false,
   touchScreen: false,
   showTutorial: true,
-  joystickSize: 100
+  joystickSize: 100,
+  joystickRevert: false
 }
