@@ -1,6 +1,6 @@
 export const initialData = {
   points: 0,
-  health: 4,
+  health: 100,
   level: 0,
   gameOver: false,
   spaceShipId: 0,

@@ -163,8 +163,8 @@ export const MainScene = () => {
           style={{
             transition: "box-shadow .5s ease",
             boxShadow: damaged.current
-              ? "inset 0 0 5vw 5vh #ff8888"
-              : "inset 0 0 5vw 5vh #000",
+              ? "inset 0 0 3vw 3vh #ff8888"
+              : "inset 0 0 3vw 3vh #000",
             fontSize: paused ? "5rem" : 0,
             background: paused ? "#000000a6" : "none",
           }}
