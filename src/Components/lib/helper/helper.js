@@ -36,7 +36,7 @@ export function storageSaveRank(name, points, err) {
     insertedDate: new Date(),
     saved: false,
     error: err?.message,
-    id: uniqueId(name)
+    id: uniqueId(`${name}${points}${new Date().toString()}`)
   });
 
   window.localStorage.setItem("rank", JSON.stringify(storageRank));
