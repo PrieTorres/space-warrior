@@ -30,7 +30,7 @@ export function calcCollapse(objToCollapse, collapse) {
 }
 
 export function storageSaveRank(name, points, err) {
-  const storageRank = JSON.parse(localStorage.getItem("rank")) ?? [];
+  const storageRank = JSON.parse(window.localStorage.getItem("rank")) ?? [];
   storageRank.push({
     name, points,
     insertedDate: new Date(),
@@ -39,5 +39,5 @@ export function storageSaveRank(name, points, err) {
     id: uniqueId(name)
   });
 
-  localStorage.setItem("rank", JSON.stringify(storageRank));
+  window.localStorage.setItem("rank", JSON.stringify(storageRank));
 }

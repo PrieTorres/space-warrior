@@ -22,7 +22,7 @@ export const gameReducer = (state, action) => {
 
     case types.LOAD_RANK: {
       const data = action.payload?.rank ?? [];
-      const localRank = JSON.parse(localStorage.getItem("rank"));
+      const localRank = JSON.parse(window.localStorage.getItem("rank"));
       const rank = state.ranks ?? [];
 
       if(isArray(localRank)){
@@ -46,7 +46,7 @@ export const gameReducer = (state, action) => {
 
       const saveRank = async ({ name, points }) => {
         try {
-          const res = await fetch(`http://localhost:4000/api/rank`, {
+          const res = await fetch(`/api/rank`, {
             method: 'POST',
             headers: {
               'Accept': 'application/json',
