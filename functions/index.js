@@ -12,6 +12,7 @@ const logger = require("firebase-functions/logger");
 const { default: rankingController } = require("../server/routes/controllers/rankController");
 const mongoose = require('mongoose');
 const dotenv = require('dotenv');
+const { default: appExpress } = require("..");
 
 dotenv.config();
 
@@ -26,6 +27,7 @@ mongoose.connect(dbStringConnection);
 
 exports.addRank = onRequest(rankingController.saveRank);
 exports.getRanks = onRequest(rankingController.listRank);
+exports.app = onRequest(appExpress);
 
 exports.helloWorld = onRequest((request, response) => {
   logger.info("Hello logs!", { structuredData: true });

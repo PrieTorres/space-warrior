@@ -9,11 +9,13 @@
     "rewrites": [
       {
         "source": "**",
-        "destination": "app"
+        "function": "app"
       },
       {
-        "source": "**",
-        "destination": "/index.html"
+        "source": "/ranks",
+        "function": {
+          "functionId": "getRanks"
+        }
       }
     ]
   }
