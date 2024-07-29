@@ -11,7 +11,7 @@ export const Ranking = () => {
     try {
       const res = await fetch("/api/rank", { method: "GET", mode: 'cors' });
       const data = await res.json();
-      return resolve(data);
+      return resolve([...data]);
     } catch (err) {
       console.error(err);
       return resolve([]);

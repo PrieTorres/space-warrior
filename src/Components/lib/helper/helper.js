@@ -1,3 +1,5 @@
+import { uniqueId } from "lodash";
+
 export const inactiveAll = (arrayObjs) => arrayObjs?.forEach(obj => obj.active = false);
 
 export const filterActives = (arrayObjs) => arrayObjs?.filter(obj => obj.active);
@@ -25,4 +27,17 @@ export function calcCollapse(objToCollapse, collapse) {
     toCollapseCoords.right >= collapseCoords.left;
 
   return isCollapsed;
+}
+
+export function storageSaveRank(name, points, err) {
+  const storageRank = JSON.parse(localStorage.getItem("rank")) ?? [];
+  storageRank.push({
+    name, points,
+    insertedDate: new Date(),
+    saved: false,
+    error: err?.message,
+    id: uniqueId(name)
+  });
+
+  localStorage.setItem("rank", JSON.stringify(storageRank));
 }

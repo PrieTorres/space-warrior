@@ -16,3 +16,4 @@ export const RANK_INPUT = "RANK_INPUT";
 export const RANK_MENU_OPEN = "RANK_MENU_OPEN";
 export const RANK_MENU_CLOSE = "RANK_MENU_CLOSE";
 export const LOAD_RANK = "LOAD_RANK";
+export const SAVE_RANK = "SAVE_RANK";
