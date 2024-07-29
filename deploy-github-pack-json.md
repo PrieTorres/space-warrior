@@ -4,7 +4,6 @@
   "private": true,
   "type": "module",
   "homepage": "https://prietorres.github.io/space-warrior/",
-  "proxy": "http://localhost:4000",
   "dependencies": {
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^13.4.0",
@@ -20,6 +19,7 @@
     "lodash": "^4.17.21",
     "mongoose": "^8.5.1",
     "nodemon": "^3.1.4",
+    "path": "^0.12.7",
     "postcss": "^8.4.31",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
@@ -31,8 +31,7 @@
   "scripts": {
     "predeploy": "npm run build",
     "deploy-pages": "npm run build && gh-pages -d build",
-    "deploy": "npm run build && npx firebase deploy",
-    "start": "concurrently \"react-scripts start\" \"nodemon src/server.js\"",
+    "start": "nodemon src/server.js",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
