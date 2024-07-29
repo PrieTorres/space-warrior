@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "type": "module",
-  "homepage": "https://PrieTorres.github.io/space-warrior",
+  "homepage": "https://prietorres.github.io/space-warrior/",
   "proxy": "http://localhost:4000",
   "dependencies": {
     "@testing-library/jest-dom": "^5.16.5",
@@ -30,7 +30,7 @@
   },
   "scripts": {
     "predeploy": "npm run build",
-    "deploy-pages": "gh-pages -d build",
+    "deploy-pages": "npm run build && gh-pages -d build",
     "deploy": "npm run build && npx firebase deploy",
     "start": "concurrently \"react-scripts start\" \"nodemon src/server.js\"",
     "build": "react-scripts build",
