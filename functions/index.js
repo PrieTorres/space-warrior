@@ -8,8 +8,8 @@
  */
 
 const { onRequest } = require("firebase-functions/v2/https");
-const logger = require("firebase-functions/logger");
-const { default: rankingController } = require("../server/routes/controllers/rankController");
+// const logger = require("firebase-functions/logger");
+// const { default: rankingController } = require("../server/routes/controllers/rankController");
 const mongoose = require('mongoose');
 const dotenv = require('dotenv');
 const { default: appExpress } = require("..");
@@ -25,11 +25,11 @@ mongoose.connect(dbStringConnection);
 // Create and deploy your first functions
 // https://firebase.google.com/docs/functions/get-started
 
-exports.addRank = onRequest(rankingController.saveRank);
-exports.getRanks = onRequest(rankingController.listRank);
+// exports.addRank = onRequest(rankingController.saveRank);
+// exports.getRanks = onRequest(rankingController.listRank);
 exports.app = onRequest(appExpress);
 
-exports.helloWorld = onRequest((request, response) => {
-  logger.info("Hello logs!", { structuredData: true });
-  response.send("Hello from Firebase!");
-});
+// exports.helloWorld = onRequest((request, response) => {
+//   logger.info("Hello logs!", { structuredData: true });
+//   response.send("Hello from Firebase!");
+// });
