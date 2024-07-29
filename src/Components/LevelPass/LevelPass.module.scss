@@ -1,4 +1,5 @@
 .level-container {
+  max-width: 100vw;
   width: 100%;
   height: 100%;
   background-color: rgba(63, 63, 63, 0.541);
@@ -31,7 +32,7 @@
 }
 
 .centered-x{
-  left: calc(50vw - 300px);
+  left: calc(50vw - 325px);
 }
 
 .out-right{
@@ -48,4 +49,23 @@
 .level-num{
   width: 100%;
   font-size: 13rem;
+}
+
+
+@media (max-width: 660px) {
+  .level-box {
+    width: 400px;
+    min-height: 60vh;
+    top: calc(50% - 200px);
+    left: -100vw;
+  }
+
+  .centered-x{
+    left: calc(50vw - 200px);
+  }
+
+  .text{
+    font-size: 4.2rem;
+    width: 80%;
+  }
 }

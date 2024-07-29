@@ -31,3 +31,13 @@
   padding: 4px;
   border: 1px solid #000;
 }
+
+@media (max-width: 600px) {
+  .box{
+    padding: 70px 30px;
+    gap: 30px;
+    max-width: 100vw;
+    flex-wrap: wrap;
+    box-sizing: border-box;
+  }
+}

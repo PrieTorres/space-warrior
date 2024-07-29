@@ -14,7 +14,7 @@ export const LevelPass = ({ level, show, secondsToDisplay }) => {
         setAnimationClass("out-right");
       }, secondsToDisplay);
     }, 100);
-   
+
     return () => {
       if (timeoutToLeave != undefined) clearTimeout(timeoutToLeave);
       if (timeoutToEnter != undefined) clearTimeout(timeoutToEnter);
@@ -23,13 +23,11 @@ export const LevelPass = ({ level, show, secondsToDisplay }) => {
 
   if (!show) return;
   return (
-    <>
-      <div className={`${style["level-container"]}`} >
-        <div className={`${style["level-box"]} ${style[animationClass]}`} ref={container}>
-          <span className={`${style["text"]}`}>Você passou de nível!</span>
-          <p className={`${style["level-num"]}`}>{level}</p>
-        </div>
+    <div className={`${style["level-container"]}`} >
+      <div className={`${style["level-box"]} ${style[animationClass]}`} ref={container}>
+        <span className={`${style["text"]}`}>Você passou de nível!</span>
+        <p className={`${style["level-num"]}`}>{level}</p>
       </div>
-    </>
+    </div>
   )
 }
