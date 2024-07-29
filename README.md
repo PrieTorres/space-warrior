@@ -12,4 +12,4 @@ a respeito dos controles, aqui estão alguns deles
 uma palhinha do jogo logo abaixo
 <img src="/public/images/examples/game_example.gif"/>
 
-jogue aqui --> <a href=" https://prietorres.github.io/space-warrior/"> https://prietorres.github.io/space-warrior/</a> (não é virus)
+jogue aqui --> <a href="https://prietorres.github.io/space-warrior/"> https://prietorres.github.io/space-warrior/</a> (não é virus)
