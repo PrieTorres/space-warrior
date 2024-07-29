@@ -1,5 +1,5 @@
 /* eslint-disable default-case */
-import { isArray, uniqueId } from 'lodash';
+import { isArray } from 'lodash';
 import { spaceshipsTypes } from '../gameAssets/functional/Sprites/spaceship/spaceshipsTypes.js';
 import * as types from './types.js';
 import { storageSaveRank } from '../Components/lib/helper/helper.js';
@@ -21,7 +21,7 @@ export const gameReducer = (state, action) => {
     }
 
     case types.LOAD_RANK: {
-      const data = action.payload?.ranks ?? [];
+      const data = action.payload?.rank ?? [];
       const localRank = JSON.parse(localStorage.getItem("rank"));
       const rank = state.ranks ?? [];
 
@@ -29,11 +29,11 @@ export const gameReducer = (state, action) => {
         data.push(...localRank);
       }
 
-      data?.rank?.forEach((rankData) => {
-        const { name, points, insertedDate, id } = rankData;
+      data?.forEach((rankData) => {
+        const { name, points, insertedDate, id, _id } = rankData;
 
-        if (!rank.map(r => r?.id)?.includes(id)) {
-          rank.push({ rankName: name, points, insertedDate, id });
+        if (!rank.map(r => r?.id)?.includes(_id ?? id)) {
+          rank.push({ rankName: name, points, insertedDate, id: _id ?? id });
         }
       });
 
