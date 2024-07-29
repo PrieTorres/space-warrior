@@ -29,7 +29,7 @@
   },
   "scripts": {
     "predeploy": "npm run build",
-    "deploy-pages": "gh-pages -d build",
+    "deploy-pages": "node check-homepage.js && gh-pages -d build",
     "deploy": "npm run build && npx firebase deploy",
     "start": "concurrently \"react-scripts start\" \"nodemon src/server.js\"",
     "build": "react-scripts build",
