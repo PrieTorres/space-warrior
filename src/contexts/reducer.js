@@ -3,6 +3,7 @@ import { isArray } from 'lodash';
 import { spaceshipsTypes } from '../gameAssets/functional/Sprites/spaceship/spaceshipsTypes.js';
 import * as types from './types.js';
 import { storageSaveRank } from '../Components/lib/helper/helper.js';
+import { addRank } from '../lib/firestore_utils.js';
 
 export const gameReducer = (state, action) => {
   switch (action.type) {
@@ -25,7 +26,7 @@ export const gameReducer = (state, action) => {
       const localRank = JSON.parse(window.localStorage.getItem("rank"));
       const rank = state.ranks ?? [];
 
-      if(isArray(localRank)){
+      if (isArray(localRank)) {
         data.push(...localRank);
       }
 
@@ -46,17 +47,10 @@ export const gameReducer = (state, action) => {
 
       const saveRank = async ({ name, points }) => {
         try {
-          const res = await fetch(`/api/rank`, {
-            method: 'POST',
-            headers: {
-              'Accept': 'application/json',
-              'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({ name, points, insertedDate: new Date() })
-          });
+          const res = await addRank({ name, points });
 
-          if(res?.code > 400){
-            storageSaveRank(name, points, {message: JSON.stringify(res)});
+          if (!res?.id || res?.error) {
+            storageSaveRank(name, points, { message: JSON.stringify(res) });
           }
 
           return res;

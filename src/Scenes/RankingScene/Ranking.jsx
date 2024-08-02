@@ -1,6 +1,7 @@
 import { useContext, useRef, useEffect, useCallback } from "react";
 import style from "./Ranking.module.scss"
 import { GameContext } from "../../contexts/GameContext";
+import { getRanks } from "../../lib/firestore_utils";
 
 export const Ranking = () => {
   const { gameState, gameDispatch } = useContext(GameContext);
@@ -9,8 +10,7 @@ export const Ranking = () => {
 
   const getRanking = new Promise(async (resolve) => {
     try {
-      const res = await fetch("/api/rank", { method: "GET", mode: 'cors' });
-      const data = await res.json();
+      const data = await getRanks();
       return resolve([...data]);
     } catch (err) {
       console.error(err);
