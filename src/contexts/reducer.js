@@ -3,7 +3,7 @@ import { isArray } from 'lodash';
 import { spaceshipsTypes } from '../gameAssets/functional/Sprites/spaceship/spaceshipsTypes.js';
 import * as types from './types.js';
 import { storageSaveRank } from '../Components/lib/helper/helper.js';
-import { addRank } from '../lib/firestore_utils.js';
+import { addRank } from '../firestore_utils.js';
 
 export const gameReducer = (state, action) => {
   switch (action.type) {

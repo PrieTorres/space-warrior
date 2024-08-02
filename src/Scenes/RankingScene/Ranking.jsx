@@ -1,7 +1,7 @@
 import { useContext, useRef, useEffect, useCallback } from "react";
 import style from "./Ranking.module.scss"
 import { GameContext } from "../../contexts/GameContext";
-import { getRanks } from "../../lib/firestore_utils";
+import { getRanks } from "../../firestore_utils";
 
 export const Ranking = () => {
   const { gameState, gameDispatch } = useContext(GameContext);

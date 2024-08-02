@@ -1,5 +1,5 @@
 import { collection, addDoc, getDocs } from "firebase/firestore";
-import { db } from '../firebase';
+import { db } from "./config/firestore.js";
 
 export const addRank = async (rank) => {
   if (!rank?.name || !rank?.points)
