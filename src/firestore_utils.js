@@ -31,3 +31,11 @@ export const getRanks = async () => {
     return [];
   }
 }
+
+/*export function getToken(e) {
+  e?.preventDefault();
+  grecaptcha.enterprise.ready(async () => {
+    const token = await grecaptcha.enterprise.execute('6LfQ1x8qAAAAAMs-XblQ02u27xomLrio5S2twFn3', {action: 'LOGIN'});
+    return token;
+  });
+}*/

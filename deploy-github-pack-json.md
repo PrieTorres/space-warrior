@@ -149,3 +149,5 @@ exports.app = onRequest(appExpress);
 
 
 https://www.youtube.com/watch?v=LCvBPsuHe6g
+https://firebase.google.com/docs/
+https://firebase.google.com/docs/app-check/web/recaptcha-enterprise-provider?hl=pt-br
