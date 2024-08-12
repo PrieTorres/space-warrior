@@ -27,3 +27,4 @@ src/Components/examples
 .env
 
 functions/serviceAccountKey.json
+.firebase/
