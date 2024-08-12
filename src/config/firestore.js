@@ -29,7 +29,7 @@ if(window.location.hostname === "localhost" || window.location.hostname === "127
 
 export const firebaseApp = initializeApp(firebaseConfig);
 const appCheck = initializeAppCheck(firebaseApp, {
-  provider: new ReCaptchaEnterpriseProvider(/* reCAPTCHA Enterprise site key */),
+  provider: new ReCaptchaEnterpriseProvider(process.env.REACT_APP_RECAPTCHA_KEY_ENTERPRISE),
   isTokenAutoRefreshEnabled: true // Set to true to allow auto-refresh.
 });
 //export const db = firebase.firestore();
