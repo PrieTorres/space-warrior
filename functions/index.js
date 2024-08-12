@@ -1,42 +1,126 @@
+const functions = require("firebase-functions");
+const admin = require("firebase-admin");
+const {getFirestore} = require("firebase-admin/firestore");
+const serviceAccount = require("./serviceAccountKey.json");
 
-/**
- * Import function triggers from their respective submodules:
- *
- * const {onCall} = require("firebase-functions/v2/https");
- * const {onDocumentWritten} = require("firebase-functions/v2/firestore");
- *
- * See a full list of supported triggers at https://firebase.google.com/docs/functions
- */
-/*
-const {onRequest} = require("firebase-functions/v2/https");
-const logger = require("firebase-functions/logger");
-const {initializeApp} = require("firebase-admin/app");
-//initializeApp();
-const mongoose = require("mongoose");
-const dotenv = require("dotenv");
-const {default: appExpress} = require("..");
+const firebaseApp = admin.initializeApp({
+  credential: admin.credential.cert(serviceAccount),
+});
 
-try {
-  dotenv.config();
+const express = require("express");
+const cors = require("cors");
+require("express");
+const app = express();
 
-  const user = process.env.DB_USER;
-  const password = process.env.DB_PASSWORD;
-  const dbStringConnection = `mongodb+srv://${user}:${password}@spacewarrior.2fypyzc.mongodb.net/`;
+app.use(cors({origin: true}));
+const db = admin.firestore();
+//getFirestore(firebaseApp, "space-warrior-db");
+// admin.firestore();
+// Routes
+app.get("/", (req, res) => {
+  return res.status(200).send("Hai there");
+});
+// create
+// Post
+app.post("/api/create", (req, res) => {
+  (async () => {
+    try {
+      await db.collection("userdetails").doc(`/${Date.now()}/`).create({
+        id: Date.now(),
+        name: req.body.name,
+        mobile: req.body.mobile,
+        address: req.body.address,
+      });
 
-  mongoose.connect(dbStringConnection);
-} catch (err) {
-  logger.error(err, err?.message, {structuredData: true});
-}
+      return res.status(200).send({status: "Success", msg: "Data Saved"});
+    } catch (error) {
+      console.log(error);
+      res.status(500).send({status: "Failed", msg: error});
+    }
+  })();
+});
 
-// Create and deploy your first functions
-// https://firebase.google.com/docs/functions/get-started
+// read specific user detail
+// get
+app.get("/api/userDetail/:id", (req, res) => {
+  (async () => {
+    try {
+      const reqDoc = db.collection("userdetails").doc(req.params.id);
+      const userDetail = await reqDoc.get();
+      const response = userDetail.data();
 
-// exports.addRank = onRequest(rankingController.saveRank);
-// exports.getRanks = onRequest(rankingController.listRank);
-exports.app = onRequest(appExpress);
+      return res.status(200).send({status: "Success", data: response});
+    } catch (error) {
+      console.log(error);
+      res.status(500).send({status: "Failed", msg: error});
+    }
+  })();
+});
 
-// exports.helloWorld = onRequest((request, response) => {
-//   logger.info("Hello logs!", { structuredData: true });
-//   response.send("Hello from Firebase!");
-// });
-*/
+// read all user details
+// get
+app.get("/api/userDetails", (req, res) => {
+  (async () => {
+    try {
+      const query = db.collection("userdetails");
+      const response = [];
+
+      await query.get().then((data) => {
+        const docs = data.docs; // query results
+
+        docs.forEach((doc) => {
+          const selectedData = {
+            name: doc.data().name,
+            mobile: doc.data().mobile,
+            address: doc.data().address,
+          };
+
+          response.push(selectedData);
+        });
+        return response;
+      });
+
+      return res.status(200).send({status: "Success", data: response});
+    } catch (error) {
+      console.log(error);
+      res.status(500).send({status: "Failed", msg: error});
+    }
+  })();
+});
+
+// update
+// put
+app.put("/api/update/:id", (req, res) => {
+  (async () => {
+    try {
+      const reqDoc = db.collection("userdetails").doc(req.params.id);
+      await reqDoc.update({
+        name: req.body.name,
+        mobile: req.body.mobile,
+        address: req.body.address,
+      });
+      return res.status(200).send({status: "Success", msg: "Data Updated"});
+    } catch (error) {
+      console.log(error);
+      res.status(500).send({status: "Failed", msg: error});
+    }
+  })();
+});
+
+// delete
+// delete
+app.delete("/api/delete/:id", (req, res) => {
+  (async () => {
+    try {
+      const reqDoc = db.collection("userdetails").doc(req.params.id);
+      await reqDoc.delete();
+      return res.status(200).send({status: "Success", msg: "Data Removed"});
+    } catch (error) {
+      console.log(error);
+      res.status(500).send({status: "Failed", msg: error});
+    }
+  })();
+});
+
+// Exports api to the firebase cloud functions
+exports.app = functions.https.onRequest(app);
