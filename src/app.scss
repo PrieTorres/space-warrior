@@ -9,3 +9,8 @@
   align-items: center;
   align-content: center;
 }
+
+.grecaptcha-badge { 
+  visibility: hidden !important;
+  opacity: 0;
+}
