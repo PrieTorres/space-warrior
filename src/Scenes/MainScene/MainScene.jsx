@@ -138,7 +138,6 @@ export const MainScene = () => {
       </div>
       {gameState.touchScreen &&
         <div
-
           className={`${style["mobile-controls"]} ${ gameState.joystickRevert ? style["reverted-control"] : ""}`}
         >
           <ShotButton shotFunction={() => handlerSpaceShip.handleSpaceShipShot(spaceShip, shots.current, munitionCount, setShots, setMunitionCount)} />
