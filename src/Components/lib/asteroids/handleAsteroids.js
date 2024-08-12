@@ -13,11 +13,19 @@ export const mitoseTheAsteroid = (asteroid) => {
   const parentXPosition = asteroid.position.x;
   const mitosedAsteroids = [];
 
+  let leftAsteroidX = parentXPosition - asteroid.width / 2;
+  let rightAsteroidX = parentXPosition + asteroid.width / 2;
+
+  const maxRightPos = window.innerWidth - (infoAsteroid.width / 2);
+
+  if(leftAsteroidX < 0) leftAsteroidX = 0;
+  if(rightAsteroidX > maxRightPos) rightAsteroidX = maxRightPos;
+
   mitosedAsteroids.push(
     copyAsteroid({
       ...cloneDeep(infoAsteroid),
       finalCordinates: {
-        x: parentXPosition - asteroid.width / 2,
+        x: leftAsteroidX,
         y: asteroid.finalCordinates.y,
       },
     }),
@@ -27,7 +35,7 @@ export const mitoseTheAsteroid = (asteroid) => {
     copyAsteroid({
       ...cloneDeep(infoAsteroid),
       finalCordinates: {
-        x: parentXPosition + asteroid.width / 2,
+        x: rightAsteroidX,
         y: asteroid.finalCordinates.y,
       },
     }),
@@ -67,7 +75,7 @@ export const moveAsteroids = ({ asteroids, takeHit }) => {
       asteroid.move({
         finalCb: () => {
           asteroid.active = false;
-  
+
           takeHit(asteroid);
         }
       });
