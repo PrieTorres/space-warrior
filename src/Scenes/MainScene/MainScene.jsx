@@ -127,6 +127,14 @@ export const MainScene = () => {
     return () => clearTimeout(timeOut);
   }, [gameDispatch, levelUpAnimation]);
 
+  useEffect(() => {
+    const interval = setInterval(() => {
+      gameDispatch({ type: types.ADD_SECONDS });
+    }, 1000);
+
+    return () => clearInterval(interval);
+  }, [paused, gameDispatch]);
+
   return (
     <div id="game-main-scene-screen" style={{ overflow: "hidden" }}>
       <div className={`${style["points-counter"]}`}>SCORE: {points}</div>

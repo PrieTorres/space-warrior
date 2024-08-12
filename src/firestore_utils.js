@@ -7,8 +7,13 @@ export const addRank = async (rank) => {
   try {
     const response = await axios.post(`https://us-central1-${process.env.REACT_APP_PROJECT_ID}.cloudfunctions.net/app/api/addRank`, {
       name: rank.name,
-      points: rank.points
+      points: rank.points,
+      spaceshipid: rank.spaceshipid,
+      level: rank.level,
+      time: rank.time,
+      startedTime: rank.startedtime,
     });
+
     console.log("Document written with ID: ", response.data.id);
     return response.data;
   } catch (error) {

@@ -47,9 +47,16 @@ export const gameReducer = (state, action) => {
 
       const saveRank = async ({ name, points }) => {
         try {
-          const res = await addRank({ name, points });
+          const res = await addRank({
+            name,
+            points,
+            spaceshipid: state.spaceShipId,
+            level: state.level,
+            time: state.totalSeconds,
+            startedTime: state.startedTime
+          });
 
-          if (!res?.id || res?.error) {
+          if (res?.code > 400) {
             storageSaveRank(name, points, { message: JSON.stringify(res) });
           }
 
@@ -66,7 +73,11 @@ export const gameReducer = (state, action) => {
       ranks.push({
         rankName: data.name,
         points: data.points,
-        insertedDate: new Date()
+        insertedDate: new Date(),
+        spaceshipid: state.spaceShipId,
+        level: state.level,
+        time: state.totalSeconds,
+        startedTime: state.startedTime
       });
 
       return {
@@ -78,6 +89,7 @@ export const gameReducer = (state, action) => {
         gameOver: false,
         initial: true,
         paused: true,
+        totalSeconds: 0,
         showRank: true
       }
     }
@@ -143,6 +155,13 @@ export const gameReducer = (state, action) => {
       return { ...state, level };
     }
 
+    case types.ADD_SECONDS: {
+      let { totalSeconds = 0 } = state;
+      totalSeconds++;
+
+      return { ...state, totalSeconds };
+    }
+
     case types.PAUSE: {
       return { ...state, paused: !state.paused };
     }
@@ -156,7 +175,7 @@ export const gameReducer = (state, action) => {
     }
 
     case types.ON: {
-      return { ...state, initial: false, paused: false }
+      return { ...state, initial: false, paused: false, startedTime: new Date(), totalSeconds: 0 }
     }
 
     case types.TUTORIAL_DISPLAY: {

@@ -12,5 +12,6 @@ export const initialData = {
   touchScreen: false,
   showTutorial: true,
   joystickSize: 100,
-  joystickRevert: false
+  joystickRevert: false,
+  totalSeconds: 0
 }

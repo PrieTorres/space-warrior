@@ -9,6 +9,7 @@ export const LEVEL_UP = "LEVEL_UP";
 export const RESTART = "RESTART";
 export const LOSE_LIFE = "LOSE_LIFE";
 export const PAUSE = "PAUSE";
+export const ADD_SECONDS = "ADD_SECONDS";
 export const TUTORIAL_DISPLAY = "TUTORIAL_DISPLAY";
 export const INITIAL = "INITIAL";
 export const ON = "ON";
