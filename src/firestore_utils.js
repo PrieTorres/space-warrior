@@ -1,18 +1,16 @@
-import { collection, addDoc, getDocs } from "firebase/firestore";
-import { db } from "./config/firestore.js";
+import axios from 'axios';
 
 export const addRank = async (rank) => {
   if (!rank?.name || !rank?.points)
     throw new Error("missing required fields (points and name)");
 
   try {
-    const docRef = await addDoc(collection(db, "rank"), {
+    const response = await axios.post(`https://us-central1-${process.env.REACT_APP_PROJECT_ID}.cloudfunctions.net/app/api/addRank`, {
       name: rank.name,
-      points: rank.points,
-      insertedDate: new Date(),
+      points: rank.points
     });
-    console.log("Document written with ID: ", docRef.id);
-    return docRef;
+    console.log("Document written with ID: ", response.data.id);
+    return response.data;
   } catch (error) {
     console.error("Error adding document: ", error);
     return { error: error?.message, code: error?.code };
@@ -21,13 +19,10 @@ export const addRank = async (rank) => {
 
 export const getRanks = async () => {
   try {
-    const querySnapshot = await getDocs(collection(db, "rank"))
-    const ranks = querySnapshot.docs
-      .map((doc) => ({ ...doc.data(), id: doc.id }));
-
-    return ranks;
+    const response = await axios.get(`https://us-central1-${process.env.REACT_APP_PROJECT_ID}.cloudfunctions.net/app/api/rank`);
+    return response.data;
   } catch (error) {
-    console.error("unable to get ranking data ", error);
+    console.error("Unable to get ranking data ", error);
     return [];
   }
-}
+};
