@@ -54,14 +54,14 @@ export class Sprite {
       finalPositionX > this.position.x
     ) {
       this.position.x += xDistanceMove;
-      if (this.position.x + xDistanceMove === finalPositionX) this.onEndSide = "right";
+      if (this.position.x + xDistanceMove >= finalPositionX) this.onEndSide = "right";
     } else if (
       !goingRigth &&
       finalPositionX !== undefined &&
       finalPositionX < this.position.x
     ) {
       this.position.x -= xDistanceMove;
-      if (this.position.x - xDistanceMove === finalPositionX) this.onEndSide = "left";
+      if (this.position.x - xDistanceMove <= finalPositionX) this.onEndSide = "left";
     }
 
     if (cb) cb();

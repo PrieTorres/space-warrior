@@ -18,14 +18,23 @@ export class AsteroidSprite extends Sprite {
     };
   }
 
-  move({ finalPositionX, finalPositionY, cb, finalCb }) {
+  move({ pFinalPositionX, pFinalPositionY, cb, finalCb }) {
+    let finalPositionX = pFinalPositionX;
+    let finalPositionY = pFinalPositionY;
+
     if (!finalPositionX) finalPositionX = this.finalCordinates.x;
     if (!finalPositionY) finalPositionY = this.finalCordinates.y;
 
     switch (this.type) {
       case "ZIGZAG":
-        if (this.onEndSide === "right" || this.finalCordinates.x === undefined) finalPositionX = 0;
-        if (this.onEndSide === "left" || this.finalCordinates.x === undefined) finalPositionX = this.gameScreen.width;
+        if (this.onEndSide === "right" || this.finalCordinates.x === undefined) {
+          finalPositionX = 0;
+          this.finalCordinates.x = 0;
+        }
+        if (this.onEndSide === "left" || this.finalCordinates.x === undefined) {
+          finalPositionX = this.gameScreen.width - this.width;
+          this.finalCordinates.x = this.gameScreen.width - this.width;
+        }
 
         this.onEndSide = undefined;
 
