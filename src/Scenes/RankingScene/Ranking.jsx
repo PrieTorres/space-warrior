@@ -1,6 +1,7 @@
 import { useContext, useRef, useEffect, useCallback } from "react";
 import style from "./Ranking.module.scss"
 import { GameContext } from "../../contexts/GameContext";
+import { getRanks } from "../../firestore_utils";
 
 export const Ranking = () => {
   const { gameState, gameDispatch } = useContext(GameContext);
@@ -9,8 +10,7 @@ export const Ranking = () => {
 
   const getRanking = new Promise(async (resolve) => {
     try {
-      const res = await fetch("/api/rank", { method: "GET", mode: 'cors' });
-      const data = await res.json();
+      const data = await getRanks();
       return resolve([...data]);
     } catch (err) {
       console.error(err);
@@ -28,11 +28,16 @@ export const Ranking = () => {
   }, [gameDispatch]);
 
   const getRankDisplay = useCallback((name, points, padding = 0) => {
+    if (!name || !points) {
+      console.error("invalid rank object", { name: name, points: points, padding });
+      return "";
+    }
+
     const containerWidth = (container.current?.offsetWidth ?? window.innerWidth) - padding * 2;
     let rankDisplay = `${name}`;
     let maxLength = (containerWidth / 5.6) - `${points}`.length - rankDisplay.length;
 
-    for (let i = name.length; i < maxLength; i++) {
+    for (let i = name?.length; i < maxLength; i++) {
       rankDisplay += ".";
     }
 
@@ -43,8 +48,8 @@ export const Ranking = () => {
 
   return (
     <div className={`${style['container']}`}>
-      <div ref={container} style={{ padding: 20, width: "100%", fontSize: 14,  }}>
-        {ranks.map((rankData, i) => (
+      <div ref={container}>
+        {ranks.sort((a, b) => b?.points - a?.points).map((rankData, i) => (
           <div key={i}>{getRankDisplay(rankData.rankName, rankData.points, 20)}</div>
         ))}
       </div>

@@ -3,6 +3,14 @@
   justify-content: center;
   align-items: flex-start;
   padding: 8px;
-  padding-bottom: 30px;
-  min-height: 70vh;
+  margin-bottom: 30px;
+  height: 70vh;
+  overflow-y: auto;
+
+  & > div {
+    height: fit-content;
+    padding: 20px;
+    width: 100%;
+    font-size: 14px;
+  }
 }

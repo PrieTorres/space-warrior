@@ -25,3 +25,5 @@ yarn-error.log*
 
 src/Components/examples
 .env
+
+functions/serviceAccountKey.json

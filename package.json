@@ -3,20 +3,30 @@
   "version": "0.1.0",
   "private": true,
   "type": "module",
-  "main": "src/server.js",
+  "main": "index.js",
+  "directories": {
+    "serve": "server"
+  },
+  "files": [
+    "index.js",
+    "src/server.js",
+    "src",
+    "server"
+  ],
   "dependencies": {
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
     "animate.css": "^4.1.1",
+    "axios": "^1.7.3",
     "babel-plugin-react-css-modules": "^5.2.6",
     "concurrently": "^8.2.2",
     "cors": "^2.8.5",
     "dotenv": "^16.4.5",
     "express": "^4.19.2",
     "firebase": "^10.12.4",
-    "firebase-admin": "^12.3.0",
-    "firebase-functions": "^5.0.1",
+    "firebase-admin": "^12.1.0",
+    "firebase-functions": "^5.0.0",
     "lodash": "^4.17.21",
     "mongoose": "^8.5.1",
     "nodemon": "^3.1.4",
@@ -33,7 +43,7 @@
     "predeploy": "npm run build",
     "deploy-pages": "node check-homepage.js && gh-pages -d build",
     "deploy": "npm run build && npx firebase deploy",
-    "start": "nodemon src/server.js",
+    "start": "npm run build && nodemon src/server.js",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
