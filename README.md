@@ -12,4 +12,5 @@ a respeito dos controles, aqui estão alguns deles
 uma palhinha do jogo logo abaixo
 <img src="/public/images/examples/game_example.gif"/>
 
-jogue aqui --> <a href="https://space-warrior-48bc2.web.app/">https://space-warrior-48bc2.web.app/</a> (não é virus)
+jogue aqui --> <a href="https://space-warrior-48bc2.web.app/">https://space-warrior-48bc2.web.app/</a> (não é virus)(versão com server que salva rank)
+<div>ou jogue aqui --> <a href="https://prietorres.github.io/space-warrior">https://prietorres.github.io/space-warrior/</a> (é virus)</div>
