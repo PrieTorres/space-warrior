@@ -8,24 +8,25 @@ export const Ranking = () => {
   const { ranks } = gameState;
   const container = useRef(null);
 
-  const getRanking = new Promise(async (resolve) => {
-    try {
-      const data = await getRanks();
-      return resolve([...data]);
-    } catch (err) {
-      console.error(err);
-      return resolve([]);
-    }
-  });
+  const getRanking = useCallback(() => {
+    return new Promise(async (resolve) => {
+      try {
+        const data = await getRanks();
+        gameDispatch({
+          type: "LOAD_RANK",
+          payload: { rank: data }
+        });
+        return resolve([...data]);
+      } catch (err) {
+        console.error(err);
+        return resolve([]);
+      }
+    });
+  }, [])
 
   useEffect(() => {
-    getRanking.then(data => {
-      gameDispatch({
-        type: "LOAD_RANK",
-        payload: { rank: data }
-      });
-    })
-  }, [gameDispatch]);
+    getRanking();
+  }, []);
 
   const getRankDisplay = useCallback((name, points, padding = 0) => {
     if (!name || !points) {
