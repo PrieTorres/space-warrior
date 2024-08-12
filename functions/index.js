@@ -1,9 +1,8 @@
 const functions = require("firebase-functions");
 const admin = require("firebase-admin");
-const {getFirestore} = require("firebase-admin/firestore");
 const serviceAccount = require("./serviceAccountKey.json");
 
-const firebaseApp = admin.initializeApp({
+admin.initializeApp({
   credential: admin.credential.cert(serviceAccount),
 });
 
@@ -14,8 +13,7 @@ const app = express();
 
 app.use(cors({origin: true}));
 const db = admin.firestore();
-//getFirestore(firebaseApp, "space-warrior-db");
-// admin.firestore();
+
 // Routes
 app.get("/", (req, res) => {
   return res.status(200).send("Hai there");
