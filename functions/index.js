@@ -1,7 +1,6 @@
 const functions = require("firebase-functions");
 const admin = require("firebase-admin");
 const serviceAccount = require("./serviceAccountKey.json");
-const { query, orderBy, limit } = require("firebase/firestore");
 const CONSTANT = require("./CONSTANT.json");
 
 admin.initializeApp({
@@ -14,11 +13,6 @@ const app = express();
 
 app.use(cors({ origin: true }));
 const db = admin.firestore();
-
-// Routes
-app.get("/", (req, res) => {
-  return res.status(200).send("Hai there");
-});
 
 /**
  * HTTP Cloud Function para adicionar um rank ao Firestore.
@@ -62,10 +56,10 @@ async function saveRank(req, res) {
       name: name,
       points: points,
       insertedDate: admin.firestore.FieldValue.serverTimestamp(),
-      spaceshipid: spaceshipid,
-      level: level,
-      time: time,
-      startedTime: startedTime,
+      spaceshipid,
+      level,
+      time,
+      startedTime,
       isMobile
     });
 
@@ -91,20 +85,12 @@ async function saveRank(req, res) {
  */
 async function getRank(req, res) {
   try {
-    const q = query(collection(db, "rank"), orderBy("points", "desc"), limit(CONSTANT.LIMIT_RANK));
-    const querySnapshot = await getDocs(q);
-    const ranks = querySnapshot.map((doc) => ({ id: doc.id, ...doc.data() }));
+    const snapshot = await db.collection("rank").limit(CONSTANT.LIMIT_RANK).orderBy("points").get();
+    const ranks = snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
     res.status(200).json(ranks);
   } catch (error) {
-    console.error("Error fetching ranks with limit:", error);
-    try {
-      const snapshot = await db.collection("rank").get();
-      const ranks = snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
-      res.status(200).json(ranks);
-    } catch (error) {
-      console.error("Error fetching ranks:", error);
-      res.status(500).send("Error fetching ranks");
-    }
+    console.error("Error fetching ranks:", error);
+    res.status(500).send("Error fetching ranks");
   }
 }
 
@@ -137,5 +123,3 @@ exports.limitCollectionByPoints = functions.firestore
       console.log(`${excessDocs} lower ranks have been deleted`);
     }
   });
-//exports.getRanks = functions.https.onRequest(getRank);
-//exports.addRank = functions.https.onRequest(saveRank);
