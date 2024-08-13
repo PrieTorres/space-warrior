@@ -25,49 +25,46 @@ export const handleKeyDown = (e, gameState, spaceShip, gameDispatch, shotFunctio
   }
 };
 
-export const handleKeyPress = (e, canvasCtx, spaceShip) => {
-  if (e.key === "w"?.toLowerCase() || e.key === "ArrowUp") {
-    const upInterval = setInterval(() => {
-      spaceShip.move({ top: spaceShip.vel });
-    }, 25);
+export const handleKeyPress = (e, spaceShip) => {
+  const directions = {
+    w: { axis: 'top', key: 'w' },
+    ArrowUp: { axis: 'top', key: 'ArrowUp' },
+    s: { axis: 'bottom', key: 's' },
+    ArrowDown: { axis: 'bottom', key: 'ArrowDown' },
+    d: { axis: 'right', key: 'd' },
+    ArrowRight: { axis: 'right', key: 'ArrowRight' },
+    a: { axis: 'left', key: 'a' },
+    ArrowLeft: { axis: 'left', key: 'ArrowLeft' },
+  };
 
-    window.addEventListener("keyup", (upKeyEvent) => {
-      if (upKeyEvent.key?.toLowerCase() === e.key?.toLowerCase()) {
-        clearInterval(upInterval);
-      }
-    });
-  }
-  if (e.key?.toLowerCase() === "s" || e.key === "ArrowDown") {
-    const downInterval = setInterval(() => {
-      spaceShip.move({ bottom: spaceShip.vel });
-    }, 25);
+  const activeIntervals = spaceShip.activeIntervals ?? {};
 
-    window.addEventListener("keyup", (upKeyEvent) => {
-      if (upKeyEvent.key?.toLowerCase() === e.key?.toLowerCase()) {
-        clearInterval(downInterval);
-      }
-    });
-  }
-  if (e.key?.toLowerCase() === "d" || e.key === "ArrowRight") {
-    const rightInterval = setInterval(() => {
-      spaceShip.move({ right: spaceShip.vel });
-    }, 25);
+  const startMovement = (axis) => {
+    if (!activeIntervals[axis]) {
+      activeIntervals[axis] = setInterval(() => {
+        spaceShip.move({ [axis]: spaceShip.vel });
+        spaceShip.activeIntervals = activeIntervals;
+      }, 25);
+    }
+  };
 
-    window.addEventListener("keyup", (upKeyEvent) => {
-      if (upKeyEvent.key?.toLowerCase() === e.key?.toLowerCase()) {
-        clearInterval(rightInterval);
-      }
-    });
-  }
-  if (e.key?.toLowerCase() === "a" || e.key === "ArrowLeft") {
-    const letfInterval = setInterval(() => {
-      spaceShip.move({ left: spaceShip.vel });
-    }, 25);
+  const stopMovement = (axis) => {
+    clearInterval(activeIntervals[axis]);
+    delete activeIntervals[axis];
+    spaceShip.activeIntervals = activeIntervals;
+  };
 
-    window.addEventListener("keyup", (upKeyEvent) => {
-      if (upKeyEvent.key?.toLowerCase() === e.key?.toLowerCase()) {
-        clearInterval(letfInterval);
+  const direction = directions[e.key?.toLowerCase()];
+  if (direction) {
+    startMovement(direction.axis);
+
+    const handleKeyUp = (upKeyEvent) => {
+      if (upKeyEvent.key?.toLowerCase() === direction.key?.toLowerCase()) {
+        stopMovement(direction.axis);
+        window.removeEventListener('keyup', handleKeyUp);
       }
-    });
+    };
+
+    window.addEventListener('keyup', handleKeyUp);
   }
 };

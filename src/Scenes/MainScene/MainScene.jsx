@@ -77,10 +77,10 @@ export const MainScene = () => {
     );
   }, [gameDispatch, gameState, munitionCount]);
 
-  const handleKeyPress = useCallback((e, canvasCtx) => {
+  const handleKeyPress = useCallback((e) => {
     if (paused) return;
 
-    if (e.x != undefined && e.y != undefined) {
+    if (e.x != undefined && e.y != undefined) { // for joystick
       const xmove = e.x * 1.5 * spaceShip.vel;
       const ymove = e.y * 1.5 * spaceShip.vel;
       let [top, bottom, left, right] = [ymove, ymove * -1, xmove * -1, xmove];
@@ -92,7 +92,7 @@ export const MainScene = () => {
 
       return spaceShip.move({ top, bottom, left, right });
     }
-    handlerSpaceShip.handleKeyPress(e, canvasCtx, spaceShip);
+    handlerSpaceShip.handleKeyPress(e, spaceShip);
   }, [paused]);
 
   useResetInfos({ spaceShip, asteroids, shots, gameState, setPoints, gameScreenHeight, gameScreenWidth });

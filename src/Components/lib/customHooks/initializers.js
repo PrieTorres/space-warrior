@@ -2,11 +2,10 @@ import { useEffect } from "react";
 import { inactiveAll } from "../helper/helper.js";
 import { createSpaceShip } from "../../../gameAssets/functional/Sprites/spaceship/createSpaceShip.js";
 
-export const useInitializeHandlers = ({ gameScreen, handleKeyDown, handleKeyPress }) => {
+export const useInitializeHandlers = ({handleKeyDown, handleKeyPress }) => {
   useEffect(() => {
-    const canvasCtx = gameScreen?.current?.getContext("2d");
     const handleDown = (e) => handleKeyDown(e);
-    const handlePress = (e) => handleKeyPress(e, canvasCtx);
+    const handlePress = (e) => handleKeyPress(e);
 
     window.addEventListener("keydown", handleDown);
     window.addEventListener("keypress", handlePress);
@@ -15,7 +14,7 @@ export const useInitializeHandlers = ({ gameScreen, handleKeyDown, handleKeyPres
       window.removeEventListener("keydown", handleDown);
       window.removeEventListener("keypress", handlePress);
     };
-  }, [gameScreen, handleKeyDown, handleKeyPress]);
+  }, [handleKeyDown, handleKeyPress]);
 };
 
 export const isTouchDevice = () => {
@@ -28,7 +27,7 @@ export const isTouchDevice = () => {
 }
 
 export const useDetectDevice = ({}) => {
-  
+
 };
 
 export const useResetInfos = ({ spaceShip, gameState, asteroids, shots, setPoints, gameScreenWidth, gameScreenHeight }) => {
