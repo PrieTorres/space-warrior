@@ -21,6 +21,10 @@ export const gameReducer = (state, action) => {
       return { ...state, gameOver: true, points: action.payload ?? 0 };
     }
 
+    case types.LOADING_RANKS: {
+      return { ...state, loadingRanks:true };
+    }
+
     case types.LOAD_RANK: {
       const data = action.payload?.rank ?? [];
       const localRank = JSON.parse(window.localStorage.getItem("rank"));
@@ -38,12 +42,11 @@ export const gameReducer = (state, action) => {
         }
       });
 
-      return { ...state, ranks: rank }
+      return { ...state, ranks: rank, loadingRanks:false }
     }
 
     case types.SAVE_RANK: {
       const data = action.payload ?? {};
-      const ranks = state.ranks ?? [];
 
       const saveRank = async ({ name, points }) => {
         try {
@@ -53,7 +56,8 @@ export const gameReducer = (state, action) => {
             spaceshipid: state.spaceShipId,
             level: state.level,
             time: state.totalSeconds,
-            startedTime: state.startedTime
+            startedTime: state.startedTime,
+            isMobile: state.touchScreen
           });
 
           if (res?.code > 400) {
@@ -70,19 +74,10 @@ export const gameReducer = (state, action) => {
       }
 
       saveRank(data);
-      ranks.push({
-        rankName: data.name,
-        points: data.points,
-        insertedDate: new Date(),
-        spaceshipid: state.spaceShipId,
-        level: state.level,
-        time: state.totalSeconds,
-        startedTime: state.startedTime
-      });
-
+      // load ranks é encarregado de puxar a info do novo rank salvo
       return {
         ...state,
-        ranks,
+        loadingRanks: true,
         points: 0,
         health: 100,
         level: 0,
@@ -133,6 +128,8 @@ export const gameReducer = (state, action) => {
         points: 0,
         health: 100,
         level: 0,
+        totalSeconds: 0,
+        startedTime: new Date(),
         gameOver: false,
         initial: true,
         paused: true,
