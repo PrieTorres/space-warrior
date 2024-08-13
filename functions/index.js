@@ -1,6 +1,8 @@
 const functions = require("firebase-functions");
 const admin = require("firebase-admin");
 const serviceAccount = require("./serviceAccountKey.json");
+const { query, orderBy, limit } = require("firebase/firestore");
+const CONSTANT = require("./CONSTANT.json");
 
 admin.initializeApp({
   credential: admin.credential.cert(serviceAccount),
@@ -42,7 +44,15 @@ async function saveRank(req, res) {
     return res.status(405).send("Method Not Allowed");
   }
 
-  const { name, points } = req.body;
+  const {
+    name,
+    points,
+    spaceshipid,
+    level,
+    time,
+    startedTime,
+    isMobile
+  } = req.body;
   if (!name || !points) {
     return res.status(400).send("Missing required fields (name and points)");
   }
@@ -52,6 +62,11 @@ async function saveRank(req, res) {
       name: name,
       points: points,
       insertedDate: admin.firestore.FieldValue.serverTimestamp(),
+      spaceshipid: spaceshipid,
+      level: level,
+      time: time,
+      startedTime: startedTime,
+      isMobile
     });
 
     res.status(201).send({ id: docRef.id });
@@ -76,12 +91,20 @@ async function saveRank(req, res) {
  */
 async function getRank(req, res) {
   try {
-    const snapshot = await db.collection("rank").get();
-    const ranks = snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
+    const q = query(collection(db, "rank"), orderBy("points", "desc"), limit(CONSTANT.LIMIT_RANK));
+    const querySnapshot = await getDocs(q);
+    const ranks = querySnapshot.map((doc) => ({ id: doc.id, ...doc.data() }));
     res.status(200).json(ranks);
   } catch (error) {
-    console.error("Error fetching ranks:", error);
-    res.status(500).send("Error fetching ranks");
+    console.error("Error fetching ranks with limit:", error);
+    try {
+      const snapshot = await db.collection("rank").get();
+      const ranks = snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
+      res.status(200).json(ranks);
+    } catch (error) {
+      console.error("Error fetching ranks:", error);
+      res.status(500).send("Error fetching ranks");
+    }
   }
 }
 
@@ -95,24 +118,24 @@ app.post("/api/addRank", (req, res) => {
 
 exports.app = functions.https.onRequest(app);
 exports.limitCollectionByPoints = functions.firestore
-    .document('rank/{rankId}')
-    .onCreate(async (snap, context) => {
-        const maxDocuments = 40; // max rank data storage
+  .document('rank/{rankId}')
+  .onCreate(async (snap, context) => {
+    const maxDocuments = CONSTANT.LIMIT_RANK;
 
-        const collectionRef = db.collection('rank');
-        const snapshot = await collectionRef.orderBy('points', 'asc').get();
+    const collectionRef = db.collection('rank');
+    const snapshot = await collectionRef.orderBy('points', 'asc').get();
 
-        if (snapshot.size > maxDocuments) {
-            const excessDocs = snapshot.size - maxDocuments;
+    if (snapshot.size > maxDocuments) {
+      const excessDocs = snapshot.size - maxDocuments;
 
-            const batch = db.batch();
-            snapshot.docs.slice(0, excessDocs).forEach((doc) => {
-                batch.delete(doc.ref);
-            });
+      const batch = db.batch();
+      snapshot.docs.slice(0, excessDocs).forEach((doc) => {
+        batch.delete(doc.ref);
+      });
 
-            await batch.commit();
-            console.log(`${excessDocs} lower ranks have been deleted`);
-        }
-    });
+      await batch.commit();
+      console.log(`${excessDocs} lower ranks have been deleted`);
+    }
+  });
 //exports.getRanks = functions.https.onRequest(getRank);
 //exports.addRank = functions.https.onRequest(saveRank);
