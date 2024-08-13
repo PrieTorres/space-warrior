@@ -15,7 +15,7 @@
   }
 }
 
-.point-div{
+.point-div {
   position: absolute;
   opacity: 0;
   visibility: hidden;
@@ -23,4 +23,27 @@
   margin: 0;
   border: 0;
   font-size: 14px;
+}
+
+.rank-name, .rank-points {
+  flex: 0 1 auto;
+  /* Permite que o item tenha o tamanho necessário */
+}
+
+.rank-input {
+  display: flex;
+  align-items: flex-end;
+  width: 100%;
+}
+
+.dots {
+  flex: 1;
+  height: 1px;
+  padding: 0px 1px;
+  background: linear-gradient(to right,
+      black 50%,
+      transparent 50% 100%);
+  background-size: 4px 4px;
+  align-self: flex-end;
+  margin: 2px;
 }
