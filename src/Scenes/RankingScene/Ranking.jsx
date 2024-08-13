@@ -40,7 +40,7 @@ export const Ranking = () => {
           </div>
         ))}
         <div style={{ width: "100%", display: "flex", justifyContent: "center" }}>
-          <div className={gameState.loadingRanks ? `${style['loading']}` : ""}></div>
+          <div className={gameState.loadingRanks || gameState.loadingAddRanks ? `${style['loading']}` : ""}></div>
         </div>
       </div>
     </div>

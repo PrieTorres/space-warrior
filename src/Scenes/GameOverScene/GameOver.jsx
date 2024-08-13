@@ -2,16 +2,23 @@ import { useContext, useEffect, useState } from "react";
 import style from "./GameOver.module.scss"
 import { GameContext } from "../../contexts/GameContext";
 import { NameInput } from "../../Components/NameInput/NameInput";
-import { SAVE_RANK } from "../../contexts/types";
+import { LOAD_RANK, LOADING_RANKS, SAVE_RANK, SUCESSFULL_SAVE_RANK } from "../../contexts/types";
+import { saveRank } from "../../Components/lib/helper/helper";
 
 export const GameOver = () => {
   const { gameState, gameDispatch } = useContext(GameContext);
   const [rankName, setRankName] = useState("");
 
   function goMenu() {
-    gameDispatch({
-      type: SAVE_RANK,
-      payload: { name: rankName, points: gameState.points }
+    gameDispatch({ type: SAVE_RANK });
+    saveRank({
+      name: rankName,
+      points: gameState.points,
+      ...gameState
+    }).then((saved) => {
+      gameDispatch({ type: SUCESSFULL_SAVE_RANK });
+      gameDispatch({ type: LOADING_RANKS });
+      gameDispatch({ type: LOAD_RANK, payload: { rank: [saved] } });
     });
   }
 

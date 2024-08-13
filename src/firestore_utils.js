@@ -11,7 +11,8 @@ export const addRank = async (rank) => {
       spaceshipid: rank.spaceshipid,
       level: rank.level,
       time: rank.time,
-      startedTime: rank.startedtime,
+      startedTime: rank.startedTime,
+      isMobile: rank.isMobile
     });
 
     console.log("Document written with ID: ", response.data.id);

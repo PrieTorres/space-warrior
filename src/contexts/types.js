@@ -19,3 +19,4 @@ export const RANK_MENU_CLOSE = "RANK_MENU_CLOSE";
 export const LOAD_RANK = "LOAD_RANK";
 export const SAVE_RANK = "SAVE_RANK";
 export const LOADING_RANKS = "LOADING_RANKS";
+export const SUCESSFULL_SAVE_RANK = "SUCESSFULL_SAVE_RANK";

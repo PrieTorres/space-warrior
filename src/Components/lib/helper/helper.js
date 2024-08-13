@@ -1,4 +1,5 @@
 import { uniqueId } from "lodash";
+import { addRank } from "../../../firestore_utils.js";
 
 export const inactiveAll = (arrayObjs) => arrayObjs?.forEach(obj => obj.active = false);
 
@@ -40,4 +41,31 @@ export function storageSaveRank(name, points, err) {
   });
 
   window.localStorage.setItem("rank", JSON.stringify(storageRank));
+}
+
+export const saveRank = async ({ name, points, spaceShipId, level, totalSeconds, startedTime, touchScreen }) => {
+  try {
+    const rankToSave = {
+      name,
+      points,
+      spaceshipid: spaceShipId,
+      level: level,
+      time: totalSeconds,
+      startedTime: startedTime,
+      isMobile: touchScreen
+    };
+
+    const res = await addRank(rankToSave);
+
+    if (res?.code > 400) {
+      storageSaveRank(name, points, { message: JSON.stringify(res) });
+    }
+
+    return { ...rankToSave, ...res };
+  } catch (err) {
+    storageSaveRank(name, points, err);
+    console.error(err);
+    console.log(err);
+    return err;
+  }
 }

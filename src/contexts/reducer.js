@@ -2,8 +2,6 @@
 import { isArray } from 'lodash';
 import { spaceshipsTypes } from '../gameAssets/functional/Sprites/spaceship/spaceshipsTypes.js';
 import * as types from './types.js';
-import { storageSaveRank } from '../Components/lib/helper/helper.js';
-import { addRank } from '../firestore_utils.js';
 
 export const gameReducer = (state, action) => {
   switch (action.type) {
@@ -22,7 +20,7 @@ export const gameReducer = (state, action) => {
     }
 
     case types.LOADING_RANKS: {
-      return { ...state, loadingRanks:true };
+      return { ...state, loadingRanks: true };
     }
 
     case types.LOAD_RANK: {
@@ -42,42 +40,13 @@ export const gameReducer = (state, action) => {
         }
       });
 
-      return { ...state, ranks: rank, loadingRanks:false }
+      return { ...state, ranks: rank, loadingRanks: false }
     }
 
     case types.SAVE_RANK: {
-      const data = action.payload ?? {};
-
-      const saveRank = async ({ name, points }) => {
-        try {
-          const res = await addRank({
-            name,
-            points,
-            spaceshipid: state.spaceShipId,
-            level: state.level,
-            time: state.totalSeconds,
-            startedTime: state.startedTime,
-            isMobile: state.touchScreen
-          });
-
-          if (res?.code > 400) {
-            storageSaveRank(name, points, { message: JSON.stringify(res) });
-          }
-
-          return res;
-        } catch (err) {
-          storageSaveRank(name, points, err);
-          console.error(err);
-          console.log(err);
-          return err;
-        }
-      }
-
-      saveRank(data);
-      // load ranks é encarregado de puxar a info do novo rank salvo
       return {
         ...state,
-        loadingRanks: true,
+        loadingAddRanks: true,
         points: 0,
         health: 100,
         level: 0,
@@ -86,6 +55,13 @@ export const gameReducer = (state, action) => {
         paused: true,
         totalSeconds: 0,
         showRank: true
+      }
+    }
+
+    case types.SUCESSFULL_SAVE_RANK: {
+      return {
+        ...state,
+        loadingAddRanks: false,
       }
     }
 
