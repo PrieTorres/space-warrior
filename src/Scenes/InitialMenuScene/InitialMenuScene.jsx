@@ -43,7 +43,9 @@ export const InitialMenuScene = () => {
             paddingBottom: 16,
             gap: 8,
             display: "flex",
-            justifyContent: "center"
+            justifyContent: "center",
+            position: 'absolute',
+            bottom: 0
           }}>
             <button
               className={`${style['start-button']}`}
