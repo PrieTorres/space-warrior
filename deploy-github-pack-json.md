@@ -8,3 +8,5 @@ homepage: "https://PrieTorres.github.io/space-warrior"
 
 corrigir movimentação
 corrigir loading addrank
+
+firebase deploy --only hosting
