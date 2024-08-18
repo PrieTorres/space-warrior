@@ -58,7 +58,7 @@ export const InitialMenuScene = () => {
           </div>
           <footer style={{ position: "absolute", bottom: 0 }}>
             <div>
-              &copy; copyrigths -- feito por <a href="https://ethereal-argon-427820-m6.web.app/">Priscila T.</a> 2023
+              &copy; copyrigths -- feito por <a href="https://ethereal-argon-427820-m6.web.app/">Priscila T.</a> 2024
               <a href='https://ethereal-argon-427820-m6.web.app/'> - Contact me</a>
             </div>
           </footer>
