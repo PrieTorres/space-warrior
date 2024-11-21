@@ -13,5 +13,6 @@ export const initialData = {
   showTutorial: true,
   joystickSize: 100,
   joystickRevert: false,
-  totalSeconds: 0
+  totalSeconds: 0,
+  joystickSensibility: 50,
 }

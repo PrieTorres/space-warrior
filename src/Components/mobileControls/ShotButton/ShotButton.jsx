@@ -4,7 +4,7 @@ import P from 'prop-types';
 export const ShotButton = ({ shotFunction }) => {
 
   return (
-    <button className={styles.container} onClick={shotFunction} />
+    <button className={styles.container} onTouchStart={shotFunction} />
   )
 }
 

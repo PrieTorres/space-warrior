@@ -146,10 +146,18 @@ export const MainScene = () => {
       </div>
       {gameState.touchScreen &&
         <div
-          className={`${style["mobile-controls"]} ${ gameState.joystickRevert ? style["reverted-control"] : ""}`}
+          className={`${style["mobile-controls"]} ${gameState.joystickRevert ? style["reverted-control"] : ""}`}
         >
           <ShotButton shotFunction={() => handlerSpaceShip.handleSpaceShipShot(spaceShip, shots.current, munitionCount, setShots, setMunitionCount)} />
-          <Joystick move={(args) => handleKeyPress(args, canvasContext)} size={gameState.joystickSize} />
+          <Joystick
+            size={gameState.joystickSize}
+            move={(args) => {
+              const factor = gameState.joystickSensibility / 100;
+              args.x = args.x * factor;
+              args.y = args.y * factor;
+              handleKeyPress(args, canvasContext);
+            }}
+          />
         </div>
       }
       <div className={`${style["munition-info"]}`}>

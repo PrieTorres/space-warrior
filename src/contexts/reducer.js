@@ -168,8 +168,13 @@ export const gameReducer = (state, action) => {
     }
 
     case types.CHANGE_JOYSTYCK: {
-      if (!action?.payload?.size || action?.payload?.size < 20 || action?.payload?.size > 400) return state;
-      return { ...state, joystickSize: action?.payload?.size }
+      if (action?.payload?.size && (action?.payload?.size < 20 || action?.payload?.size > 400)) return state;
+      if (action?.payload?.sensibility && (action?.payload?.sensibility > 100 || action?.payload?.size < 0.01)) return state;
+      return {
+        ...state,
+        joystickSize: action?.payload?.size ?? state.joystickSize,
+        joystickSensibility: action?.payload?.sensibility ?? state.joystickSensibility
+      }
     }
 
     default: {
