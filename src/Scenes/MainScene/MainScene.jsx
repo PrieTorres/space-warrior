@@ -80,7 +80,7 @@ export const MainScene = () => {
   const handleKeyPress = useCallback((e) => {
     if (paused) return;
 
-    if (e.x != undefined && e.y != undefined) { // for joystick
+    if (e.x != undefined && e.y != undefined) {
       const xmove = e.x * 1.5 * spaceShip.vel;
       const ymove = e.y * 1.5 * spaceShip.vel;
       let [top, bottom, left, right] = [ymove, ymove * -1, xmove * -1, xmove];

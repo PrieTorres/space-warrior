@@ -26,7 +26,7 @@ export const shotTypes = {
   doubleShot: {
     getSprite: (spaceshipData, width = 5, height = 10) => {
       const shots = [];
-      const spaceShipY = spaceshipData.position.y  + spaceshipData.height / 2;
+      const spaceShipY = spaceshipData.position.y + spaceshipData.height / 2;
       const spaceShipX = spaceshipData.position.x + spaceshipData.width / 2;
       const widthCalc = spaceshipData.width / 3;
 
@@ -51,7 +51,7 @@ export const shotTypes = {
     },
   },
   bigShot: {
-    getSprite: (spaceshipData, size=50) => {
+    getSprite: (spaceshipData, size = 50) => {
       return [
         new Shot({
           width: size,
@@ -60,8 +60,8 @@ export const shotTypes = {
           damage: 3,
           vel: 2,
           position: {
-            x: spaceshipData.position.x + 15 + spaceshipData.width / 2,
-            y: spaceshipData.position.y + spaceshipData.width / 2,
+            x: spaceshipData.position.x + spaceshipData.width / 2,
+            y: spaceshipData.position.y + spaceshipData.height,
           },
           finalCordinates: { y: -50 },
           spaceshipData,
