@@ -63,7 +63,7 @@ export const asteroidsTypes = [
       range: 100
     },
     {
-      id: 6,
+      id: 8,
       imageSrc: `${process.env.PUBLIC_URL}/images/asteroids/asteroid-6.png`,
       vel: 0.7,
       damage: 2,
