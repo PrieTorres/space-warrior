@@ -8,16 +8,16 @@ export const shotTypes = {
     getSprite: (spaceshipData, size = 10) => {
       return [
         new Shot({
-          width: 10,
           width: size,
+          height: size,
           color: "red",
           damage: spaceshipData.damage,
           vel: 3,
           position: {
-            x: spaceshipData.position.x + 5 + spaceshipData.width / 2,
-            y: spaceshipData.position.y + spaceshipData.width / 2,
             x: spaceshipData.position.x + spaceshipData.width / 2 + size / 2,
+            y: spaceshipData.position.y + spaceshipData.height / 2,
           },
+          finalCordinates: { y: -(spaceshipData.height * 2) },
           spaceshipData,
         }),
       ];
@@ -29,8 +29,9 @@ export const shotTypes = {
       const spaceShipY = spaceshipData.position.y + spaceshipData.height / 2;
       const spaceShipX = spaceshipData.position.x + spaceshipData.width / 2;
       const widthCalc = spaceshipData.width / 3;
+      const numOfShots = 2;
 
-      for (let i = 1; i <= 2; i++) {
+      for (let i = 0; i < numOfShots; i++) {
         const posX = i === 1 ? spaceShipX + widthCalc : spaceShipX - widthCalc;
 
         shots.push(
@@ -57,13 +58,13 @@ export const shotTypes = {
           width: size,
           height: size,
           color: "violet",
-          damage: 3,
+          damage: 4,
           vel: 2,
           position: {
-            x: spaceshipData.position.x + spaceshipData.width / 2,
-            y: spaceshipData.position.y + spaceshipData.height,
+            x: spaceshipData.position.x + spaceshipData.width / 2 + size / 2,
+            y: spaceshipData.position.y + spaceshipData.height / 2,
           },
-          finalCordinates: { y: -50 },
+          finalCordinates: { y: -size },
           spaceshipData,
         }),
       ];
