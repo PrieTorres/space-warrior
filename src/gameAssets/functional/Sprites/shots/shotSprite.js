@@ -55,11 +55,9 @@ export class Shot extends Sprite {
       }
 
       if (finalPositionY > this.position.y) this.position.y += this.vel;
-      if (finalPositionX && finalPositionX > this.position.x)
-        this.position.x += this.vel;
+      if (finalPositionX && finalPositionX > this.position.x) this.position.x += this.vel;
       if (finalPositionY < this.position.y) this.position.y -= this.vel;
-      if (finalPositionX && finalPositionX < this.position.x)
-        this.position.x -= this.vel;
+      if (finalPositionX && finalPositionX < this.position.x) this.position.x -= this.vel;
     }, CONST.defaultInterval);
   }
 

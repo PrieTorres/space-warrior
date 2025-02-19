@@ -5,19 +5,19 @@ import { Shot } from "../shots/shotSprite.js";
 
 export const shotTypes = {
   default: {
-    getSprite: (spaceshipData) => {
+    getSprite: (spaceshipData, size = 10) => {
       return [
         new Shot({
           width: 10,
-          height: 10,
+          width: size,
           color: "red",
           damage: spaceshipData.damage,
           vel: 3,
           position: {
             x: spaceshipData.position.x + 5 + spaceshipData.width / 2,
             y: spaceshipData.position.y + spaceshipData.width / 2,
+            x: spaceshipData.position.x + spaceshipData.width / 2 + size / 2,
           },
-          finalCordinates: { y: -20 },
           spaceshipData,
         }),
       ];
@@ -51,7 +51,7 @@ export const shotTypes = {
     },
   },
   bigShot: {
-    getSprite: (spaceshipData, size = 50) => {
+    getSprite: (spaceshipData, size = 150) => {
       return [
         new Shot({
           width: size,
