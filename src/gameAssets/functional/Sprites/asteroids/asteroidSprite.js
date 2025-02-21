@@ -18,6 +18,17 @@ export class AsteroidSprite extends Sprite {
     };
   }
 
+  draw(c) {
+    if (this.isLoaded)
+      c.drawImage(
+        this.image,
+        this.position.x + this.width / 3,
+        this.position.y + this.height / 3,
+        this.width,
+        this.height,
+      );
+  }
+
   move({ pFinalPositionX, pFinalPositionY, cb, finalCb }) {
     let finalPositionX = pFinalPositionX;
     let finalPositionY = pFinalPositionY;
