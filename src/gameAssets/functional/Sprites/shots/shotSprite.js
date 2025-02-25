@@ -28,9 +28,9 @@ export class Shot extends Sprite {
     c.fillStyle = this.color;
     c.beginPath();
     c.arc(
-      this.position.x - this.width / 3,
-      this.position.y - this.height / 3,
-      this.width,
+      this.position.x,
+      this.position.y,
+      this.width / 2,
       0,
       2 * Math.PI,
     );

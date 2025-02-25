@@ -19,14 +19,15 @@ export class AsteroidSprite extends Sprite {
   }
 
   draw(c) {
-    if (this.isLoaded)
+    if (this.isLoaded) {
       c.drawImage(
         this.image,
-        this.position.x + this.width / 3,
-        this.position.y + this.height / 3,
+        this.position.x - this.width / 2,
+        this.position.y - this.height / 2,
         this.width,
         this.height,
       );
+    }
   }
 
   move({ pFinalPositionX, pFinalPositionY, cb, finalCb }) {

@@ -6,26 +6,32 @@ export const inactiveAll = (arrayObjs) => arrayObjs?.forEach(obj => obj.active =
 export const filterActives = (arrayObjs) => arrayObjs?.filter(obj => obj.active);
 
 export function getBoundingCoordinates(obj) {
-  const top = obj.position.y + obj.height / 2;
-  const bottom = obj.position.y - obj.height / 2;
-  const left = obj.position.x;
-  const right = obj.position.x + obj.width;
+  const top = obj.position.y - obj.height / 2;
+  const bottom = obj.position.y + obj.height / 2;
+  const right = obj.position.x + obj.width / 2;
+  const left = obj.position.x - obj.width / 2;
   return { top, bottom, left, right };
 }
 
-export function calcCollapse(objToCollapse, collapse) {
-  if (!collapse?.position || !objToCollapse?.position) {
+export function calcCollapse(objToCollapse, shot) {
+  if (!shot?.position || !objToCollapse?.position) {
     return false;
   }
 
   const toCollapseCoords = getBoundingCoordinates(objToCollapse);
-  const collapseCoords = getBoundingCoordinates(collapse);
+  const shotCoords = {
+    top: shot.position.y - shot.width / 2,
+    bottom: shot.position.y + shot.width / 2,
+    left: shot.position.x - shot.width / 2,
+    right: shot.position.x + shot.width / 2
+  };
 
-  const isCollapsed =
-    toCollapseCoords.top >= collapseCoords.bottom &&
-    toCollapseCoords.bottom <= collapseCoords.top &&
-    toCollapseCoords.left <= collapseCoords.right &&
-    toCollapseCoords.right >= collapseCoords.left;
+  const isCollapsed = (
+    shotCoords.bottom >= toCollapseCoords.top &&
+    shotCoords.top <= toCollapseCoords.bottom &&
+    shotCoords.right >= toCollapseCoords.left &&
+    shotCoords.left <= toCollapseCoords.right
+  );
 
   return isCollapsed;
 }
