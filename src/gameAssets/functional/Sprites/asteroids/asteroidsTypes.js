@@ -11,9 +11,9 @@ export const asteroidsTypes = [
       id: 2,
       imageSrc: `${process.env.PUBLIC_URL}/images/asteroids/asteroid-2.png`,
       vel: 0.5,
-      damage: 2,
+      damage: 4,
       size: 100,
-      health: 4,
+      health: 5,
     },
     {
       id: 3,
@@ -38,7 +38,7 @@ export const asteroidsTypes = [
       vel: 1.2,
       damage: 1,
       size: 30,
-      health: 1,
+      health: 2,
       type: "GANG",
       quant: 3
     },
@@ -48,7 +48,7 @@ export const asteroidsTypes = [
       vel: 1,
       damage: 1,
       size: 35,
-      health: 1,
+      health: 2,
       type: "GANG",
       quant: 5
     },
@@ -71,6 +71,17 @@ export const asteroidsTypes = [
       health: 1,
       type: "GANGZIGZAGRANGE",
       quant: 5,
-      range: 80
+      range: 80,
+    },
+    {
+      id: 9,
+      imageSrc: `${process.env.PUBLIC_URL}/images/asteroids/asteroid-6.png`,
+      vel: 0.7,
+      damage: 2,
+      size: 35,
+      health: 3,
+      type: "ZIGZAG",
+      quant: 5,
+      range: 120,
     },
   ];

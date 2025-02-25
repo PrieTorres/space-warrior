@@ -31,10 +31,27 @@ export const createAsteroid = ({
   const w = asteroidData.width ?? asteroidData.size;
   const h = asteroidData.height ?? asteroidData.size;
   const maxScreen = gameScreenWidth - w;
+
+  const xPos = Math.floor(Math.random() * (maxScreen));
+  if (asteroidData.range) {
+    const finalCordinates = {
+      x: xPos + asteroidData.range,
+      y: gameScreenHeight,
+    };
+
+    const rangePosition = {
+      left: xPos,
+      right: xPos + asteroidData.range
+    }
+
+    asteroidData.finalCordinates = finalCordinates;
+    asteroidData.rangePosition = rangePosition;
+  }
+
   const dataToSprite = {
     position: {
       y: 0,
-      x: Math.floor(Math.random() * (maxScreen)),
+      x: xPos,
     },
     finalCordinates: { y: gameScreenHeight },
     width: w,

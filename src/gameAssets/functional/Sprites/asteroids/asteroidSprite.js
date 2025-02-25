@@ -12,6 +12,7 @@ export class AsteroidSprite extends Sprite {
     this.active = true;
     this.health = props.health;
     this.type = props.type;
+    this.rangePosition = props.rangePosition;
     this.gameScreen = {
       width: props.gameScreenWidth,
       height: props.gameScreenHeight,
@@ -39,13 +40,15 @@ export class AsteroidSprite extends Sprite {
 
     switch (this.type) {
       case "ZIGZAG":
+      case "ZIGZAGRANGE":
+      case "GANGZIGZAGRANGE":
         if (this.onEndSide === "right" || this.finalCordinates.x === undefined) {
-          finalPositionX = 0;
-          this.finalCordinates.x = 0;
+          finalPositionX = this.rangePosition?.left ?? 0;
+          this.finalCordinates.x = finalPositionX;
         }
         if (this.onEndSide === "left" || this.finalCordinates.x === undefined) {
-          finalPositionX = this.gameScreen.width - this.width;
-          this.finalCordinates.x = this.gameScreen.width - this.width;
+          finalPositionX = this.rangePosition?.right ?? (this.gameScreen.width - this.width);
+          this.finalCordinates.x = finalPositionX;
         }
 
         this.onEndSide = undefined;

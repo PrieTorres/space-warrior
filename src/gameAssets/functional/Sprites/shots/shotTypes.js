@@ -24,7 +24,7 @@ export const shotTypes = {
     },
   },
   doubleShot: {
-    getSprite: (spaceshipData, width = 5, height = 10) => {
+    getSprite: (spaceshipData, width = 15, height = 15) => {
       const shots = [];
       const spaceShipY = spaceshipData.position.y + spaceshipData.height / 2;
       const spaceShipX = spaceshipData.position.x + spaceshipData.width / 2;
