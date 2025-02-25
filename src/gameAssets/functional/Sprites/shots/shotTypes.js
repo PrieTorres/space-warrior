@@ -61,7 +61,7 @@ export const shotTypes = {
           damage: 4,
           vel: 2,
           position: {
-            x: spaceshipData.position.x + spaceshipData.width / 2 + size / 2,
+            x: spaceshipData.position.x + spaceshipData.width / 2,
             y: spaceshipData.position.y + spaceshipData.height / 2,
           },
           finalCordinates: { y: -size },
