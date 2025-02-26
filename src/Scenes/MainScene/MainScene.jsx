@@ -15,6 +15,7 @@ import { createSpaceShip } from "../../gameAssets/functional/Sprites/spaceship/c
 import { ShotButton } from "../../Components/mobileControls/ShotButton/ShotButton.jsx";
 import { Joystick } from "react-joystick-component";
 import { PauseButton } from "../../Components/PauseButton/index.jsx";
+import { filterActives } from "../../Components/lib/helper/helper.js";
 
 export const MainScene = () => {
   const { gameState, gameDispatch } = useContext(GameContext);
@@ -67,7 +68,11 @@ export const MainScene = () => {
 
   useEffect(() => {
     canvasContext.current = gameScreen.current?.getContext("2d");
-  }, [gameScreenHeight, gameScreenWidth])
+  }, [gameScreenHeight, gameScreenWidth]);
+
+  useEffect(() => {
+    asteroids.current = filterActives(asteroids.current);
+  }, [asteroids.current.length]);
 
   const setShots = (updatedShots) => { shots.current = updatedShots };
   const handleKeyDown = useCallback((e) => {
