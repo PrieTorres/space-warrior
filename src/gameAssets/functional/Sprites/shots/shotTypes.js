@@ -5,7 +5,7 @@ import { Shot } from "../shots/shotSprite.js";
 
 export const shotTypes = {
   default: {
-    getSprite: (spaceshipData, size = 10) => {
+    getSprite: (spaceshipData, size = 18) => {
       return [
         new Shot({
           width: size,
@@ -14,7 +14,7 @@ export const shotTypes = {
           damage: spaceshipData.damage,
           vel: 3,
           position: {
-            x: spaceshipData.position.x + spaceshipData.width / 2 + size / 2,
+            x: spaceshipData.position.x + spaceshipData.width / 2,
             y: spaceshipData.position.y + spaceshipData.height / 2,
           },
           finalCordinates: { y: -(spaceshipData.height * 2) },
@@ -24,7 +24,7 @@ export const shotTypes = {
     },
   },
   doubleShot: {
-    getSprite: (spaceshipData, width = 15, height = 15) => {
+    getSprite: (spaceshipData, width = 10, height = 10) => {
       const shots = [];
       const spaceShipY = spaceshipData.position.y + spaceshipData.height / 2;
       const spaceShipX = spaceshipData.position.x + spaceshipData.width / 2;
